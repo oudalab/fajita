@@ -12,6 +12,7 @@
 	<!-- SCROLLS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	 <link rel="stylesheet" href="bower_components/angularjs-datetime-picker/angularjs-datetime-picker.css">
 	<style>
 		html 					{ overflow-y:scroll; }
 		body 					{ padding-top:50px; }
@@ -24,7 +25,11 @@
 
 	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
 	<script src="js/services/todos.js"></script> <!-- load our todo service -->
+	<script src="js/services/actors.js"></script> <!-- load our actor service -->
+	<script src="js/services/agents.js"></script> <!-- load our agent service -->
 	<script src="js/core.js"></script> <!-- load our main application -->
+	<script src="bower_components/angularjs-datetime-picker/angularjs-datetime-picker.js"></script>
+
 
 </head>
 <!-- SET THE CONTROLLER -->
@@ -71,24 +76,31 @@
 				</form>
 			</div>
 		</div>
+		<div>
+	
+		 <!--  <form name="ActorForm"> -->
+		 <div class="jumbotron">
+		    <h4>Actor and Target tagging section</h4>
+		    <label for="actorSelect">Actor:</label>
+		    <select name="actorSelect" id="actorSelect"
+		      ng-options="item as item.name for item in data.availableOptions track by item.id" ng-model="data.selectedOption"
+		      ></select>
 
+		     <label for="agentSelect">Agent:</label>
+		     <select name="agentSelect" id="agentSelect"
+		      ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="agentdata.selectedOption"
+		      ></select>
+
+		       <input ng-model="date4" datetime-picker date-only />
+		  </div>  
+		  <!-- </form> -->
+		  <!-- <hr>
+		  <tt>option = {{data.selectedOption}}</tt><br/> -->
 		<div class="text-center text-muted">
 			<p>EventData Tagging Tool made by <a href="http://scotch.io">YanLiang</a>.</p>
 			<p>Read the <a href="https://github.com/oudalab/biryani">repository on github</a>.</p>
 		</div>
 
-	</div>
-
-
-	<div>
-	  <form name="ActorForm">
-	    <label for="mySelect">Actor:</label>
-	    <select name="mySelect" id="mySelect"
-	      ng-options="option.name for option in data.availableOptions track by option.id"
-	      ng-model="data.selectedOption"></select>
-	  </form>
-	  <hr>
-	  <tt>option = {{data.selectedOption}}</tt><br/>
 	</div>
 
 </body>

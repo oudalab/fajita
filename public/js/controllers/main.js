@@ -1,18 +1,40 @@
 angular.module('todoController', [])
 
 	// inject the Todo service factory into our controller
-	.controller('mainController', ['$scope','$http','Todos', function($scope, $http, Todos) {
+	.controller('mainController', ['$scope','$http','Todos','Actors','Agents', function($scope, $http, Todos,Actors,Agents) {
 		$scope.formData = {};
 		$scope.loading = true;
 
-		$scope.data = {
+	  	Actors.get()
+		   .success(function(data){
+              
+               $scope.loading=false;
+               $scope.data={
+               	availableOptions:data,
+               	selectedOption:data[0].name
+               }
+
+		   });
+		Agents.get()
+		   .success(function(data){
+              
+               $scope.loading=false;
+               $scope.agentdata={
+               	availableOptions:data,
+               	selectedOption:data[0].name
+               }
+
+		   });
+
+	/*	$scope.data = {
 		    availableOptions: [
 		      {id: '1', name: 'Option A'},
 		      {id: '2', name: 'Option B'},
 		      {id: '3', name: 'Option C'}
 		    ],
-		    selectedOption: {id: '3', name: 'Option C'} //This sets the default value of the select in the ui
-		    };
+		    availableOptions:$scope.availableOptions,
+		    selectedOption: {id: '1'} //This sets the default value of the select in the ui
+		    };*/
 
 		// GET =====================================================================
 		// when landing on the page, get all todos and show them
@@ -56,6 +78,7 @@ angular.module('todoController', [])
 					$scope.todos = data; // assign our new list of todos
 				});
 		};
+		
 	}]);
 
 

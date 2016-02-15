@@ -1,11 +1,20 @@
 var Todo = require('./models/todo');
 var Actor = require('./models/actor');
+var Agent=require('./models/agent');
 
 function getAllCountryActors(res){
-	Actor.find(function(err,countryActors){
+	Actor.find(function(err,actors){
 		if(err)
 			res.send(err)
-		res.json(countryActors);
+		res.json(actors);
+	});
+}
+
+function getAllAgentActors(res){
+	Agent.find(function(err,actors){
+		if(err)
+			res.send(err)
+		res.json(actors);
 	});
 }
 
@@ -24,8 +33,11 @@ module.exports = function(app) {
 
 	// api ---------------------------------------------------------------------
 	//get all country actors
-	app.get('/api/countryActors', function(req,res){
+	app.get('/api/actors', function(req,res){
 		getAllCountryActors(res);
+	})
+		app.get('/api/agents', function(req,res){
+		getAllAgentActors(res);
 	})
 
 	// get all todos
@@ -35,7 +47,7 @@ module.exports = function(app) {
 		getTodos(res);
 	});
 	//create new country actor
-	app.post('/api/countryActors',function(req,res){
+	app.post('/api/actors',function(req,res){
 		Actor.create({
 			name:req.body.text,
 
