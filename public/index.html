@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
 
-	<title> Todo App</title>
+	<title>OUlab Code Tagging System</title>
 
 	<!-- SCROLLS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
@@ -33,9 +33,6 @@
 	<script src="js/services/agents.js"></script> <!-- load our agent service -->
 	<script src="js/core.js"></script> <!-- load our main application -->
 	<script src="js/angular-datepicker.js"></script> <!-- load our main application -->
-	
-
-
 </head>
 <!-- SET THE CONTROLLER -->
 <body  ng-controller="mainController">
@@ -98,16 +95,17 @@
                   <div>
                   <div>
 			      <label for="datePicker">DateFrom:</label>
-			      <datepicker date-year-title="selected title">
+			      <datepicker class="picker" date-year-title="selected title">
                   <input ng-model="date"/>
                   </datepicker>
                   </div>
                   <div>
                   <label for="datePicker">DateTo:</label>
-			      <datepicker date-year-title="selected title">
+			      <datepicker class="picker" date-year-title="selected title">
                   <input ng-model="date"/>
                   </datepicker>
                   </div>
+                  <button type="button" class="btn btn-success">Commit</button>
                   </div>
 		  </div> 
 		  
