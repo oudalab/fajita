@@ -1,1 +1,1 @@
-angular.module('scotchTodo', ['angularjs-datetime-picker','todoController','todoService','actorService','agentService']);
+angular.module('scotchTodo', ['todoController','todoService','actorService','agentService']);

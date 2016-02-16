@@ -7,12 +7,12 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
 
-	<title>Node/Angular Todo App</title>
+	<title> Todo App</title>
 
 	<!-- SCROLLS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-	 <link rel="stylesheet" href="bower_components/angularjs-datetime-picker/angularjs-datetime-picker.css">
+	 <link rel="stylesheet" href="css/angular-datepicker.css">
 	<style>
 		html 					{ overflow-y:scroll; }
 		body 					{ padding-top:50px; }
@@ -21,19 +21,24 @@
 	</style>
 
 	<!-- SPELLS -->
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
-
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+	<script src="js/angular-material.min.js"></script>
 	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
 	<script src="js/services/todos.js"></script> <!-- load our todo service -->
 	<script src="js/services/actors.js"></script> <!-- load our actor service -->
 	<script src="js/services/agents.js"></script> <!-- load our agent service -->
 	<script src="js/core.js"></script> <!-- load our main application -->
-	<script src="bower_components/angularjs-datetime-picker/angularjs-datetime-picker.js"></script>
+	<script src="js/angular-datepicker.js"></script> <!-- load our main application -->
+	
 
 
 </head>
 <!-- SET THE CONTROLLER -->
-<body ng-controller="mainController">
+<body  ng-controller="mainController">
 	<div class="container">
 
 		<!-- HEADER AND TODO COUNT -->
@@ -80,22 +85,33 @@
 	
 		 <!--  <form name="ActorForm"> -->
 		 <div class="jumbotron">
-		    <h4>Actor and Target tagging section</h4>
-		    <label for="actorSelect">Actor:</label>
-		    <select name="actorSelect" id="actorSelect"
-		      ng-options="item as item.name for item in data.availableOptions track by item.id" ng-model="data.selectedOption"
-		      ></select>
+			    <h4>Actor and Target tagging section</h4>
+			    <label for="actorSelect">Actor:</label>
+			    <select name="actorSelect" id="actorSelect"
+			      ng-options="item as item.name for item in data.availableOptions track by item.id" ng-model="data.selectedOption"
+			      ></select>
 
-		     <label for="agentSelect">Agent:</label>
-		     <select name="agentSelect" id="agentSelect"
-		      ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="agentdata.selectedOption"
-		      ></select>
-
-		       <input ng-model="date4" datetime-picker date-only />
-		  </div>  
-		  <!-- </form> -->
-		  <!-- <hr>
-		  <tt>option = {{data.selectedOption}}</tt><br/> -->
+			     <label for="agentSelect">Agent:</label>
+			     <select name="agentSelect" id="agentSelect"
+			      ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="agentdata.selectedOption"
+			      ></select>
+                  <div>
+                  <div>
+			      <label for="datePicker">DateFrom:</label>
+			      <datepicker date-year-title="selected title">
+                  <input ng-model="date"/>
+                  </datepicker>
+                  </div>
+                  <div>
+                  <label for="datePicker">DateTo:</label>
+			      <datepicker date-year-title="selected title">
+                  <input ng-model="date"/>
+                  </datepicker>
+                  </div>
+                  </div>
+		  </div> 
+		  
+	
 		<div class="text-center text-muted">
 			<p>EventData Tagging Tool made by <a href="http://scotch.io">YanLiang</a>.</p>
 			<p>Read the <a href="https://github.com/oudalab/biryani">repository on github</a>.</p>
