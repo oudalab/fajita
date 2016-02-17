@@ -79,43 +79,131 @@
 			</div>
 		</div>
 		<div>
-	
-		 <!--  <form name="ActorForm"> -->
-		 <div class="jumbotron">
-			    <h4>Actor and Target tagging section</h4>
-			    <label for="actorSelect">Actor:</label>
-			    <select name="actorSelect" id="actorSelect"
-			      ng-options="item as item.name for item in data.availableOptions track by item.id" ng-model="data.selectedOption"
-			      ></select>
+		    <div class="row">
+			  <div class="col-md-4 jumbotron" style="height:780px;margin-right:10px;">sentence</div>
+			  <div class="col-md-7">
+			        <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;">
+						   <div class="row" style="padding:0px">
+						      <div class="col-md-6">actor tagging section:</div>
+						   </div>
+						  <div class="row" style="padding:2px">
+						     <div class="col-md-12">
+						     	<label for="actorSelect">Country</label>
+							    <select name="actorSelect" id="actorSelect"
+							      ng-options="item as item.name for item in data.availableOptions track by item.id" ng-model="data.selectedOption"
+							      ></select>
+						     </div>
+						  </div>
+						   <div class="row" style="padding:2px">
+						     <div class="col-md-12">
+						         <label for="agentSelect">Agent</label>
+							     <select name="agentSelect" id="agentSelect"
+							      ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="agentdata.selectedOption"
+							      ></select>
+						     </div>
+						  </div>
+						  <div class="row" style="padding:2px">
+						     <div class="col-md-4">
+						     	<!-- <label for="datePicker">From:</label> -->
+						     	 <div class="col-md-3"><label>From </label></div>
+						     	 <div class="col-md-3">
+							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM'>
+					                  <input ng-model="date0"/>
+					                  </datepicker>
+						     	 </div>
+							      
+						     </div>
+						     <div class="col-md-4">
+						     	<!-- <label for="datePicker">To:</label> -->
+							     <div class="col-md-3"><label>To </label></div>
+						     	 <div class="col-md-3">
+							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM'>
+					                  <input ng-model="date1"/>
+					                  </datepicker>
+						     	 </div>
+						     </div>
+						  </div>
+						  <div class="row" style="padding:2px">
+						     <div class="col-md-4 col-md-offset-4">
+						     	<button type="button" class="btn btn-success" style="padding:2px;width:100px;">Commit</button>
+						     </div>
+						  </div>
 
-			     <label for="agentSelect">Agent:</label>
-			     <select name="agentSelect" id="agentSelect"
-			      ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="agentdata.selectedOption"
-			      ></select>
-                  <div>
-                  <div>
-			      <label for="datePicker">DateFrom:</label>
-			      <datepicker class="picker" date-year-title="selected title">
-                  <input ng-model="date"/>
-                  </datepicker>
-                  </div>
-                  <div>
-                  <label for="datePicker">DateTo:</label>
-			      <datepicker class="picker" date-year-title="selected title">
-                  <input ng-model="date"/>
-                  </datepicker>
-                  </div>
-                  <button type="button" class="btn btn-success">Commit</button>
-                  </div>
-		  </div> 
-		  
+			        </div>
+			         <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;">
+						   <div class="row" style="padding:0px">
+						      <div class="col-md-6">verb tagging section:</div>
+						   </div>
+						   <div class="row" style="padding:2px">
+							     <div class="col-md-12">
+							         <label for="verbcodeSelect">Code</label>
+								     <select name="verbcodeSelect" id="verbcodeSelect"
+								      ng-options="item as item.name for item in codedata.availableOptions track by item.id" ng-model="codedata.selectedOption"
+								      ></select>
+							     </div>			        
+						    </div>
+						    <div class="row" style="padding:2px">
+							     <div class="col-md-4 col-md-offset-4">
+							     	<button type="button" class="btn btn-success" style="padding:2px;width:100px;">Commit</button>
+							     </div>
+						    </div>
+				    </div>
+			        <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;">
+						   <div class="row" style="padding:0px">
+						      <div class="col-md-6">target tagging section:</div>
+						   </div>
+						  <div class="row" style="padding:2px">
+						     <div class="col-md-12">
+						     	<label for="actorSelect">Country</label>
+							    <select name="actorSelect" id="actorSelect"
+							      ng-options="item as item.name for item in data.availableOptions track by item.id" ng-model="data.selectedOption"
+							      ></select>
+						     </div>
+						  </div>
+						   <div class="row" style="padding:2px">
+						     <div class="col-md-12">
+						         <label for="agentSelect">Agent</label>
+							     <select name="agentSelect" id="agentSelect"
+							      ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="agentdata.selectedOption"
+							      ></select>
+						     </div>
+						  </div>
+						  <div class="row" style="padding:2px">
+						     <div class="col-md-4">
+						     	<!-- <label for="datePicker">From:</label> -->
+						     	 <div class="col-md-3"><label>From </label></div>
+						     	 <div class="col-md-3">
+							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM'>
+					                  <input ng-model="date2"/>
+					                  </datepicker>
+						     	 </div>
+							      
+						     </div>
+						     <div class="col-md-4">
+						     	<!-- <label for="datePicker">To:</label> -->
+							     <div class="col-md-3"><label>To </label></div>
+						     	 <div class="col-md-3">
+							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM'>
+					                  <input ng-model="date3"/>
+					                  </datepicker>
+						     	 </div>
+						     </div>
+						  </div>
+						  <div class="row" style="padding:2px">
+						     <div class="col-md-4 col-md-offset-4">
+						     	<button type="button" class="btn btn-success" style="padding:2px;width:100px;">Commit</button>
+						     </div>
+						  </div>
+		      </div>
+            </div>
+		  </div>
 	
-		<div class="text-center text-muted">
+<!-- 		<div class="text-center text-muted">
 			<p>EventData Tagging Tool made by <a href="http://scotch.io">YanLiang</a>.</p>
 			<p>Read the <a href="https://github.com/oudalab/biryani">repository on github</a>.</p>
-		</div>
+		</div> -->
 
-	</div>
+	
 
 </body>
 </html>
