@@ -1,1 +1,3 @@
-angular.module('scotchTodo', ['todoController','todoService','actorService','agentService']);
+  angular
+      .module('scotchTodo',['todoController','todoService','actorService','agentService','verbService']);
+    

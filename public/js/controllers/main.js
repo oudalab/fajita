@@ -1,7 +1,8 @@
-angular.module('todoController', ['720kb.datepicker'])
+angular.module('todoController', ['720kb.datepicker','app'])  //the name is not good here, actually this hsould be angular app
+  //app here is for the auto complete feature.
 
 	// inject the Todo service factory into our controller
-	.controller('mainController', ['$scope','$http','Todos','Actors','Agents', function($scope, $http, Todos,Actors,Agents) {
+	.controller('mainController', ['$scope','$http','Todos','Actors','Agents','Verbs','MovieRetriever', function($scope, $http, Todos,Actors,Agents,Verbs,MovieRetriever) {
 		//date picker
 		  $scope.myDate = new Date();
 
@@ -29,7 +30,7 @@ angular.module('todoController', ['720kb.datepicker'])
 		   .success(function(data){
               
                $scope.loading=false;
-               $scope.data={
+               $scope.actordata={
                	availableOptions:data,
                	selectedOption:data[0].name
                }
@@ -45,6 +46,15 @@ angular.module('todoController', ['720kb.datepicker'])
                }
 
 		   });
+		Verbs.get()
+		    .success(function(data){
+              $scope.loading=false;
+              $scope.verbdata={
+              	availableOptions:data,
+              	selectedOption:data[0].name
+              }
+		    });
+
 
 	/*	$scope.data = {
 		    availableOptions: [
@@ -98,5 +108,21 @@ angular.module('todoController', ['720kb.datepicker'])
 					$scope.todos = data; // assign our new list of todos
 				});
 		};
+
+		/*$scope.movies = ["Lord of the Rings",
+                        "Drive",
+                        "Science of Sleep",
+                        "Back to the Future",
+                        "Oldboy"];*/
+
+        // gives another movie array on change
+        $scope.updateMovies = function(typed){
+            // MovieRetriever could be some service returning a promise
+            $scope.newmovies = MovieRetriever.getmovies(typed);
+            $scope.newmovies.then(function(data){
+              $scope.movies = data;
+            });
+        }
 		
 	}]);
+

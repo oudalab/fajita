@@ -1,6 +1,15 @@
 var Todo = require('./models/todo');
 var Actor = require('./models/actor');
 var Agent=require('./models/agent');
+var Verb=require('./models/verb');
+
+function getAllVerbs(res){
+	Verb.find(function(err,verbs){
+		if(err)
+			res.send(err)
+		res.json(verbs);
+	});
+}
 
 function getAllCountryActors(res){
 	Actor.find(function(err,actors){
@@ -32,6 +41,10 @@ function getTodos(res){
 module.exports = function(app) {
 
 	// api ---------------------------------------------------------------------
+    app.get('/api/verbs', function(req,res){
+		getAllVerbs(res);
+	})
+	
 	//get all country actors
 	app.get('/api/actors', function(req,res){
 		getAllCountryActors(res);
