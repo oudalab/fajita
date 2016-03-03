@@ -39,131 +39,138 @@
 </head>
 <!-- SET THE CONTROLLER -->
 <body>
-  
+   <button type="button" class="btn btn-success" style="padding:2px;width:100px;float:right">Sign In
+		     	</button>
 	<div class="container"   ng-controller="mainController">
 		    
-		     	<button type="button" class="btn btn-success" style="padding:2px;width:100px;float:right">Sign In
-		     	</button>
-		   
-	
-		
-		    <div class="row">
+           <div class="row">
 			  <div class="col-md-4 jumbotron" style="height:780px;margin-right:10px;">sentence</div>
 			  <div class="col-md-7">
-			        <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;">
+			    
+			        <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;background-color:pink;">
 						   <div class="row" style="padding:0px">
-						      <div class="col-md-6">actor tagging section:</div>
+						      <div class="col-md-6" style="font-weight:bold">ACTOR-SECTION</div>
+						      <div class="col-md-3 col-md-offset-3"><button type="button" class="glyphicon glyphicon-plus" style="background-color:#5cb85c"></button></div>
 						   </div>
 						  <div class="row" style="padding:2px">
-						     <div class="col-md-8">
-						     	<!-- <label for="actorSelect">Country</label>
-							    <select name="actorSelect" id="actorSelect"
-							      ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="actdata.selectedOption"
-							      ></select> -->
-							      <autocomplete ng-model="yourchoice" data="movies" on-type="updateMovies"></autocomplete>
+						     <div class="col-md-2" style="font-weight:bold">
+							    country:
+						     </div>
+						     <div class="col-md-6">
+						     <autocomplete  ng-model="yourchoice" data="movies" on-type="updateMovies"></autocomplete>
 						     </div>
 						  </div>
 						   <div class="row" style="padding:2px">
-						     <div class="col-md-12">
-						         <label for="agentSelect">Agent</label>
-							     <select name="agentSelect" id="agentSelect"
-							      ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="agentdata.selectedOption"
-							      ></select>
+						    <div class="col-md-2" style="font-weight:bold">
+							    agent:
 						     </div>
-						  </div>
-						  <div class="row" style="padding:2px">
-						     <div class="col-md-4">
-						     	<!-- <label for="datePicker">From:</label> -->
-						     	 <div class="col-md-3"><label>From </label></div>
-						     	 <div class="col-md-3">
-							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM'>
+						     <div class="col-md-6">
+						     <autocomplete  ng-model="yourchoice1" data="movies1" on-type="updateMovies1"></autocomplete>
+						     </div>
+						     </div>
+						      <div class="row" style="padding:2px">
+						        <div class="col-md-2" style="font-weight:bold">
+							    from:
+						        </div>
+						     	<div class="col-md-6">
+							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
 					                  <input ng-model="date0"/>
-					                  </datepicker>
-						     	 </div>
-							      
-						     </div>
-						     <div class="col-md-4">
-						     	<!-- <label for="datePicker">To:</label> -->
-							     <div class="col-md-3"><label>To </label></div>
-						     	 <div class="col-md-3">
-							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM'>
+					                 </datepicker>
+						     	</div>	
+						     	<div class="col-md-3 col-md-offset-1">
+						    
+								
+								  <label><input type="radio" name="optradio">not sure</label>
+							
+                           
+                                </div>
+						     </div>	
+						     	<div class="row" style="padding:2px">		
+						         <div class="col-md-2" style="font-weight:bold">
+							        to:
+						         </div>
+						     	 <div class="col-md-6">
+							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
 					                  <input ng-model="date1"/>
-					                  </datepicker>
+					                 </datepicker>
 						     	 </div>
-						     </div>
-						  </div>
-						  <div class="row" style="padding:2px">
-						     <div class="col-md-4 col-md-offset-4">
-						     	<button type="button" class="btn btn-success" style="padding:2px;width:100px;">Commit</button>
-						     </div>
-						  </div>
-
+						     	 <div class="col-md-3 col-md-offset-1">
+						     	 <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
+						         </div>
+						        </div>
 			        </div>
-			         <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;">
+			         <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;background-color:#fbc97f;">
 						   <div class="row" style="padding:0px">
-						      <div class="col-md-6">verb tagging section:</div>
+						      <div class="col-md-6" style="font-weight:bold">VERB-SECTION</div>
+						      <div class="col-md-3 col-md-offset-3">
+								  <label><input type="radio" name="optradio">not sure</label>
+                                </div>
 						   </div>
 						   <div class="row" style="padding:2px">
-							     <div class="col-md-12">
-							         <label for="verbcodeSelect">Code</label>
-								     <select name="verbcodeSelect" id="verbcodeSelect"
-								      ng-options="item as item.name for item in verbdata.availableOptions track by item.id" ng-model="verbdata.selectedOption"
-								      ></select>
-							     </div>			        
+							     <div class="col-md-2" style="font-weight:bold">
+							      code:
+						         </div>
+							     <div class="col-md-6">
+							      <autocomplete  ng-model="yourchoice4" data="movies2" on-type="updateMovies2"></autocomplete>
+						     	 </div>	
+						     	 <div class="col-md-3 col-md-offset-1">
+						     	  <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
+						         </div>
 						    </div>
-						    <div class="row" style="padding:2px">
-							     <div class="col-md-4 col-md-offset-4">
-							     	<button type="button" class="btn btn-success" style="padding:2px;width:100px;">Commit</button>
-							     </div>
-						    </div>
-				    </div>
-			        <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;">
+						  
+				     </div>
+			      <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;background-color:#cdbfe3;;">
 						   <div class="row" style="padding:0px">
-						      <div class="col-md-6">target tagging section:</div>
+						      <div class="col-md-6" style="font-weight:bold">TARGET-SECTION</div>
+						      <div class="col-md-3 col-md-offset-3"><button type="button" class="glyphicon glyphicon-plus" style="background-color:#5cb85c"></button></div>
 						   </div>
 						  <div class="row" style="padding:2px">
-						     <div class="col-md-12">
-						     	<label for="targetactorSelect">Country</label>
-							    <select name="targetactorSelect" id="targetactorSelect"
-							      ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="actordata.selectedOption"
-							      ></select>
+						     <div class="col-md-2" style="font-weight:bold">
+							    country:
+						     </div>
+						     <div class="col-md-6">
+						     <autocomplete  ng-model="yourchoice2" data="movies" on-type="updateMovies"></autocomplete>
 						     </div>
 						  </div>
 						   <div class="row" style="padding:2px">
-						     <div class="col-md-12">
-						         <label for="targetagentSelect">Agent</label>
-							     <select name="targetagentSelect" id="targetagentSelect"
-							      ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="agentdata.selectedOption"
-							      ></select>
+						    <div class="col-md-2" style="font-weight:bold">
+							    agent:
 						     </div>
-						  </div>
-						  <div class="row" style="padding:2px">
-						     <div class="col-md-4">
-						     	<!-- <label for="datePicker">From:</label> -->
-						     	 <div class="col-md-3"><label>From </label></div>
-						     	 <div class="col-md-3">
-							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM'>
+						     <div class="col-md-6">
+						     <autocomplete  ng-model="yourchoice3" data="movies1" on-type="updateMovies1"></autocomplete>
+						     </div>
+						     </div>
+						      <div class="row" style="padding:2px">
+						        <div class="col-md-2" style="font-weight:bold">
+							    from:
+						        </div>
+						     	<div class="col-md-6">
+							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
 					                  <input ng-model="date2"/>
-					                  </datepicker>
-						     	 </div>
-							      
-						     </div>
-						     <div class="col-md-4">
-						     	<!-- <label for="datePicker">To:</label> -->
-							     <div class="col-md-3"><label>To </label></div>
-						     	 <div class="col-md-3">
-							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM'>
+					                 </datepicker>
+						     	</div>	
+						     	<div class="col-md-3 col-md-offset-1">
+						    
+								
+								  <label><input type="radio" name="optradio">not sure</label>
+							
+                           
+                                </div>
+						     </div>	
+						     	<div class="row" style="padding:2px">		
+						         <div class="col-md-2" style="font-weight:bold">
+							        to:
+						         </div>
+						     	 <div class="col-md-6">
+							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
 					                  <input ng-model="date3"/>
-					                  </datepicker>
+					                 </datepicker>
 						     	 </div>
-						     </div>
-						  </div>
-						  <div class="row" style="padding:2px">
-						     <div class="col-md-4 col-md-offset-4">
-						     	<button type="button" class="btn btn-success" style="padding:2px;width:100px;">Commit</button>
-						     </div>
-						  </div>
-		      </div>
+						     	 <div class="col-md-3 col-md-offset-1">
+						     	 <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
+						         </div>
+						        </div>
+			        </div>
             </div>
 		    </div>
 	

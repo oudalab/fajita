@@ -116,11 +116,25 @@ angular.module('todoController', ['720kb.datepicker','app'])  //the name is not 
                         "Oldboy"];*/
 
         // gives another movie array on change
-        $scope.updateMovies = function(typed){
+        $scope.updateMovies = function(typed){ //FOR COUNTRY
             // MovieRetriever could be some service returning a promise
             $scope.newmovies = MovieRetriever.getmovies(typed);
             $scope.newmovies.then(function(data){
               $scope.movies = data;
+            });
+        }
+          $scope.updateMovies1 = function(typed){//FOR AGENT
+            // MovieRetriever could be some service returning a promise
+            $scope.newmovies1 = MovieRetriever.getmovies1(typed);
+            $scope.newmovies1.then(function(data){
+              $scope.movies1 = data;
+            });
+        }
+           $scope.updateMovies2 = function(typed){//FOR VERB
+            // MovieRetriever could be some service returning a promise
+            $scope.newmovies2 = MovieRetriever.getmovies2(typed);
+            $scope.newmovies2.then(function(data){
+              $scope.movies2 = data;
             });
         }
 		
