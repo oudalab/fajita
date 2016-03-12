@@ -1,8 +1,6 @@
-angular.module('eventApp', ['720kb.datepicker','app'])  //the name is not good here, actually this hsould be angular app
-  //app here is for the auto complete feature.
-
+var app=angular.module('mainService', ['720kb.datepicker','app']);
 	// inject the Todo service factory into our controller
-	.controller('mainController', ['$scope','$http','Actors','Agents','Verbs','AutoCompleteRetriever', function($scope,$http,Actors,Agents,Verbs,AutoCompleteRetriever) {
+	app.controller('mainController', ['$scope','$http','Actors','Agents','Verbs','AutoCompleteRetriever', function($scope,$http,Actors,Agents,Verbs,AutoCompleteRetriever) {
 		//date picker
 		  $scope.myDate = new Date();
 
@@ -126,6 +124,23 @@ angular.module('eventApp', ['720kb.datepicker','app'])  //the name is not good h
               $scope.VerbDropdown = data;
             });
         }
-		
+
+            //var CanadaProvinces = {52:"Ontario", 53:"Quebec", 54:"British Columbia", 55:"Alberta", 56:"Manitoba", 57:"Saskatchewan", 58:"Nova Scotia", 59:"New Brunswick", 60:"Newfoundland and Labrador",61:"Prince Edward Island", 62:"Northwest Territories", 63:"Yukon", 64:"Nunavut"};
+ 
+ /*     	  CanadaProvinces = {52:"Ontario", 53:"Quebec", 54:"British Columbia", 55:"Alberta", 56:"Manitoba", 57:"Saskatchewan", 58:"Nova Scotia", 59:"New Brunswick", 60:"Newfoundland and Labrador",61:"Prince Edward Island", 62:"Northwest Territories", 63:"Yukon", 64:"Nunavut"};
+            for(var key in CanadaProvinces) 
+            {
+                var opt = document.createElement('option');
+                opt.value = key;
+                opt.innerHTML = CanadaProvinces[key];
+                $(elem).append(opt);
+                console.log("should show this!");
+                 $('#combobox')
+                 .append($("<option></option>")
+                 .attr("value",key)
+                 .text(CanadaProvinces[key]));
+                 // combobox
+            }*/
+     
 	}]);
 

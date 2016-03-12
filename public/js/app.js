@@ -83,12 +83,12 @@ app.controller('MyCtrl', function($scope, AutoCompleteRetriever){
   $scope.countryDropdown = data;
   });
 
-  $scope.agentDropdown= AutoCompleteRetriever.getmovies1("...");
+  $scope.agentDropdown= AutoCompleteRetriever.getAgentDropdown("...");
   $scope.agentDropdown.then(function(data){
   $scope.agentDropdown = data;
   });
 
-  $scope.verbDropdown = AutoCompleteRetriever.getmovies2("...");
+  $scope.verbDropdown = AutoCompleteRetriever.getVerbDropdown("...");
   $scope.verbDropdown.then(function(data){
   $scope.verbDropdown= data;
   });
@@ -99,4 +99,21 @@ app.controller('MyCtrl', function($scope, AutoCompleteRetriever){
   $scope.getAgentDropdown = function(){
     return $scope.agentDropdown;
   }
+   CanadaProvinces = {52:"Ontario", 53:"Quebec", 54:"British Columbia", 55:"Alberta", 56:"Manitoba", 57:"Saskatchewan", 58:"Nova Scotia", 59:"New Brunswick", 60:"Newfoundland and Labrador",61:"Prince Edward Island", 62:"Northwest Territories", 63:"Yukon", 64:"Nunavut"};
+            for(var key in CanadaProvinces) 
+            {
+              /*  var opt = document.createElement('option');
+                opt.value = key;
+                opt.innerHTML = CanadaProvinces[key];
+                $(elem).append(opt);*/
+                console.log("should show this!");
+                 $('#combobox')
+                 .append($("<option></option>")
+                 .attr("value",key)
+                 .text(CanadaProvinces[key]));
+
+                 // combobox
+            }
 });
+
+

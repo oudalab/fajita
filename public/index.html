@@ -14,6 +14,11 @@
 	<link rel="stylesheet" href="css/angular-datepicker.css">
     <link rel="stylesheet" href="css/autocomplete.css">
 	<!-- SPELLS -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="js/jqueryAutocomplete.js"></script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
@@ -21,47 +26,68 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
 	<script src="js/angular-material.min.js"></script>
-	<script type="text/javascript" src="js/autocomplete.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
-	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
-<!-- 	/*<script src="js/controllers/autoCtrl.js"></script> */ -->
+	<script src="js/services/main.js"></script> 
+	<script src="js/services/app.js"></script>
 	<script src="js/services/actors.js"></script> <!-- load our actor service -->
 	<script src="js/services/agents.js"></script> <!-- load our agent service -->
 	<script src="js/services/verbs.js"></script> <!-- load our verb service -->
 	<script src="js/core.js"></script> <!-- load our main application -->
-	<script src="js/angular-datepicker.js"></script> <!-- load our main application -->
+	<script src="js/angular-datepicker.js"></script> 
+	
+
+	  <style>
+	  .custom-combobox {
+	    position: relative;
+	    display: inline-block;
+	  }
+	  .custom-combobox-toggle {
+	    position: absolute;
+	    top: 0;
+	    bottom: 0;
+	    margin-left: -1px;
+	    padding: 0;
+	  }
+	  .custom-combobox-input {
+	    margin: 0;
+	    padding: 5px 10px;
+	  }
+	  </style>
 
 </head>
 <!-- SET THE CONTROLLER -->
-<body>
+<body ng-controller="mainController">
    <button type="button" class="btn btn-success" style="padding:2px;width:100px;float:right">Sign Out
 		     	</button>
-	<div class="container" ng-controller="mainController">
+	<div class="container" >
            <div class="row">
-			  <div class="col-md-4 jumbotron" style="height:780px;margin-right:10px;">sentence</div>
+			  <div class="col-md-4 well well-lg" style="height:800px;margin-right:10px;">sentence</div>
 			  <div class="col-md-7">			    
-			        <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;background-color:pink;">
+			        <div class="row well well-lg" style="height:260px;margin-bottom:5px;padding:2px;background-color:pink;">
 						   <div class="row" style="padding:0px">
 						      <div class="col-md-6" style="font-weight:bold">ACTOR-SECTION</div>
 						      <div class="col-md-3 col-md-offset-3"><button type="button" class="glyphicon glyphicon-plus" style="background-color:#5cb85c"></button></div>
 						   </div>
 						   <div class="row" style="padding:2px">
-						     <div class="col-md-2" style="font-weight:bold">
-							    country:
-						     </div>
-						     <div class="col-md-6">
-						     <autocomplete  ng-model="yourchoice" data="countryDropdown" on-type="updateCountryDropdown"></autocomplete>
-						     </div>
-						   </div>
+                                <div class="ui-widget col-md-6">
+							          <label>country </label>
+									  <select id='combobox' ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="selected"></select>
+									    <div>
+									    <button id="toggle">show all</button>
+									    </div>	
+								 </div>
+						    </div>
+						   
 						   <div class="row" style="padding:2px">
-						    <div class="col-md-2" style="font-weight:bold">
-							    agent:
-						     </div>
-						     <div class="col-md-6">
-						     <autocomplete  ng-model="yourchoice1" data="agentDropdown" on-type="updateAgentDropdown">
-						     </autocomplete>
-						     </div>
-						     </div>
+						     <div class="ui-widget col-md-6">
+							          <label>agent...</label>
+									  <select id='combobox1' ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="selected1"></select>
+									    <div>
+									    <button id="toggle1">show all</button>
+									    </div>	
+							  </div>
+						   </div>
+						     
 						      <div class="row" style="padding:2px">
 						        <div class="col-md-2" style="font-weight:bold">
 							    from:
@@ -89,7 +115,7 @@
 						         </div>
 						        </div>
 			        </div>
-			         <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;background-color:#fbc97f;">
+			         <div class="row well well-lg" style="height:260px;margin-bottom:5px;padding:2px;background-color:#fbc97f;">
 						   <div class="row" style="padding:0px">
 						      <div class="col-md-6" style="font-weight:bold">VERB-SECTION</div>
 						      <div class="col-md-3 col-md-offset-3">
@@ -97,40 +123,43 @@
                                 </div>
 						   </div>
 						   <div class="row" style="padding:2px">
-							     <div class="col-md-2" style="font-weight:bold">
-							      code:
-						         </div>
-							     <div class="col-md-6">
-							      <autocomplete  ng-model="yourchoice4" data="verbDropdown" on-type="updateVerbDropdown">
-							      </autocomplete>
-						     	 </div>	
-						     	 <div class="col-md-3 col-md-offset-1">
+							      <div class="ui-widget col-md-6">
+							          <label>verb....</label>
+									  <select id='combobox2' ng-options="item as item.name for item in verbdata.availableOptions track by item.id" ng-model="selected2"></select>
+									    <div>
+									    <button id="toggle2">show all</button>
+									    </div>	
+							      </div>
+						     	 <div class="col-md-3 col-md-offset-3">
 						     	  <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
 						         </div>
 						    </div>
 						  
 				     </div>
-			      <div class="row jumbotron" style="height:255px;margin-bottom:5px;padding:2px;background-color:#cdbfe3;;">
+			      <div class="row well well-lg" style="height:260px;margin-bottom:5px;padding:2px;background-color:#cdbfe3;;">
 						   <div class="row" style="padding:0px">
 						      <div class="col-md-6" style="font-weight:bold">TARGET-SECTION</div>
 						      <div class="col-md-3 col-md-offset-3"><button type="button" class="glyphicon glyphicon-plus" style="background-color:#5cb85c"></button></div>
 						   </div>
 						  <div class="row" style="padding:2px">
-						     <div class="col-md-2" style="font-weight:bold">
-							    country:
-						     </div>
-						     <div class="col-md-6">
-						     <autocomplete  ng-model="yourchoice2" data="countryDropdown" on-type="updateCountryDropdown"></autocomplete>
-						     </div>
-						  </div>
+						      <div class="ui-widget col-md-6">
+							          <label>country </label>
+									  <select id='combobox3' ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="selected3"></select>
+									    <div>
+									    <button id="toggle3">show all</button>
+									    </div>	
+								 </div>
+						    </div>
+						   
 						   <div class="row" style="padding:2px">
-						    <div class="col-md-2" style="font-weight:bold">
-							    agent:
-						     </div>
-						     <div class="col-md-6">
-						     <autocomplete  ng-model="yourchoice3" data="agentDropdown" on-type="updateAgentDropdown"></autocomplete>
-						     </div>
-						     </div>
+						     <div class="ui-widget col-md-6">
+							          <label>agent...</label>
+									  <select id='combobox4' ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="selected4"></select>
+									    <div>
+									    <button id="toggle4">show all</button>
+									    </div>	
+							  </div>
+						   </div>
 						      <div class="row" style="padding:2px">
 						        <div class="col-md-2" style="font-weight:bold">
 							    from:
@@ -161,7 +190,6 @@
             </div>
 		    </div>
 	</div>
-
 <!--
 Copyright 2016 Google Inc. All Rights Reserved. 
 Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
