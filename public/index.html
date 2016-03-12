@@ -26,13 +26,11 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
 	<script src="js/angular-material.min.js"></script>
-	<script type="text/javascript" src="js/autocomplete.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+	
+  
 	<script src="js/controllers/main.js"></script> 
-	<script src="js/services/app.js"></script>
-	<script src="js/services/actors.js"></script> <!-- load our actor service -->
-	<script src="js/services/agents.js"></script> <!-- load our agent service -->
-	<script src="js/services/verbs.js"></script> <!-- load our verb service -->
+	
+
 	<script src="js/core.js"></script> <!-- load our main application -->
 	<script src="js/angular-datepicker.js"></script> 
 	
@@ -89,31 +87,31 @@
 							  </div>
 						   </div>
 						     
-						      <div class="row" style="padding:2px">
-						        <div class="col-md-2" style="font-weight:bold">
-							    from:
-						        </div>
-						     	<div class="col-md-6">
-							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-					                  <input ng-model="date0"/>
-					                 </datepicker>
+						      	<div class="row" style="padding:2px">
+							        <div class="col-md-2" style="font-weight:bold">
+								    from:
+							        </div>
+							     	<div class="col-md-6">
+								     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
+						                  <input ng-model="date0"/>
+						                 </datepicker>
+							     	</div>	
+							     	<div class="col-md-3 col-md-offset-1">
+									  <label><input type="radio" name="optradio">not sure</label>
+                                	</div>
 						     	</div>	
-						     	<div class="col-md-3 col-md-offset-1">
-								  <label><input type="radio" name="optradio">not sure</label>
-                                </div>
-						     </div>	
 						     	<div class="row" style="padding:2px">		
-						         <div class="col-md-2" style="font-weight:bold">
-							        to:
-						         </div>
-						     	 <div class="col-md-6">
-							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-					                  <input ng-model="date1"/>
-					                 </datepicker>
-						     	 </div>
-						     	 <div class="col-md-3 col-md-offset-1">
-						     	 <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
-						         </div>
+							         <div class="col-md-2" style="font-weight:bold">
+								        to:
+							         </div>
+							     	 <div class="col-md-6">
+								     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
+						                  <input ng-model="date1"/>
+						                 </datepicker>
+							     	 </div>
+							     	 <div class="col-md-3 col-md-offset-1">
+							     	 <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
+							         </div>
 						        </div>
 			        </div>
 			         <div class="row well well-lg" style="height:260px;margin-bottom:5px;padding:2px;background-color:#fbc97f;">
@@ -162,19 +160,19 @@
 							  </div>
 						   </div>
 						      <div class="row" style="padding:2px">
-						        <div class="col-md-2" style="font-weight:bold">
-							    from:
-						        </div>
-						     	<div class="col-md-6">
-							     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-					                  <input ng-model="date2"/>
-					                 </datepicker>
-						     	</div>	
-						     	<div class="col-md-3 col-md-offset-1">								
-								  <label><input type="radio" name="optradio">not sure</label>
-                                </div>
+							        <div class="col-md-2" style="font-weight:bold">
+								    from:
+							        </div>
+							     	<div class="col-md-6">
+								     	 <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
+						                  <input ng-model="date2"/>
+						                 </datepicker>
+							     	</div>	
+							     	<div class="col-md-3 col-md-offset-1">								
+									  <label><input type="radio" name="optradio">not sure</label>
+	                                </div>
 						     </div>	
-						     	<div class="row" style="padding:2px">		
+						     <div class="row" style="padding:2px">		
 						         <div class="col-md-2" style="font-weight:bold">
 							        to:
 						         </div>
@@ -186,7 +184,7 @@
 						     	 <div class="col-md-3 col-md-offset-1">
 						     	 <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
 						         </div>
-						        </div>
+						     </div>
 			        </div>
             </div>
 		    </div>
@@ -195,6 +193,5 @@
 Copyright 2016 Google Inc. All Rights Reserved. 
 Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
 -->
-
 </body>
 </html>
