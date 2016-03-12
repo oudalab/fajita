@@ -1,127 +1,102 @@
 var app = angular.module('app', ['autocomplete']);
 
 // the service that retrieves some movie title from an url
-app.factory('MovieRetriever',function($http, $q, $timeout){
-  var MovieRetriever = new Object();
+app.factory('AutoCompleteRetriever',function($http, $q, $timeout){
+  var AutoCompleteRetriever = new Object();
 
-  MovieRetriever.getAgents=function() {
+  AutoCompleteRetriever.getAgents=function() {
         return $http.get('/api/agents');
       }
-  MovieRetriever.getActors=function() {
+  AutoCompleteRetriever.getActors=function() {
         return $http.get('/api/actors');
       }
 
-   MovieRetriever.getVerbs=function() {
+   AutoCompleteRetriever.getVerbs=function() {
         return $http.get('/api/verbs');
       }
 
-  MovieRetriever.getmovies = function(i) {
-    var moviedata = $q.defer();
-    var movies;
-   var moreMovies=[];
-   this.getActors()
+  AutoCompleteRetriever.getCountryDropdown = function(i) {
+    var deferredCountryData = $q.defer();
+    var country;
+    var moreCountry=[];
+    this.getActors()
        .success(function(data){
              data.forEach(function(item){
-              moreMovies.push(item['name']);
+              moreCountry.push(item['name']);
              });
        });
-
-    if(i && i.indexOf('T')!=-1)
-      movies=moreMovies;
-    else
-      movies=moreMovies;
-
+    country=moreCounrty;
     $timeout(function(){
-      moviedata.resolve(movies);
+      deferredCountryData.resolve(country);
     },1000);
 
-    return moviedata.promise
+    return deferredCountryData.promise;
   }
 
-    MovieRetriever.getmovies1 = function(i) {
-    var moviedata = $q.defer();
-    var movies;
-   var moreMovies=[];
-   this.getAgents()
+  AutoCompleteRetriever.getAgentDropdown = function(i) {
+    var deferredAgentData = $q.defer();
+    var agent;
+    var moreAgent=[];
+    this.getAgents()
        .success(function(data){
              data.forEach(function(item){
-              moreMovies.push(item['name']);
+              moreAgent.push(item['name']);
              });
        });
-
-    if(i && i.indexOf('T')!=-1)
-      movies=moreMovies;
-    else
-      movies=moreMovies;
+      agent=moreAgent;
 
     $timeout(function(){
-      moviedata.resolve(movies);
+      deferredAgentData.resolve(agent);
     },1000);
 
-    return moviedata.promise
+    return deferredAgentData.promise;
   }
 
-      MovieRetriever.getmovies2= function(i) {
-    var moviedata = $q.defer();
-    var movies;
-   var moreMovies=[];
-   this.getVerbs()
-       .success(function(data){
-             data.forEach(function(item){
-              moreMovies.push(item['name']);
-             });
-       });
+  AutoCompleteRetriever.getVerbDropdown= function(i) {
+    var deferredVerbData= $q.defer();
+     var verb;
+     var moreVerb=[];
+     this.getVerbs()
+         .success(function(data){
+               data.forEach(function(item){
+                moreVerb.push(item['name']);
+               });
+         });
 
-    if(i && i.indexOf('T')!=-1)
-      movies=moreMovies;
-    else
-      movies=moreMovies;
+      verb=moreVerb;
 
     $timeout(function(){
-      moviedata.resolve(movies);
+      deferredVerbData.resolve(verb);
     },1000);
 
-    return moviedata.promise
+    return deferredVerbData.promise;
   }
-
-  return MovieRetriever;
+  //factory return this retriever object.
+  return AutoCompleteRetriever;
 });
 
-app.controller('MyCtrl', function($scope, MovieRetriever){
 
-  $scope.movies = MovieRetriever.getmovies("...");
-  $scope.movies.then(function(data){
-    $scope.movies = data;
+app.controller('MyCtrl', function($scope, AutoCompleteRetriever){
+
+  $scope.countryDropdown = AutoCompleteRetriever.getCountryDropdown("...");
+  $scope.countryDropdown.then(function(data){
+  $scope.countryDropdown = data;
   });
 
-    $scope.movies1 = MovieRetriever.getmovies1("...");
-  $scope.movies1.then(function(data){
-    $scope.movies1 = data;
+  $scope.agentDropdown= AutoCompleteRetriever.getmovies1("...");
+  $scope.agentDropdown.then(function(data){
+  $scope.agentDropdown = data;
   });
 
-     $scope.movies2 = MovieRetriever.getmovies2("...");
-  $scope.movies2.then(function(data){
-    $scope.movies2= data;
+  $scope.verbDropdown = AutoCompleteRetriever.getmovies2("...");
+  $scope.verbDropdown.then(function(data){
+  $scope.verbDropdown= data;
   });
 
-  $scope.getmovies = function(){
-    return $scope.movies;  //for source country
+  $scope.getCountryDropdown = function(){
+    return $scope.countryDropdown;  
   }
-
-   $scope.getmovies1 = function(){
-    return $scope.movies1; //for source agent
+  $scope.getAgentDropdown = function(){
+    return $scope.agentDropdown;
   }
-
-/*  $scope.doSomething = function(typedthings){
-    console.log("Do something like reload data with this: " + typedthings );
-    $scope.newmovies = MovieRetriever.getmovies(typedthings);
-    $scope.newmovies.then(function(data){
-      $scope.movies = data;
-    });
-  }
-
-  $scope.doSomethingElse = function(suggestion){
-    console.log("Suggestion selected: " + suggestion );
-  }*/
-
 });

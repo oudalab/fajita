@@ -1,3 +1,2 @@
-  angular
-      .module('scotchTodo',['todoController','todoService','actorService','agentService','verbService']);
+  angular.module('eventApp',['actorService','agentService','verbService']);
     

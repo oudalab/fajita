@@ -1,8 +1,8 @@
-angular.module('todoController', ['720kb.datepicker','app'])  //the name is not good here, actually this hsould be angular app
+angular.module('eventApp', ['720kb.datepicker','app'])  //the name is not good here, actually this hsould be angular app
   //app here is for the auto complete feature.
 
 	// inject the Todo service factory into our controller
-	.controller('mainController', ['$scope','$http','Todos','Actors','Agents','Verbs','MovieRetriever', function($scope, $http, Todos,Actors,Agents,Verbs,MovieRetriever) {
+	.controller('mainController', ['$scope','$http','Actors','Agents','Verbs','AutoCompleteRetriever', function($scope,$http,Actors,Agents,Verbs,AutoCompleteRetriever) {
 		//date picker
 		  $scope.myDate = new Date();
 
@@ -55,21 +55,10 @@ angular.module('todoController', ['720kb.datepicker','app'])  //the name is not 
               }
 		    });
 
-
-	/*	$scope.data = {
-		    availableOptions: [
-		      {id: '1', name: 'Option A'},
-		      {id: '2', name: 'Option B'},
-		      {id: '3', name: 'Option C'}
-		    ],
-		    availableOptions:$scope.availableOptions,
-		    selectedOption: {id: '1'} //This sets the default value of the select in the ui
-		    };*/
-
 		// GET =====================================================================
 		// when landing on the page, get all todos and show them
 		// use the service to get all the todos
-		Todos.get()
+/*		Todos.get()
 			.success(function(data) {
 				$scope.todos = data;
 				$scope.loading = false;
@@ -94,11 +83,11 @@ angular.module('todoController', ['720kb.datepicker','app'])  //the name is not 
 						$scope.todos = data; // assign our new list of todos
 					});
 			}
-		};
+		};*/
 
 		// DELETE ==================================================================
 		// delete a todo after checking it
-		$scope.deleteTodo = function(id) {
+	/*	$scope.deleteTodo = function(id) {
 			$scope.loading = true;
 
 			Todos.delete(id)
@@ -107,7 +96,7 @@ angular.module('todoController', ['720kb.datepicker','app'])  //the name is not 
 					$scope.loading = false;
 					$scope.todos = data; // assign our new list of todos
 				});
-		};
+		};*/
 
 		/*$scope.movies = ["Lord of the Rings",
                         "Drive",
@@ -116,25 +105,25 @@ angular.module('todoController', ['720kb.datepicker','app'])  //the name is not 
                         "Oldboy"];*/
 
         // gives another movie array on change
-        $scope.updateMovies = function(typed){ //FOR COUNTRY
-            // MovieRetriever could be some service returning a promise
-            $scope.newmovies = MovieRetriever.getmovies(typed);
-            $scope.newmovies.then(function(data){
-              $scope.movies = data;
+        $scope.updateCountryDropdown = function(typed){ //FOR COUNTRY
+            // AutoCompleteRetriever could be some service returning a promise
+            $scope.newCountry = AutoCompleteRetriever.getCountryDropdown(typed);
+            $scope.newCounrty.then(function(data){
+              $scope.countryDropdown= data;
             });
         }
-          $scope.updateMovies1 = function(typed){//FOR AGENT
-            // MovieRetriever could be some service returning a promise
-            $scope.newmovies1 = MovieRetriever.getmovies1(typed);
-            $scope.newmovies1.then(function(data){
-              $scope.movies1 = data;
+          $scope.updateAgentDropdown = function(typed){//FOR AGENT
+            // AutoCompleteRetriever could be some service returning a promise
+            $scope.newAgent = AutoCompleteRetriever.getAgentDropdown(typed);
+            $scope.newAgent.then(function(data){
+              $scope.agentDropdown = data;
             });
         }
-           $scope.updateMovies2 = function(typed){//FOR VERB
-            // MovieRetriever could be some service returning a promise
-            $scope.newmovies2 = MovieRetriever.getmovies2(typed);
-            $scope.newmovies2.then(function(data){
-              $scope.movies2 = data;
+           $scope.updateVerbDropdown= function(typed){//FOR VERB
+            // AutoCompleteRetriever could be some service returning a promise
+            $scope.newVerb= AutoCompleteRetriever.getVerbDropdown(typed);
+            $scope.newVerb.then(function(data){
+              $scope.VerbDropdown = data;
             });
         }
 		
