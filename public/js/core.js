@@ -1,3 +1,3 @@
-  var app=angular.module('eventApp',['mainService','actorService','agentService','verbService']);
+ var app=angular.module('eventApp',['mainServiceModule']);
 
     

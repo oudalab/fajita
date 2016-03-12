@@ -1,4 +1,44 @@
-var app=angular.module('mainService', ['720kb.datepicker','app']);
+var app=angular.module('mainServiceModule', ['720kb.datepicker','app']);
+
+    app.factory('Actors', ['$http',function($http) {
+		return {
+			get : function() {
+				return $http.get('/api/actors');
+			}
+		/*	create : function(todoData) {
+				return $http.post('/api/todos', todoData);
+			},
+			delete : function(id) {
+				return $http.delete('/api/todos/' + id);
+			}*/
+		}
+	}]);
+	app.factory('Agents', ['$http',function($http) {
+		return {
+			get : function() {
+				return $http.get('/api/agents');
+			}
+		/*	create : function(todoData) {
+				return $http.post('/api/todos', todoData);
+			},
+			delete : function(id) {
+				return $http.delete('/api/todos/' + id);
+			}*/
+		}
+	}]);
+	app.factory('Verbs', ['$http',function($http) {
+		return {
+			get : function() {
+				return $http.get('/api/verbs');
+			}
+		/*	create : function(todoData) {
+				return $http.post('/api/todos', todoData);
+			},
+			delete : function(id) {
+				return $http.delete('/api/todos/' + id);
+			}*/
+		}
+	}]);
 	// inject the Todo service factory into our controller
 	app.controller('mainController', ['$scope','$http','Actors','Agents','Verbs','AutoCompleteRetriever', function($scope,$http,Actors,Agents,Verbs,AutoCompleteRetriever) {
 		//date picker
