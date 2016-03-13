@@ -26,7 +26,6 @@ function getAllAgentActors(res){
 	});
 }
 
-
 module.exports = function(app) {
 
 	// api ---------------------------------------------------------------------

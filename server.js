@@ -8,6 +8,16 @@ var morgan   = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
+var hash = require('bcrypt-node');
+var path = require('path');
+var passport = require('passport');
+var localStrategy = require('passport-local' ).Strategy;
+
+var User=require('./app/models/user.js');
+var routes = require('./loginapi.js');
+
 // configuration ===============================================================
 mongoose.connect(database.url); 	// connect to mongoDB database on modulus.io
 
@@ -17,12 +27,43 @@ app.use(bodyParser.urlencoded({'extended':'true'})); // parse application/x-www-
 app.use(bodyParser.json()); // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override header in the request
+app.use(cookieParser());
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+//configure passport
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 // routes ======================================================================
 require('./app/routes.js')(app);
+app.use('/user/',routes);
+
+// error hndlers
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+app.use(function(err, req, res) {
+  res.status(err.status || 500);
+  res.end(JSON.stringify({
+    message: err.message,
+    error: {}
+  }));
+});
 
 // listen (start app with node server.js) ======================================
 app.listen(port);
 console.log("App listening on port " + port);
 console.log("database url for this app is: "+database.url);
+
+
