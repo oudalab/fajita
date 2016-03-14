@@ -1,4 +1,12 @@
 
+	<link rel="stylesheet" href="css/angular-datepicker.css">
+    <link rel="stylesheet" href="css/autocomplete.css">
+	<!-- SPELLS -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="js/jqueryAutocomplete.js"></script>
+
     <style>
     .custom-combobox {
       position: relative;
@@ -16,11 +24,15 @@
       padding: 5px 10px;
     }
     </style>
-   <button type="button" class="btn btn-success" style="padding:2px;width:100px;float:right">Sign Out
-		     	</button>
+   <div  ng-controller="mainController">
+   
 	<div class="container" >
            <div class="row">
-			  <div class="col-md-4 well well-lg" style="height:800px;margin-right:10px;">sentence</div>
+			  <div class="col-md-4 well well-lg" style="height:800px;margin-right:10px;padding-top:0">
+			  <div class="row">
+			  <button type="button" class="btn btn-success" style="padding:2px;width:75px;float:left">Sign Out</button>
+			  </div>
+			  </div>
 			  <div class="col-md-7">			    
 			        <div class="row well well-lg" style="height:260px;margin-bottom:5px;padding:2px;background-color:pink;">
 						   <div class="row" style="padding:0px">
@@ -148,6 +160,7 @@
 			        </div>
             </div>
 		    </div>
+	</div>
 	</div>
 <!--
 Copyright 2016 Google Inc. All Rights Reserved. 
