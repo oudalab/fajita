@@ -50,6 +50,10 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 
 		$scope.formData = {};
 		$scope.loading = true;
+		$scope.signmeOut=function()
+		{
+         console.log("this is correct thing to see!");
+		};
 
 	  	Actors.get()
 		   .success(function(data){
