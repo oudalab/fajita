@@ -27,7 +27,7 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
  		}
  	}]);
 	// inject the Todo service factory into our controller
-	app.controller('mainController', ['$scope','$http','Actors','Agents','Verbs', function($scope,$http,Actors,Agents,Verbs) {
+	app.controller('mainController', ['$scope','$http','$location','Actors','Agents','Verbs','AuthService', function($scope,$http,$location,Actors,Agents,Verbs,AuthService) {
 		//date picker
 		  $scope.myDate = new Date();
 
@@ -52,7 +52,11 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 		$scope.loading = true;
 		$scope.signmeOut=function()
 		{
-         console.log("this is correct thing to see!");
+	      // call logout from service
+	      AuthService.logout()
+	        .then(function () {
+	          $location.path('/login');
+	        });
 		};
 
 	  	Actors.get()
