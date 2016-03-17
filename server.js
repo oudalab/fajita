@@ -29,18 +29,27 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override header in the request
 app.use(cookieParser());
 app.use(require('express-session')({
+    cookieName: 'session-eventdata',
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 //configure passport
 passport.use(new localStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+/*passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());*/
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
 
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 
 // routes ======================================================================
 require('./app/routes.js')(app);

@@ -58,6 +58,10 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 	          $location.path('/login');
 	        });
 		};
+		$scope.addNewTab=function()
+		{
+			console.log("this is to add a new tab with the button!");
+		}
 
 	  	Actors.get()
 		   .success(function(data){

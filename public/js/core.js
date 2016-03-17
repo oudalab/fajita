@@ -6,7 +6,7 @@ app.config(function ($routeProvider) {
  
     .when('/', {
       templateUrl: '../partials/home.html',
-      access: {restricted: false}
+      access: {restricted: true}
     })
     .when('/login', {
       templateUrl: '../partials/login.html',

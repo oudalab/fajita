@@ -22,19 +22,26 @@ angular.module('mainServiceModule').factory('AuthService',
       }
     }
 
+    //var noop=function(){};
+
     function getUserStatus() {
+   
       $http.get('/user/status')
       // handle success
       .success(function (data) {
         if(data.status){
           user = true;
+         
         } else {
           user = false;
+
         }
       })
       // handle error
       .error(function (data) {
         user = false;
+        callback();
+      
       });
     }
 

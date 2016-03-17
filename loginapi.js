@@ -32,7 +32,7 @@ router.post('/login', function(req, res, next) {
         err: info
       });
     }
-    req.logIn(user, function(err) {
+    req.login(user, function(err) {
       if (err) {
         return res.status(500).json({
           err: 'Could not log in user'
@@ -41,6 +41,7 @@ router.post('/login', function(req, res, next) {
       res.status(200).json({
         status: 'Login successful!'
       });
+   /*   req.session.user=user;*/
     });
   })(req, res, next);
 });
@@ -54,6 +55,7 @@ router.get('/logout', function(req, res) {
 
 router.get('/status', function(req, res) {
   if (!req.isAuthenticated()) {
+  
     return res.status(200).json({
       status: false
     });
