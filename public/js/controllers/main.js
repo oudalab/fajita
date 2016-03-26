@@ -45,11 +45,23 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 		    var day = date.getDay();
 		    return day === 0 || day === 6;
 		  }
-		  //
-      //end of datepicker ,,'material.svgAssetsCache'
+
 
 		$scope.formData = {};
 		$scope.loading = true;
+        $scope.testPartial="../../partials/testPartial.html";
+
+        $scope.partialId = 1;
+
+	    $scope.getPartialUrl = function() {
+	        /*return 'partial' + this.partialId + '.html';*/
+	       /* if(this.partialId===1)
+	        {
+	        	return 
+	        }*/
+	        return "../../partials/testPartial.html";
+	    }
+
 		$scope.signmeOut=function()
 		{
 	      // call logout from service
@@ -58,10 +70,7 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 	          $location.path('/login');
 	        });
 		};
-		$scope.addNewTab=function()
-		{
-			console.log("this is to add a new tab with the button!");
-		}
+
 
 	  	Actors.get()
 		   .success(function(data){

@@ -40,8 +40,6 @@ angular.module('mainServiceModule').factory('AuthService',
       // handle error
       .error(function (data) {
         user = false;
-        callback();
-      
       });
     }
 

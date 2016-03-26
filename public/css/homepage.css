@@ -1,0 +1,40 @@
+/*set the tabs content color*/
+#tabs-1
+{
+	background-color: pink;
+}
+#tabs
+{
+	border:0;
+	padding:0;
+}
+
+/*set the height of tabs bar*/
+	
+.ui-tabs .ui-tabs-nav
+{
+	height:30px;
+
+}
+
+.ui-tabs-anchor
+{
+	height:20px;
+	font-size:12px;
+	background-color: #47a447;
+	padding-top:2px;
+	padding-bottom:0;
+	font-style: italic;
+}
+
+#sourceTabs{
+	padding:0;
+}
+
+div.col-md-4.well.well-lg{
+	margin-right: 0;
+}
+
+
+
+
