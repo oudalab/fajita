@@ -63,6 +63,10 @@ module.exports = function(app) {
 				res.send(res);
 		});
 	});
+	app.get('/api/test',function(req,res){
+	  
+        res.send({"user:":req.user});
+	});
 	//this is for getting the partial view
 	/*app.get('/partialTest',function(req,res){
       res.sendfile('./public/partials/testPartial.html');

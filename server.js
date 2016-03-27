@@ -20,6 +20,7 @@ var routes = require('./loginapi.js');
 
 // configuration ===============================================================
 mongoose.connect(database.url); 	// connect to mongoDB database on modulus.io
+app.set('view engine','jade');
 
 app.use(express.static(__dirname + '/public')); 		// set the static files location /public/img will be /img for users
 app.use(morgan('dev')); // log every request to the console
@@ -31,7 +32,7 @@ app.use(cookieParser());
 app.use(require('express-session')({
     cookieName: 'session-eventdata',
     secret: 'keyboard cat',
-    resave: false,
+    resave: true,
     saveUninitialized: true
 }));
 app.use(passport.initialize());
