@@ -2,6 +2,8 @@ var Actor = require('./models/actor');
 var Agent=require('./models/agent');
 var Secondrole=require('./models/secondrole');
 var Verb=require('./models/verb');
+var SourceDictionary=require('./models/sourceDictionary');
+var Car=require('./models/car');
 
 
 function getAllVerbs(res){
@@ -63,10 +65,23 @@ module.exports = function(app) {
 				res.send(res);
 		});
 	});
-	app.get('/api/test',function(req,res){
+	app.post('/api/carExample',function(req,res){
+		//Car.create()
+		Car.create({
+			name:req.body.name,
+			car:req.body.car
+
+		},function(err){
+			if(err)
+				res.send(res);
+		});
+
+	});
+/*	app.get('/api/test',function(req,res){
 	  
         res.send({"user:":req.user});
-	});
+	});*/
+
 	//this is for getting the partial view
 	/*app.get('/partialTest',function(req,res){
       res.sendfile('./public/partials/testPartial.html');
