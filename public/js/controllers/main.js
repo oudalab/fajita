@@ -19,6 +19,13 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
  			}
  		}
  	}]);
+ 	app.factory('Secondroles', ['$http',function($http) {
+ 		return {
+ 			get : function() {
+ 				return $http.get('/api/secondroles');
+ 			}
+ 		}
+ 	}]);
  	app.factory('Verbs', ['$http',function($http) {
  		return {
  			get : function() {
@@ -26,8 +33,9 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
  			}
  		}
  	}]);
+
 	// inject the Todo service factory into our controller
-	app.controller('mainController', ['$scope','$http','$location','Actors','Agents','Verbs','AuthService', function($scope,$http,$location,Actors,Agents,Verbs,AuthService) {
+	app.controller('mainController', ['$scope','$http','$location','Actors','Agents','Secondroles','Verbs','AuthService', function($scope,$http,$location,Actors,Agents,Secondroles,Verbs,AuthService) {
 		//date picker
 		  $scope.myDate = new Date();
 
@@ -46,21 +54,6 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 		    return day === 0 || day === 6;
 		  }
 
-
-		$scope.formData = {};
-		$scope.loading = true;
-        $scope.testPartial="../../partials/testPartial.html";
-
-        $scope.partialId = 1;
-
-	    $scope.getPartialUrl = function() {
-	        /*return 'partial' + this.partialId + '.html';*/
-	       /* if(this.partialId===1)
-	        {
-	        	return 
-	        }*/
-	        return "../../partials/testPartial.html";
-	    }
 
 		$scope.signmeOut=function()
 		{
@@ -92,6 +85,17 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
                }
 
 		   });
+	   	Secondroles.get()
+	     .success(function(data){
+          
+           $scope.loading=false;
+           $scope.secondroledata={
+           	availableOptions:data,
+           	selectedOption:data[0].name
+           }
+
+	   });
+
 		Verbs.get()
 		    .success(function(data){
               $scope.loading=false;

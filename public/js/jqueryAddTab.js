@@ -11,7 +11,7 @@ $(function() {
     	var   li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ).replace(/#\{tabid\}/g,"tabid"+tabCounter) );
     	tabs.find( ".ui-tabs-nav" ).append( li );
       //tabs.append( "<div id='" + id + "'>" +  "<div ng-include='"+"../../partials/testPartial.html"+"'></div>" + "</div>" );
-      tabs.append("<div id='test'></div>");
+      tabs.append("<div id='summary'></div>");
       tabs.append();
     	tabs.tabs( "refresh" );
       
@@ -19,9 +19,9 @@ $(function() {
       $("#tabid2").click(function(){
       console.log("hello tehre!");
       $.ajax({
-        url:"/partialTest",
+        url:"/summaryTable",
         success:function(result){
-          $("#test").html(result);
+          $("#summary").html(result);
         }
       });
     });

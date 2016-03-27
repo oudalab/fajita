@@ -1,6 +1,8 @@
 var Actor = require('./models/actor');
 var Agent=require('./models/agent');
+var Secondrole=require('./models/secondrole');
 var Verb=require('./models/verb');
+
 
 function getAllVerbs(res){
 	Verb.find(function(err,verbs){
@@ -19,10 +21,17 @@ function getAllCountryActors(res){
 }
 
 function getAllAgentActors(res){
-	Agent.find(function(err,actors){
+	Agent.find(function(err,agents){
 		if(err)
 			res.send(err)
-		res.json(actors);
+		res.json(agents);
+	});
+}
+function getAllSecondroleActors(res){
+	Secondrole.find(function(err,secondrole){
+      if(err)
+      	res.send(err)
+      res.json(secondrole);
 	});
 }
 
@@ -40,6 +49,10 @@ module.exports = function(app) {
 		app.get('/api/agents', function(req,res){
 		getAllAgentActors(res);
 	})
+	   app.get('/api/secondroles', function(req,res){
+		getAllSecondroleActors(res);
+	})
+
 	//create new country actor
 	app.post('/api/actors',function(req,res){
 		Actor.create({
@@ -51,9 +64,9 @@ module.exports = function(app) {
 		});
 	});
 	//this is for getting the partial view
-	app.get('/partialTest',function(req,res){
+	/*app.get('/partialTest',function(req,res){
       res.sendfile('./public/partials/testPartial.html');
-	});
+	});*/
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
 		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)

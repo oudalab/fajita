@@ -32,10 +32,11 @@
                <button type="button" class="btn btn-success" style="padding:2px;width:75px;float:left" ng-click="signmeOut()">Sign Out</button>
             </div>
          </div>
-         <div class="col-md-7">
-            <div id="tabs" class="row well well-lg" style="height:260px;margin-bottom:5px;">
+         <div class="col-md-8">
+            <div id="tabs" class="row well well-lg"  style="height:350px;margin-bottom:5px;">
                <ul id="sourceTabs">
-                  <li><a href="#tabs-1" id="tabid1">role1</a></li>
+                  <li><a href="#tabs-1" id="tabid1">AddRole</a></li>
+                  <li><a href="#tabs-2" id="tabid2">Summary</a></li>
                </ul>
                <div id="tabs-1">
                   <div class="row" style="padding:0px">
@@ -47,21 +48,32 @@
                   <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
                         <label>country </label>
-                        <select id='combobox' ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="selected"></select>
+                        <select id='combobox0' ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="selected0"></select>
                         <div>
-                           <button id="toggle">show all</button>
+                           <button id="toggle0">show all</button>
                         </div>
                      </div>
                   </div>
+                 
                   <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
-                        <label>agent...</label>
+                        <label>1st role</label>
                         <select id='combobox1' ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="selected1"></select>
                         <div>
                            <button id="toggle1">show all</button>
                         </div>
                      </div>
                   </div>
+                    <div class="row" style="padding:2px">
+                     <div class="ui-widget col-md-6">
+                        <label>2nd role </label>
+                        <select id='combobox2' ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ng-model="selected2"></select>
+                        <div>
+                           <button id="toggle2">show all</button>
+                        </div>
+                     </div>
+                  </div>
+                
                   <div class="row" style="padding:2px">
                      <div class="col-md-2" style="font-weight:bold">
                         from:
@@ -88,6 +100,7 @@
                         <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
                      </div>
                   </div>
+               
                </div>
             </div>
             <div class="row well well-lg" style="height:260px;margin-bottom:5px;background-color:#fbc97f;">
@@ -100,9 +113,9 @@
                <div class="row" style="padding:2px">
                   <div class="ui-widget col-md-6">
                      <label>verb....</label>
-                     <select id='combobox2' ng-options="item as item.name for item in verbdata.availableOptions track by item.id" ng-model="selected2"></select>
+                     <select id='combobox3' ng-options="item as item.name for item in verbdata.availableOptions track by item.id" ng-model="selected3"></select>
                      <div>
-                        <button id="toggle2">show all</button>
+                        <button id="toggle3">show all</button>
                      </div>
                   </div>
                   <div class="col-md-3 col-md-offset-3">
@@ -118,21 +131,22 @@
                <div class="row" style="padding:2px">
                   <div class="ui-widget col-md-6">
                      <label>country </label>
-                     <select id='combobox3' ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="selected3"></select>
+                     <select id='combobox4' ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="selected4"></select>
                      <div>
-                        <button id="toggle3">show all</button>
+                        <button id="toggle4">show all</button>
                      </div>
                   </div>
                </div>
                <div class="row" style="padding:2px">
                   <div class="ui-widget col-md-6">
                      <label>agent...</label>
-                     <select id='combobox4' ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="selected4"></select>
+                     <select id='combobox5' ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="selected5"></select>
                      <div>
-                        <button id="toggle4">show all</button>
+                        <button id="toggle5">show all</button>
                      </div>
                   </div>
                </div>
+
                <div class="row" style="padding:2px">
                   <div class="col-md-2" style="font-weight:bold">
                      from:
