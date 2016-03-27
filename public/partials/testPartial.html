@@ -1,1 +1,50 @@
-<h2>Hello Yan Liang!</h2>
+ <div class="row" style="padding:0px">
+     <div class="col-md-6" style="font-weight:bold">ACTOR-SECTION</div>
+     <div class="col-md-3 col-md-offset-3">
+        <button type="button" id="addSource" class="glyphicon glyphicon-plus" style="background-color:#5cb85c" ></button>
+     </div>
+  </div>
+  <div class="row" style="padding:2px">
+     <div class="ui-widget col-md-6">
+        <label>country </label>
+        <select id='combobox2' ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="selected2"></select>
+        <div>
+           <button id="toggle2">show all</button>
+        </div>
+     </div>
+  </div>
+  <div class="row" style="padding:2px">
+     <div class="ui-widget col-md-6">
+        <label>agent...</label>
+        <select id='combobox21' ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="selected21"></select>
+        <div>
+           <button id="toggle21">show all</button>
+        </div>
+     </div>
+  </div>
+  <div class="row" style="padding:2px">
+     <div class="col-md-2" style="font-weight:bold">
+        from:
+     </div>
+     <div class="col-md-6">
+        <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
+           <input ng-model="date0"/>
+        </datepicker>
+     </div>
+     <div class="col-md-3 col-md-offset-1">
+        <label><input type="radio" name="optradio">not sure</label>
+     </div>
+  </div>
+  <div class="row" style="padding:2px">
+     <div class="col-md-2" style="font-weight:bold">
+        to:
+     </div>
+     <div class="col-md-6">
+        <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
+           <input ng-model="date1"/>
+        </datepicker>
+     </div>
+     <div class="col-md-3 col-md-offset-1">
+        <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
+     </div>
+  </div>

@@ -50,6 +50,10 @@ module.exports = function(app) {
 				res.send(res);
 		});
 	});
+	//this is for getting the partial view
+	app.get('/partialTest',function(req,res){
+      res.sendfile('./public/partials/testPartial.html');
+	});
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
 		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)

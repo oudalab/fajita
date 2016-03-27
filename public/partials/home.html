@@ -7,14 +7,6 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="js/jqueryAutocomplete.js"></script>
 <script src="js/jqueryAddTab.js"></script>
-  <script type="text/ng-template" id="partial1.html">
-      <h2>Partial 1</h2>
-      <p>Content loaded from FIRST partial</p>
-    </script>
-    <script type="text/ng-template" id="partial2.html">
-      <h2>Partial 2</h2>
-      <p>Content loaded from SECOND partial</p>
-    </script>
   <style>
     .custom-combobox {
       position: relative;
@@ -33,12 +25,6 @@
     }
   </style>
 <div  ng-controller="mainController">
-    <h1>Partials from dropdown</h1>
-    <select ng-model="partialId">
-      <option value="1">Partial 1</option>
-      <option value="2">Partial 2</option>
-    </select>
-    <div ng-include="getPartialUrl()"></div>
    <div class="container" >
       <div class="row">
          <div class="col-md-4 well well-lg" style="height:800px;padding-top:0">
@@ -49,9 +35,7 @@
          <div class="col-md-7">
             <div id="tabs" class="row well well-lg" style="height:260px;margin-bottom:5px;">
                <ul id="sourceTabs">
-                  <li><a href="#tabs-1">tab1</a></li>
-                  <li><a href="#tabs-2">tab2</a></li>
-                  <li><a href="#tabs-3">tab3</a></li>
+                  <li><a href="#tabs-1" id="tabid1">role1</a></li>
                </ul>
                <div id="tabs-1">
                   <div class="row" style="padding:0px">
