@@ -6,7 +6,7 @@ module.exports=mongoose.model('sourceDictionary',{
  firstRoleCode:{type:String},
  secondRoleCode:{type:String},
  dateStart:{type:Date},
- deteEnd:{type:Date},
+ dateEnd:{type:Date},
  confidenceFlag:{type:Boolean},
  userId:{type:String},
  taggingTime:{type:Date,default:Date.now}

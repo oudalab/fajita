@@ -104,6 +104,41 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
               	selectedOption:data[0].name
               }
 		    });  
+/**********source Form***************************************/
+
+$scope.sourceForm={};
+$scope.sourceForm.word="";
+$scope.sourceForm.country="";
+$scope.sourceForm.rolefirst="";
+$scope.sourceForm.rolesecond="";
+$scope.sourceForm.startdate="";
+$scope.sourceForm.enddate="";
+$scope.sourceForm.sourceflag="";
+
+
+$scope.sourceForm.submitSourceForm=function(item,event){
+	console.log("-->submit source form");
+	var sourceDicObject={
+       word: $scope.sourceForm.word,
+       countryCode:$scope.sourceForm.country,
+       firstRoleCode:$scope.sourceForm.rolefirst,
+       secondRoleCode:$scope.sourceForm.rolesecond,
+       dateStart:$scope.sourceForm.startdate,
+       dateEnd:$scope.sourceForm.enddate,
+       confidenceFlag:$scope.sourceForm.sourceflag
+       //get the useId from the req in api.
+	};
+	var responsePromise = $http.post("/api/addSourceDictionary", sourceDicObject, {});
+       responsePromise.success(function(dataFromServer, status, headers, config) {
+          console.log("Submitting source form is successful!");
+       });
+        responsePromise.error(function(data, status, headers, config) {
+          alert("Submitting form failed!");
+       });
+}
+
+/**********end of source Form***************************************/
+
 /****************test section***************************/
 
 $scope.myForm = {};

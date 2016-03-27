@@ -49,7 +49,8 @@
                   <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
                         <label>country </label>
-                        <select id='combobox0' ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="sourceForm.country"></select>
+                        <select id='combobox0' ng-model="sourceForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
+                        <!-- <input type="hidden" ng-model="sourceForm.country"> -->
                         <div>
                            <button id="toggle0">show all</button>
                         </div>
@@ -59,7 +60,8 @@
                   <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
                         <label>1st role</label>
-                        <select id='combobox1' ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="sourceForm.rolefirst"></select>
+                        <select id='combobox1' ng-model="sourceForm.rolefirst" ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ></select>
+                       <!--  <input type="hidden" ng-model="sourceForm.rolefirst"> -->
                         <div>
                            <button id="toggle1">show all</button>
                         </div>
@@ -68,7 +70,8 @@
                     <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
                         <label>2nd role </label>
-                        <select id='combobox2' ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ng-model="sourcesForm.rolesecond"></select>
+                        <select id='combobox2' ng-model="sourceForm.rolesecond" ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ></select>
+                      <!--   <input type="hidden" ng-model="sourceForm.rolesecond"> -->
                         <div>
                            <button id="toggle2">show all</button>
                         </div>
@@ -81,11 +84,11 @@
                      </div>
                      <div class="col-md-6">
                         <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                           <input ng-model="sourceForm.start"/>
+                           <input ng-model="sourceForm.startdate"/>
                         </datepicker>
                      </div>
                      <div class="col-md-3 col-md-offset-1">
-                        <label> <input type="checkbox" name="sourcecheck" id="sourceflag">not sure?</label>
+                        <label> <input type="checkbox" name="sourcecheck" id="sourceflag" ng-model="sourceForm.sourceflag">sure?</label>
                      </div>
                   </div>
                   <div class="row" style="padding:2px">
@@ -94,7 +97,7 @@
                      </div>
                      <div class="col-md-6">
                         <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                           <input ng-model="sourceForm.end"/>
+                           <input ng-model="sourceForm.enddate"/>
                         </datepicker>
                      </div>
                      <div class="col-md-3 col-md-offset-1">
@@ -108,7 +111,7 @@
                <div class="row" style="padding:0px">
                   <div class="col-md-6" style="font-weight:bold">VERB-SECTION</div>
                   <div class="col-md-3 col-md-offset-3">
-                     <label> <input type="checkbox" name="verbcheck" id="verbflag">not sure?</label>
+                     <label> <input type="checkbox" name="verbcheck" id="verbflag" >sure?</label>
                   </div>
                </div>
                <div class="row" style="padding:2px">
@@ -158,7 +161,7 @@
                      </datepicker>
                   </div>
                   <div class="col-md-3 col-md-offset-1">								
-                     <label> <input type="checkbox" name="targetcheck" id="targetflag">not sure?</label>
+                     <label> <input type="checkbox" name="targetcheck" id="targetflag" >sure?</label>
                   </div>
                </div>
                <div class="row" style="padding:2px">
@@ -181,10 +184,10 @@
      <form>
     <input type="text" id="name" ng-model="myForm.name" ng-minlength="5" ng-maxlength="12"> Name <br/>
 
-    <select ng-model="myForm.car">
-      <option value="nissan">Nissan</option>
-      <option value="toyota">Toyota</option>
-      <option value="fiat">Fiat</option>
+    <select ng-model="myForm.car" id="test1">
+      <option value="nissan">hello:nissan</option>
+      <option value="toyota">hello:Toyota</option>
+      <option value="fiat">hello:Fiat</option>
     </select>
 
     <button ng-click="myForm.submitTheForm()">Submit Form</button>

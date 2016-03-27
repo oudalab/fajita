@@ -77,9 +77,30 @@ module.exports = function(app) {
 		});
 
 	});
+    //post source form
+	app.post('/api/addSourceDictionary',function(req,res){
+		//Car.create()
+		SourceDictionary.create({
+		/*	name:req.body.name,
+			car:req.body.car*/
+		   word: req.body.name,
+	       countryCode:req.body.countryCode,
+	       firstRoleCode:req.body.firstRoleCode,
+	       secondRoleCode:req.body.secondRoleCode,
+	       dateStart:req.body.dateStart,
+	       dateEnd:req.body.dateEnd,
+	       confidenceFlag:req.body.confidenceFlag,
+	       userId:req.user.id   //the id property is lower case on user
+
+		},function(err){
+			if(err)
+				res.send(res);
+		});
+
+	});
 /*	app.get('/api/test',function(req,res){
 	  
-        res.send({"user:":req.user});
+        res.send({"user:":req.user.id});
 	});*/
 
 	//this is for getting the partial view

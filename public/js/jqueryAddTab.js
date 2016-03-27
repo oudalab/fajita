@@ -35,17 +35,5 @@ $(function() {
       addTab();
     });
     //this is for injetcing the pink edited form in
-
-    //this is js code for confidence flag radio button
-   // $('#sourceflag').click(function(){
-      /*if(this.prop("checked"))
-      {
-        this.prop("checked")=false;
-      }
-      else
-      {
-        this.prop("checked",true);
-      }
-    })*/
     
   });
