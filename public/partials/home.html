@@ -27,13 +27,13 @@
 <div  ng-controller="mainController">
    <div class="container" >
       <div class="row">
-         <div class="col-md-4 well well-lg" style="height:800px;padding-top:0">
+         <div class="col-md-4 well well-lg" style="height:1000px;padding-top:0">
             <div class="row">
                <button type="button" class="btn btn-success" style="padding:2px;width:75px;float:left" ng-click="signmeOut()">Sign Out</button>
             </div>
          </div>
          <div class="col-md-8">
-            <div id="tabs" class="row well well-lg"  style="height:350px;margin-bottom:5px;">
+            <div id="tabs" class="row well well-lg"  style="height:450px;margin-bottom:5px;">
                <ul id="sourceTabs">
                   <li><a href="#tabs-1" id="tabid1">AddRole</a></li>
                   <li><a href="#tabs-2" id="tabid2">Summary</a></li>
@@ -47,9 +47,11 @@
                      </div>
                   </div>
                   <div class="row" style="padding:2px">
+
                      <div class="ui-widget col-md-6">
                         <label>country </label>
                         <select id='combobox0' ng-model="sourceForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
+                       
                         <!-- <input type="hidden" ng-model="sourceForm.country"> -->
                         <div>
                            <button id="toggle0">show all</button>
@@ -127,7 +129,7 @@
                   </div>
                </div>
             </div>
-            <div class="row well well-lg" style="height:260px;margin-bottom:5px;background-color:#cdbfe3;;">
+            <div class="row well well-lg" style="height:450px;margin-bottom:5px;background-color:#cdbfe3;;">
                <div class="row" style="padding:0px">
                   <div class="col-md-6" style="font-weight:bold">TARGET-SECTION</div>
                   <div class="col-md-3 col-md-offset-3"><button type="button" id="addTarget" class="glyphicon glyphicon-plus" style="background-color:#5cb85c"></button></div>

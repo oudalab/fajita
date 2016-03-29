@@ -31,6 +31,10 @@ $(function() {
       tabCounter++;
     }
 
+    $("#combobox0").change(function() {
+      $("#input0").val($(this).val());
+     });
+
     $("#addSource").click(function(){
       addTab();
     });

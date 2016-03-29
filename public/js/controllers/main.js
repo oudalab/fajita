@@ -120,9 +120,9 @@ $scope.sourceForm.submitSourceForm=function(item,event){
 	console.log("-->submit source form");
 	var sourceDicObject={
        word: $scope.sourceForm.word,
-       countryCode:$scope.sourceForm.country,
-       firstRoleCode:$scope.sourceForm.rolefirst,
-       secondRoleCode:$scope.sourceForm.rolesecond,
+       countryCode:$scope.sourceForm.country.id,
+       firstRoleCode:$scope.sourceForm.rolefirst.id,
+       secondRoleCode:$scope.sourceForm.rolesecond.id,
        dateStart:$scope.sourceForm.startdate,
        dateEnd:$scope.sourceForm.enddate,
        confidenceFlag:$scope.sourceForm.sourceflag
