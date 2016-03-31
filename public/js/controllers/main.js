@@ -128,7 +128,7 @@ $scope.sourceForm.submitSourceForm=function(item,event){
        confidenceFlag:$scope.sourceForm.sourceflag
        //get the useId from the req in api.
 	};
-	var responsePromise = $http.post("/api/addSourceDictionary", sourceDicObject, {});
+	var responsePromise = $http.post("/api/addSourceDictionary", sourceDicObject);
        responsePromise.success(function(dataFromServer, status, headers, config) {
           console.log("Submitting source form is successful!");
        });
@@ -153,7 +153,7 @@ $scope.myForm = {};
        };
       
 
-       var responsePromise = $http.post("/api/carExample", dataObject, {});
+       var responsePromise = $http.post("/api/carExample", dataObject);
        responsePromise.success(function(dataFromServer, status, headers, config) {
           console.log(dataFromServer.title);
        });

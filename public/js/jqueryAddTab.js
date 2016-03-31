@@ -7,6 +7,17 @@ $(function() {
      var tabTemplate = "<li><a href='#{href}' id='#{tabid}'>#{label}</a></li>";
      var tabCounter=2;
 
+//for click the summary tab.
+      $("#tabid2").click(function(){
+      console.log("hello tehre!");
+      $.ajax({
+        url:"/summaryTable",
+        success:function(result){
+          $("#summary").html(result.name);
+        }
+      });
+    });
+
     function addTab(){
     	var label="role"+tabCounter;
     	var id="tabs-"+tabCounter;

@@ -92,12 +92,20 @@ module.exports = function(app) {
 	       confidenceFlag:req.body.confidenceFlag,
 	       userId:req.user.id   //the id property is lower case on user
 
-		},function(err){
-			if(err)
-				res.send(res);
+		
 		});
+		//need to put this end here when making a post request.
+		res.end();
 
 	});
+	app.get('/summaryTable',function(req,res){
+		res.send({"name":"Hello Yan Liang"});
+		res.end();
+	})
+	/*app.post('/view1', function(req, res) {
+    console.log(req.body.desc);
+    res.end();*/
+/*});*/
 /*	app.get('/api/test',function(req,res){
 	  
         res.send({"user:":req.user.id});
