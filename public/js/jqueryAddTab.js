@@ -13,7 +13,7 @@ $(function() {
       $.ajax({
         url:"/summaryTable",
         success:function(result){
-          $("#summary").html(result.name);
+          $("#summary").html(result);
         }
       });
     });

@@ -13,6 +13,13 @@ function getAllVerbs(res){
 		res.json(verbs);
 	});
 }
+function getSourceDictionary(res){
+	SourceDictionary.find(function(err,sourcedictionary){
+		if(err)
+			res.send(err)
+		res.json(sourcedictionary);
+	})
+}
 
 function getAllCountryActors(res){
 	Actor.find(function(err,actors){
@@ -54,7 +61,9 @@ module.exports = function(app) {
 	   app.get('/api/secondroles', function(req,res){
 		getAllSecondroleActors(res);
 	})
-
+       app.get('/api/sourcedictionary', function(req,res){
+		getSourceDictionary(res);
+	})
 	//create new country actor
 	app.post('/api/actors',function(req,res){
 		Actor.create({
@@ -81,9 +90,7 @@ module.exports = function(app) {
 	app.post('/api/addSourceDictionary',function(req,res){
 		//Car.create()
 		SourceDictionary.create({
-		/*	name:req.body.name,
-			car:req.body.car*/
-		   word: req.body.name,
+		   word: req.body.word,
 	       countryCode:req.body.countryCode,
 	       firstRoleCode:req.body.firstRoleCode,
 	       secondRoleCode:req.body.secondRoleCode,
@@ -91,16 +98,19 @@ module.exports = function(app) {
 	       dateEnd:req.body.dateEnd,
 	       confidenceFlag:req.body.confidenceFlag,
 	       userId:req.user.id   //the id property is lower case on user
-
-		
 		});
 		//need to put this end here when making a post request.
 		res.end();
 
 	});
 	app.get('/summaryTable',function(req,res){
-		res.send({"name":"Hello Yan Liang"});
-		res.end();
+        /*var sourceDictionary="";*/
+		SourceDictionary.find({}, function(err, data){
+		       console.log(">>>> " + data );
+		      res.render('./summaryTable.jade',{sourcedictionary:data});
+		     
+		    });
+       
 	})
 	/*app.post('/view1', function(req, res) {
     console.log(req.body.desc);

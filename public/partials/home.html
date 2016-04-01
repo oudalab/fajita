@@ -40,6 +40,7 @@
                </ul>
                <div id="tabs-1">
                  <form>
+                  <input ng-model="sourceForm.word" value="testSource"/>
                   <div class="row" style="padding:0px">
                      <div class="col-md-6" style="font-weight:bold">ACTOR-SECTION</div>
                      <div class="col-md-3 col-md-offset-3">
@@ -108,7 +109,9 @@
                   </div>
                </form>
                </div>
-             
+                <div id="tabs-2">
+                <div id="summary"></div>
+                </div>
             </div>
             <div class="row well well-lg" style="height:260px;margin-bottom:5px;background-color:#fbc97f;">
                <div class="row" style="padding:0px">
@@ -185,7 +188,7 @@
       </div>
    </div>
      <form>
-    <input type="text" id="name" ng-model="myForm.name" ng-minlength="5" ng-maxlength="12"> Name <br/>
+<!--     <input type="text" id="name" ng-model="myForm.name" ng-minlength="5" ng-maxlength="12"> Name <br/>
 
     <select ng-model="myForm.car" id="test1">
       <option value="nissan">hello:nissan</option>
@@ -201,7 +204,7 @@
   </div>
   <div>
     {{myForm.car}}
-  </div>
+  </div> -->
 
 
 </div>

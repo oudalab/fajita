@@ -17,10 +17,12 @@ var localStrategy = require('passport-local' ).Strategy;
 
 var User=require('./app/models/user.js');
 var routes = require('./loginapi.js');
+var stylus = require('stylus');
 
 // configuration ===============================================================
 mongoose.connect(database.url); 	// connect to mongoDB database on modulus.io
 app.set('view engine','jade');
+
 
 app.use(express.static(__dirname + '/public')); 		// set the static files location /public/img will be /img for users
 app.use(morgan('dev')); // log every request to the console
