@@ -1,26 +1,21 @@
-block content
-  h1 Roles Summary Table
-    table#sourcedictionary
+div(id="summary1" class="table table-bordered")
+  table 
     thead
-      tr.head
+      tr
         th Word
         th Country
-        th Primary Role
-        th Secondary Role
-         th Start Date
-        th End Date
-        th Confidence  
+        th 1st Role
+        th 2nd Role
+        th Start
+        th End
+        th Sure
     tbody
-      - var i = -1
-      each val, key in sourcedictionary
-        - ++i
-        tr(class=(i % 2 == 0) ? 'odd' : 'even')
-          td #{key}
-          td #{val.word}
-          td #{val.countryCode}
-          td #{val.firstRoleCode}
-          td #{val.secondRoleCode}
-          td #{val.startDate}
-          td #{val.endDate}
-          td #{val.confidenceFlag}
- 
+      each source in sourcedictionary
+        tr
+          td #{source.word}
+          td #{source.countryCode}
+          td #{source.firstRoleCode}
+          td #{source.secondRoleCode}
+          td #{source.dateStart}
+          td #{source.dateEnd}
+          td #{source.confidenceFlag}

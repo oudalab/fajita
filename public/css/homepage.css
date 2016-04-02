@@ -40,6 +40,11 @@ div.ui-tabs-panel.ui-widget-content.ui-corner-bottom
 	padding-top:0;
 }
 
+#summary1{
+	padding:0;
+	
+}
+tr:nth-child(even){background-color: #f2f2f2}
 
 
 
