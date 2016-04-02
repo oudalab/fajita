@@ -52,8 +52,6 @@
                      <div class="ui-widget col-md-6">
                         <label>country </label>
                         <select id='combobox0' ng-model="sourceForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
-                       
-                        <!-- <input type="hidden" ng-model="sourceForm.country"> -->
                         <div>
                            <button id="toggle0">show all</button>
                         </div>
@@ -64,7 +62,6 @@
                      <div class="ui-widget col-md-6">
                         <label>1st role</label>
                         <select id='combobox1' ng-model="sourceForm.rolefirst" ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ></select>
-                          <!--  <input type="hidden" ng-model="sourceForm.rolefirst"> -->
                         <div>
                            <button id="toggle1">show all</button>
                         </div>
@@ -74,7 +71,6 @@
                      <div class="ui-widget col-md-6">
                         <label>2nd role </label>
                         <select id='combobox2' ng-model="sourceForm.rolesecond" ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ></select>
-                      <!--   <input type="hidden" ng-model="sourceForm.rolesecond"> -->
                         <div>
                            <button id="toggle2">show all</button>
                         </div>
@@ -188,27 +184,7 @@
       </div>
    </div>
      <form>
-<!--     <input type="text" id="name" ng-model="myForm.name" ng-minlength="5" ng-maxlength="12"> Name <br/>
-
-    <select ng-model="myForm.car" id="test1">
-      <option value="nissan">hello:nissan</option>
-      <option value="toyota">hello:Toyota</option>
-      <option value="fiat">hello:Fiat</option>
-    </select>
-
-    <button ng-click="myForm.submitTheForm()">Submit Form</button>
-  </form>
-
-  <div>
-    {{myForm.name}}
-  </div>
-  <div>
-    {{myForm.car}}
-  </div> -->
-
-
 </div>
-
 
 <!--
 Copyright 2016 Google Inc. All Rights Reserved. 

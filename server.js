@@ -34,9 +34,9 @@ app.use(cookieParser());
 /*app.use(express.session());*/
 app.use(require('express-session')({
     cookieName: 'session-eventdata',
-    secret: 'keyboard cat',
-    resave: true,
-    saveUninitialized: true
+    secret: process.env.SESSION_SECRET||'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
 }));
 app.use(passport.initialize());
 app.use(passport.session());

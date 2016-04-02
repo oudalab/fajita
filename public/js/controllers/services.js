@@ -16,8 +16,10 @@ angular.module('mainServiceModule').factory('AuthService',
 
     function isLoggedIn() {
       if(user) {
+        console.log("return true here");
         return true;
       } else {
+        console.log("return false here");
         return false;
       }
     }
@@ -25,15 +27,18 @@ angular.module('mainServiceModule').factory('AuthService',
     //var noop=function(){};
 
     function getUserStatus() {
+      console.log("user status has been checked");
    
       $http.get('/user/status')
       // handle success
       .success(function (data) {
         if(data.status){
           user = true;
+          console.log("user authenticated!");
          
         } else {
           user = false;
+          console.log("user not get authenticated!");
 
         }
       })

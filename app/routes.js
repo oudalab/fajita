@@ -3,7 +3,7 @@ var Agent=require('./models/agent');
 var Secondrole=require('./models/secondrole');
 var Verb=require('./models/verb');
 var SourceDictionary=require('./models/sourceDictionary');
-var Car=require('./models/car');
+
 
 
 function getAllVerbs(res){
@@ -74,18 +74,6 @@ module.exports = function(app) {
 				res.send(res);
 		});
 	});
-	app.post('/api/carExample',function(req,res){
-		//Car.create()
-		Car.create({
-			name:req.body.name,
-			car:req.body.car
-
-		},function(err){
-			if(err)
-				res.send(res);
-		});
-
-	});
     //post source form
 	app.post('/api/addSourceDictionary',function(req,res){
 		//Car.create()
@@ -106,25 +94,13 @@ module.exports = function(app) {
 	app.get('/summaryTable',function(req,res){
         /*var sourceDictionary="";*/
 		SourceDictionary.find({}, function(err, data){
-		       console.log(">>>> " + data );
+		       //console.log(">>>> " + data );
 		      res.render('./summaryTable.jade',{sourcedictionary:data});
 		     
 		    });
        
 	})
-	/*app.post('/view1', function(req, res) {
-    console.log(req.body.desc);
-    res.end();*/
-/*});*/
-/*	app.get('/api/test',function(req,res){
-	  
-        res.send({"user:":req.user.id});
-	});*/
 
-	//this is for getting the partial view
-	/*app.get('/partialTest',function(req,res){
-      res.sendfile('./public/partials/testPartial.html');
-	});*/
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
 		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)

@@ -3,7 +3,6 @@
  //config for the route
 app.config(function ($routeProvider) {
   $routeProvider
- 
     .when('/', {
       templateUrl: '../partials/home.html',
       access: {restricted: true}
