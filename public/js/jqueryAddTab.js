@@ -9,7 +9,7 @@ $(function() {
      var tabTemplate = "<li><a href='#{href}' id='#{tabid}'>#{label}</a></li>";
      var tabCounter=2;
 
-//for click the summary tab.
+//for click to see the source summary table
       $("#tabid2").click(function(){
       var sourceword=$('#sourceWord').val();
       /*console.log("this is the sourceword"+sourceword);*/
@@ -23,30 +23,21 @@ $(function() {
         }
       });
     });
-/*
-    function addTab(){
-    	var label="role"+tabCounter;
-    	var id="tabs-"+tabCounter;
-    	var   li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ).replace(/#\{tabid\}/g,"tabid"+tabCounter) );
-    	tabs.find( ".ui-tabs-nav" ).append( li );
-      //tabs.append( "<div id='" + id + "'>" +  "<div ng-include='"+"../../partials/testPartial.html"+"'></div>" + "</div>" );
-      tabs.append("<div id='summary'></div>");
-      tabs.append();
-    	tabs.tabs( "refresh" );
-      
-      //this function has to be defined here, if not dynamically, when page load $('#') this objetc may not exist yet.
-      $("#tabid2").click(function(){
-      console.log("hello tehre!");
+
+// for click to see the target summary table
+    $("#tabid4").click(function(){
+      var targetword=$('#targetWord').val();
+      //also the source and taget summary they share the same jade table for summary.
       $.ajax({
+        method: "GET",
         url:"/summaryTable",
+        data:{"queryword":targetword},
         success:function(result){
-          $("#summary").html(result);
+          $("#summaryTarget").html(result);
         }
       });
     });
 
-      tabCounter++;
-    }*/
 //*******************************clear the form when click on add another button************************//
 
     $("#addSource").click(function(){ 

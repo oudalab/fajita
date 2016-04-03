@@ -126,7 +126,7 @@ $scope.sourceForm.submitSourceForm=function(item,event){
        secondRoleCode:$('#combobox2input').val(),//secondRoleCode
        dateStart:$scope.sourceForm.startdate,
        dateEnd:$scope.sourceForm.enddate,
-       confidenceFlag:$scope.sourceForm.sourceflag
+       confidenceFlag:$('#sourceflag').val()
        //get the useId from the req in api.
 	};
 	var responsePromise = $http.post("/api/addSourceDictionary", sourceDicObject);
@@ -139,6 +139,45 @@ $scope.sourceForm.submitSourceForm=function(item,event){
 }
 
 /**********end of source Form***************************************/
+
+/**********target Form***************************************/
+
+$scope.targetForm={};
+$scope.targetForm.word="";
+$scope.targetForm.country="";
+$scope.targetForm.rolefirst="";
+$scope.targetForm.rolesecond="";
+$scope.targetForm.startdate="";
+$scope.targetForm.enddate="";
+$scope.targetForm.targetflag="";
+
+
+$scope.targetForm.submitTargetForm=function(item,event){
+  console.log("-->submit source form");
+  var sourceDicObject={
+       word: $('#targetWord').val(), 
+       //this is they way to go there is bug in combobox auto complete use jquery directly
+       countryCode:$('#combobox3input').val(), //countryCode
+       firstRoleCode:$('#combobox4input').val(), //firstRoleCode
+       secondRoleCode:$('#combobox5input').val(),//secondRoleCode
+       dateStart:$scope.sourceForm.startdate,
+       dateEnd:$scope.sourceForm.enddate,
+       confidenceFlag:$('#targetflag').val()
+       //get the useId from the req in api.
+  };
+  //targetDictionary and sourceDictionary share the same schema.
+  var responsePromise = $http.post("/api/addSourceDictionary", sourceDicObject);
+       responsePromise.success(function(dataFromServer, status, headers, config) {
+          console.log("Submitting source form is successful!");
+       });
+        responsePromise.error(function(data, status, headers, config) {
+          alert("Submitting form failed!");
+      });
+}
+
+/**********end of target Form***************************************/
+
+
 
 /****************test section***************************/
 
