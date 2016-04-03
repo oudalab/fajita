@@ -3,13 +3,15 @@
  //now put all the after page load js code here
 $(function() {
     var tabs= $( "#tabs" ).tabs();
+    $( "#tabs1" ).tabs();
+
 
      var tabTemplate = "<li><a href='#{href}' id='#{tabid}'>#{label}</a></li>";
      var tabCounter=2;
 
 //for click the summary tab.
       $("#tabid2").click(function(){
-      console.log("hello tehre!");
+      
       $.ajax({
         url:"/summaryTable",
         success:function(result){
@@ -87,5 +89,9 @@ $("#combobox2").change(function() {
     $('#toggle0').click();
     $('#toggle1').click();
     $('#toggle2').click();
+    $('#toggle3').click();
+    $('#toggle4').click();
+    $('#toggle5').click();
+    $('#toggle6').click();
     
   });

@@ -33,7 +33,7 @@
             </div>
          </div>
          <div class="col-md-8">
-            <div id="tabs" class="row well well-lg"  style="height:470px;margin-bottom:5px;">
+            <div id="tabs" class="source row well well-lg"  style="height:470px;margin-bottom:5px;">
                <ul id="sourceTabs">
                   <li><a href="#tabs-1" id="tabid1">AddRole</a></li>
                   <li><a href="#tabs-2" id="tabid2">Summary</a></li>
@@ -52,7 +52,7 @@
                      <div class="ui-widget col-md-6">
                         <label>country </label>
                         <input hidden id="combobox0input" class="comboboxinput"/>
-                        <select id='combobox0' class="comboboxGroup" ng-model="sourceForm.country1" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
+                        <select id='combobox0' class="comboboxGroup" ng-model="sourceForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
                         <div>
                            <button id="toggle0">Hide Underlying Select</button>
                         </div>
@@ -132,57 +132,86 @@
                   </div>
                </div>
             </div>
-            <div class="row well well-lg" style="height:470px;margin-bottom:5px;background-color:#cdbfe3;;">
-               <div class="row" style="padding:0px">
-                  <div class="col-md-6" style="font-weight:bold">TARGET-SECTION</div>
-                  <div class="col-md-3 col-md-offset-3"><button type="button" id="addTarget" class="glyphicon glyphicon-plus" style="background-color:#5cb85c">Add Another Role</button></div>
-               </div>
-               <div class="row" style="padding:2px">
-                  <div class="ui-widget col-md-6">
-                     <label>country </label>
-                     <select id='combobox4' ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="selected4"></select>
-                     <div>
-                        <button id="toggle4">Hide Underlying Select</button>
+             <div id="tabs1" class="target row well well-lg"  style="height:470px;margin-bottom:5px;">
+               <ul id="targetTabs">
+                  <li><a href="#tabs-3" id="tabid3">Add-Target-Role</a></li>
+                  <li><a href="#tabs-4" id="tabid4">Summary</a></li>
+               </ul>
+               <div id="tabs-3">
+                 <form id="targetForm">
+                  <input ng-model="targetForm.word"/>
+                  <div class="row" style="padding:0px">
+                     <div class="col-md-6" style="font-weight:bold">ACTOR-SECTION</div>
+                     <div class="col-md-3 col-md-offset-3">
+                        <button type="button" id="addTarget" class="glyphicon glyphicon-plus" style="background-color:#5cb85c" >Add Another Role</button>
                      </div>
                   </div>
-               </div>
-               <div class="row" style="padding:2px">
-                  <div class="ui-widget col-md-6">
-                     <label>agent...</label>
-                     <select id='combobox5' ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="selected5"></select>
-                     <div>
-                        <button id="toggle5">Hide Underlying Select</button>
-                     </div>
-                  </div>
-               </div>
+                  <div class="row" style="padding:2px">
 
-               <div class="row" style="padding:2px">
-                  <div class="col-md-2" style="font-weight:bold">
-                     from:
+                     <div class="ui-widget col-md-6">
+                        <label>country </label>
+                        <input hidden id="combobox3input" class="comboboxinput"/>
+                        <select id='combobox4' class="comboboxGroup" ng-model="targetForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
+                        <div>
+                           <button id="toggle4">Hide Underlying Select</button>
+                        </div>
+                     </div>
                   </div>
-                  <div class="col-md-6">
-                     <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                        <input ng-model="date2"/>
-                     </datepicker>
+                 
+                  <div class="row" style="padding:2px">
+                     <div class="ui-widget col-md-6">
+                        <label>1st role</label>
+                        <input hidden id="combobox4input" class="comboboxinput"/>
+                        <select id='combobox5' class="comboboxGroup" ng-model="targetForm.rolefirst" ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ></select>
+                        <div>
+                           <button id="toggle5">Hide Underlying Select</button>
+                        </div>
+                     </div>
                   </div>
-                  <div class="col-md-3 col-md-offset-1">								
-                     <label> <input type="checkbox" name="targetcheck" id="targetflag" >sure?</label>
+                    <div class="row" style="padding:2px">
+                     <div class="ui-widget col-md-6">
+                        <label>2nd role </label>
+                        <input hidden id="combobox5input" class="comboboxinput"/>
+                        <select id='combobox6' class="comboboxGroup" ng-model="targetForm.rolesecond" ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ></select>
+                        <div>
+                           <button id="toggle6">Hide Underlying Select</button>
+                        </div>
+                     </div>
                   </div>
+                
+                  <div class="row" style="padding:2px">
+                     <div class="col-md-2" style="font-weight:bold">
+                        from:
+                     </div>
+                     <div class="col-md-6">
+                        <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
+                           <input ng-model="targetForm.startdate"/>
+                        </datepicker>
+                     </div>
+                     <div class="col-md-3 col-md-offset-1">
+                        <label> <input type="checkbox" name="sourcecheck" id="sourceflag" ng-model="targetForm.sourceflag">sure?</label>
+                     </div>
+                  </div>
+                  <div class="row" style="padding:2px">
+                     <div class="col-md-2" style="font-weight:bold">
+                        to:
+                     </div>
+                     <div class="col-md-6">
+                        <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
+                           <input ng-model="targetForm.enddate" />
+                        </datepicker>
+                     </div>
+                     <div class="col-md-3 col-md-offset-1">
+                        <button type="button" class="btn btn-success" ng-click="targetForm.submitSourceForm()" style="padding:2px;width:100px;">commit</button>
+                     </div>
+                  </div>
+               </form>
                </div>
-               <div class="row" style="padding:2px">
-                  <div class="col-md-2" style="font-weight:bold">
-                     to:
-                  </div>
-                  <div class="col-md-6">
-                     <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                        <input ng-model="date3"/>
-                     </datepicker>
-                  </div>
-                  <div class="col-md-3 col-md-offset-1">
-                     <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
-                  </div>
-               </div>
+                <div id="tabs-4">
+                <div id="summaryTarget"></div>
+                </div>
             </div>
+            
          </div>
       </div>
    </div>

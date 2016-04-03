@@ -1,7 +1,13 @@
 /*set the tabs content color*/
+/**color for source**/
 #tabs-1
 {
 	background-color: pink;
+}
+/**color for target**/
+#tabs-3
+{
+	background-color: #cdbfe3;
 }
 #tabs
 {
@@ -28,6 +34,10 @@
 }
 
 #sourceTabs{
+	padding:0;
+}
+#targetTabs
+{
 	padding:0;
 }
 
