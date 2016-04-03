@@ -33,7 +33,7 @@
             </div>
          </div>
          <div class="col-md-8">
-            <div id="tabs" class="row well well-lg"  style="height:450px;margin-bottom:5px;">
+            <div id="tabs" class="row well well-lg"  style="height:470px;margin-bottom:5px;">
                <ul id="sourceTabs">
                   <li><a href="#tabs-1" id="tabid1">AddRole</a></li>
                   <li><a href="#tabs-2" id="tabid2">Summary</a></li>
@@ -51,9 +51,10 @@
 
                      <div class="ui-widget col-md-6">
                         <label>country </label>
-                        <select id='combobox0' ng-model="sourceForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
+                        <input id="combobox0input" class="comboboxinput"/>
+                        <select id='combobox0' ng-model="sourceForm.country1" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
                         <div>
-                           <button id="toggle0">show all</button>
+                           <button id="toggle0">underlying choice</button>
                         </div>
                      </div>
                   </div>
@@ -61,18 +62,20 @@
                   <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
                         <label>1st role</label>
+                        <input id="combobox1input" class="comboboxinput"/>
                         <select id='combobox1' ng-model="sourceForm.rolefirst" ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ></select>
                         <div>
-                           <button id="toggle1">show all</button>
+                           <button id="toggle1">underlying choice</button>
                         </div>
                      </div>
                   </div>
                     <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
                         <label>2nd role </label>
+                        <input id="combobox2input" class="comboboxinput"/>
                         <select id='combobox2' ng-model="sourceForm.rolesecond" ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ></select>
                         <div>
-                           <button id="toggle2">show all</button>
+                           <button id="toggle2">underlying choice</button>
                         </div>
                      </div>
                   </div>
@@ -109,7 +112,7 @@
                 <div id="summary"></div>
                 </div>
             </div>
-            <div class="row well well-lg" style="height:260px;margin-bottom:5px;background-color:#fbc97f;">
+            <div class="row well well-lg" style="height:240px;margin-bottom:5px;background-color:#fbc97f;">
                <div class="row" style="padding:0px">
                   <div class="col-md-6" style="font-weight:bold">VERB-SECTION</div>
                   <div class="col-md-3 col-md-offset-3">

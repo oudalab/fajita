@@ -42,13 +42,18 @@ $(function() {
       tabCounter++;
     }
 
-    $("#combobox0").change(function() {
-      $("#input0").val($(this).val());
-     });
 
     $("#addSource").click(function(){
       addTab();
     });
-    //this is for injetcing the pink edited form in
+
+    
+
+  
+
+    //this is for click the show all button when page load
+    $('#toggle0').click();
+    $('#toggle1').click();
+    $('#toggle2').click();
     
   });

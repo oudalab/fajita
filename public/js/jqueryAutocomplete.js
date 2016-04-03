@@ -1,5 +1,7 @@
 (function( $ ) {
     $.widget( "custom.combobox", {
+      
+
       _create: function() {
         this.wrapper = $( "<span>" )
           .addClass( "custom-combobox" )
@@ -33,7 +35,9 @@
             ui.item.option.selected = true;
             this._trigger( "select", event, {
               item: ui.item.option
+
             });
+            this.input.closest('div.ui-widget').find('input.comboboxinput').val(ui.item.option.value);
           },
  
           autocompletechange: "_removeIfInvalid"
@@ -128,37 +132,37 @@
     });
   })( jQuery );
  
-  $(function() {
-    //for source
-    $( "#combobox0" ).combobox();
-    $( "#toggle0" ).click(function() {
-      $( "#combobox0" ).toggle();
-    });
-      $( "#combobox1" ).combobox();
-    $( "#toggle1" ).click(function() {
-      $( "#combobox1" ).toggle();
-    }); 
-    //for verb
-    $( "#combobox2" ).combobox();
-    $( "#toggle2" ).click(function() {
-      $( "#combobox2" ).toggle();
-    });
-    //for target
-     $( "#combobox3" ).combobox();
-    $( "#toggle3" ).click(function() {
-      $( "#combobox3" ).toggle();
-    });
-     $( "#combobox4" ).combobox();
-    $( "#toggle4" ).click(function() {
-      $( "#combobox4" ).toggle();
-    });
-       $( "#combobox5" ).combobox();
-    $( "#toggle5" ).click(function() {
-      $( "#combobox5" ).toggle();
-    });
-      $( "#combobox6" ).combobox();
-    $( "#toggle6" ).click(function() {
-      $( "#combobox6" ).toggle();
-    });
-
+$(function() {
+  //for source
+  $( "#combobox0" ).combobox();
+  $( "#toggle0" ).click(function() {
+    $( "#combobox0" ).toggle();
   });
+    $( "#combobox1" ).combobox();
+  $( "#toggle1" ).click(function() {
+    $( "#combobox1" ).toggle();
+  }); 
+  //for verb
+  $( "#combobox2" ).combobox();
+  $( "#toggle2" ).click(function() {
+    $( "#combobox2" ).toggle();
+  });
+  //for target
+   $( "#combobox3" ).combobox();
+  $( "#toggle3" ).click(function() {
+    $( "#combobox3" ).toggle();
+  });
+   $( "#combobox4" ).combobox();
+  $( "#toggle4" ).click(function() {
+    $( "#combobox4" ).toggle();
+  });
+     $( "#combobox5" ).combobox();
+  $( "#toggle5" ).click(function() {
+    $( "#combobox5" ).toggle();
+  });
+    $( "#combobox6" ).combobox();
+  $( "#toggle6" ).click(function() {
+    $( "#combobox6" ).toggle();
+  });
+
+});

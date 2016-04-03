@@ -6,8 +6,8 @@ module.exports=mongoose.model('sourceDictionary',{
  countryCode:{type:String},
  firstRoleCode:{type:String},
  secondRoleCode:{type:String},
- dateStart:{type:FormatDate,format:'YYYY-MM-DD'},
- dateEnd:{type:FormatDate,format:'YYYY-MM-DD'},
+ dateStart:{type:FormatDate,format:'YYYY-MM-DD',default:'1600-1-1'},
+ dateEnd:{type:FormatDate,format:'YYYY-MM-DD',default:'1600-1-1'},
  confidenceFlag:{type:Boolean},
  userId:{type:String},
  taggingTime:{type:Date,default:Date.now}
