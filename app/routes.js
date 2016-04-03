@@ -76,7 +76,15 @@ module.exports = function(app) {
 	});
     //post source form
 	app.post('/api/addSourceDictionary',function(req,res){
-		//Car.create()
+		/*console.log("start date: "+req.body.dateStart);*/
+		if(req.body.dateStart==="")
+		{
+			req.body.dateStart=new Date("1800-01-01");
+		}
+		if(req.body.dateEnd==="")
+		{
+			req.body.dateEnd=new Date("1800-01-01");
+		}
 		SourceDictionary.create({
 		   word: req.body.word,
 	       countryCode:req.body.countryCode,

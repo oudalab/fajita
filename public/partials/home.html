@@ -51,7 +51,7 @@
 
                      <div class="ui-widget col-md-6">
                         <label>country </label>
-                        <input id="combobox0input" class="comboboxinput"/>
+                        <input hidden id="combobox0input" class="comboboxinput"/>
                         <select id='combobox0' ng-model="sourceForm.country1" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
                         <div>
                            <button id="toggle0">underlying choice</button>
@@ -62,7 +62,7 @@
                   <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
                         <label>1st role</label>
-                        <input id="combobox1input" class="comboboxinput"/>
+                        <input hidden id="combobox1input" class="comboboxinput"/>
                         <select id='combobox1' ng-model="sourceForm.rolefirst" ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ></select>
                         <div>
                            <button id="toggle1">underlying choice</button>
@@ -72,7 +72,7 @@
                     <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
                         <label>2nd role </label>
-                        <input id="combobox2input" class="comboboxinput"/>
+                        <input hidden id="combobox2input" class="comboboxinput"/>
                         <select id='combobox2' ng-model="sourceForm.rolesecond" ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ></select>
                         <div>
                            <button id="toggle2">underlying choice</button>
@@ -99,7 +99,7 @@
                      </div>
                      <div class="col-md-6">
                         <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                           <input ng-model="sourceForm.enddate"/>
+                           <input ng-model="sourceForm.enddate" />
                         </datepicker>
                      </div>
                      <div class="col-md-3 col-md-offset-1">

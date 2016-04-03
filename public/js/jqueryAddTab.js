@@ -47,8 +47,21 @@ $(function() {
       addTab();
     });
 
-    
 
+    
+//*************************************when underlying box change make the hidden input change*********************//
+
+$("#combobox0").change(function() {
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
+    });
+$("#combobox1").change(function() {
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
+    });
+$("#combobox2").change(function() {
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
+    });
+
+//***************end********************************************************************************************//
   
 
     //this is for click the show all button when page load
