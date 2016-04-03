@@ -142,28 +142,6 @@ $scope.sourceForm.submitSourceForm=function(item,event){
 
 /****************test section***************************/
 
-$scope.myForm = {};
-       $scope.myForm.name = "Jakob Jenkov";
-       $scope.myForm.car  = "nissan";
-
-     $scope.myForm.submitTheForm = function(item, event) {
-       console.log("--> Submitting form");
-       var dataObject = {
-          name : $scope.myForm.name
-          ,car  : $scope.myForm.car
-       };
-      
-
-       var responsePromise = $http.post("/api/carExample", dataObject);
-       responsePromise.success(function(dataFromServer, status, headers, config) {
-          console.log(dataFromServer.title);
-       });
-        responsePromise.error(function(data, status, headers, config) {
-          alert("Submitting form failed!");
-       });
-     }
-
-
 
 
 /***************end of test section**************************/

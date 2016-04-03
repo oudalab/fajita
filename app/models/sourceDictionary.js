@@ -10,5 +10,6 @@ module.exports=mongoose.model('sourceDictionary',{
  dateEnd:{type:FormatDate,format:'YYYY-MM-DD'},
  confidenceFlag:{type:Boolean},
  userId:{type:String},
+ userName:{type:String},
  taggingTime:{type:Date,default:Date.now}
 });

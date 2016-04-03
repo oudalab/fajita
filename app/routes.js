@@ -3,8 +3,9 @@ var Agent=require('./models/agent');
 var Secondrole=require('./models/secondrole');
 var Verb=require('./models/verb');
 var SourceDictionary=require('./models/sourceDictionary');
-
-
+var User=require('./models/user');
+var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId
 
 function getAllVerbs(res){
 	Verb.find(function(err,verbs){
@@ -85,7 +86,12 @@ module.exports = function(app) {
 		{
 			req.body.dateEnd=new Date("1800-01-01");
 		}
-		SourceDictionary.create({
+	/*	var userName="";
+		User.find({'_id':ObjectId(req.user.id),'userid':req.user.id},function(err,data){
+                 userName=data.username;
+                 console.log("this is the user name : "+userName);*/
+
+           SourceDictionary.create({
 		   word: req.body.word,
 	       countryCode:req.body.countryCode,
 	       firstRoleCode:req.body.firstRoleCode,
@@ -93,16 +99,23 @@ module.exports = function(app) {
 	       dateStart:req.body.dateStart,
 	       dateEnd:req.body.dateEnd,
 	       confidenceFlag:req.body.confidenceFlag,
-	       userId:req.user.id   //the id property is lower case on user
+	       userId:req.user.id,   //the id property is lower case on user
+	      /* userName:userName*/
 		});
 		//need to put this end here when making a post request.
 		res.end();
+		/*});*/
+		/*console.log("this is the user name "+req.user.id);*/
+
+		
 
 	});
 	app.get('/summaryTable',function(req,res){
 		var queryword=req.param('queryword');
 		SourceDictionary.find({'word':queryword}, function(err, data){
 		       //console.log(">>>> " + data );
+		       //dynamically add user name
+	
 		      res.render('./summaryTable.jade',{sourcedictionary:data});
 		     
 		    });
