@@ -119,7 +119,7 @@ $scope.sourceForm.sourceflag="";
 $scope.sourceForm.submitSourceForm=function(item,event){
 	console.log("-->submit source form");
 	var sourceDicObject={
-       word: $scope.sourceForm.word,
+       word: $('#sourceWord').val(),
        //this is they way to go there is bug in combobox auto complete use jquery directly
        countryCode:$('#combobox0input').val(), //countryCode
        firstRoleCode:$('#combobox1input').val(), //firstRoleCode

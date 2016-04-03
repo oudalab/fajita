@@ -100,8 +100,8 @@ module.exports = function(app) {
 
 	});
 	app.get('/summaryTable',function(req,res){
-        /*var sourceDictionary="";*/
-		SourceDictionary.find({}, function(err, data){
+		var queryword=req.param('queryword');
+		SourceDictionary.find({'word':queryword}, function(err, data){
 		       //console.log(">>>> " + data );
 		      res.render('./summaryTable.jade',{sourcedictionary:data});
 		     

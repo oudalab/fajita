@@ -27,7 +27,7 @@
 <div  ng-controller="mainController">
    <div class="container" >
       <div class="row">
-         <div class="col-md-4 well well-lg" style="height:1180px;padding-top:0">
+         <div class="col-md-4 well well-lg" style="height:1190px;padding-top:0">
             <div class="row">
                <button type="button" class="btn btn-success" style="padding:2px;width:75px;float:left" ng-click="signmeOut()">Sign Out</button>
             </div>
@@ -35,12 +35,12 @@
          <div class="col-md-8">
             <div id="tabs" class="source row well well-lg"  style="height:470px;margin-bottom:5px;">
                <ul id="sourceTabs">
-                  <li><a href="#tabs-1" id="tabid1">AddRole</a></li>
-                  <li><a href="#tabs-2" id="tabid2">Summary</a></li>
+                  <li><a href="#tabs-1" id="tabid1">Add-Source-Role</a></li>
+                  <li><a href="#tabs-2" id="tabid2">Source-Summary</a></li>
                </ul>
                <div id="tabs-1">
                  <form id="sourceForm">
-                  <input ng-model="sourceForm.word"/>
+                  <input id="sourceWord"/>
                   <div class="row" style="padding:0px">
                      <div class="col-md-6" style="font-weight:bold">ACTOR-SECTION</div>
                      <div class="col-md-3 col-md-offset-3">
@@ -135,13 +135,13 @@
              <div id="tabs1" class="target row well well-lg"  style="height:470px;margin-bottom:5px;">
                <ul id="targetTabs">
                   <li><a href="#tabs-3" id="tabid3">Add-Target-Role</a></li>
-                  <li><a href="#tabs-4" id="tabid4">Summary</a></li>
+                  <li><a href="#tabs-4" id="tabid4">Target-Summary</a></li>
                </ul>
                <div id="tabs-3">
                  <form id="targetForm">
-                  <input ng-model="targetForm.word"/>
+                  <input id="targetWord"/>
                   <div class="row" style="padding:0px">
-                     <div class="col-md-6" style="font-weight:bold">ACTOR-SECTION</div>
+                     <div class="col-md-6" style="font-weight:bold">TARGET-SECTION</div>
                      <div class="col-md-3 col-md-offset-3">
                         <button type="button" id="addTarget" class="glyphicon glyphicon-plus" style="background-color:#5cb85c" >Add Another Role</button>
                      </div>
@@ -189,7 +189,7 @@
                         </datepicker>
                      </div>
                      <div class="col-md-3 col-md-offset-1">
-                        <label> <input type="checkbox" name="sourcecheck" id="sourceflag" ng-model="targetForm.sourceflag">sure?</label>
+                        <label> <input type="checkbox" name="targetcheck" id="sourceflag" ng-model="targetForm.targetflag">sure?</label>
                      </div>
                   </div>
                   <div class="row" style="padding:2px">
@@ -202,7 +202,7 @@
                         </datepicker>
                      </div>
                      <div class="col-md-3 col-md-offset-1">
-                        <button type="button" class="btn btn-success" ng-click="targetForm.submitSourceForm()" style="padding:2px;width:100px;">commit</button>
+                        <button type="button" class="btn btn-success" ng-click="targetForm.submitTargetForm()" style="padding:2px;width:100px;">commit</button>
                      </div>
                   </div>
                </form>
