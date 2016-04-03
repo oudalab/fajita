@@ -37,6 +37,7 @@ div.col-md-4.well.well-lg{
 
 div.ui-tabs-panel.ui-widget-content.ui-corner-bottom
 {
+	padding:5px;
 	padding-top:0;
 }
 
