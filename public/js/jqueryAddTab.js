@@ -17,7 +17,7 @@ $(function() {
         }
       });
     });
-
+/*
     function addTab(){
     	var label="role"+tabCounter;
     	var id="tabs-"+tabCounter;
@@ -40,11 +40,15 @@ $(function() {
     });
 
       tabCounter++;
-    }
+    }*/
 
 
     $("#addSource").click(function(){
-      addTab();
+      console.log("you just clicked clear form!");
+     
+    $('#sourceForm')[0].reset();
+    //need this otherwise when clear it will show up the first option in the input.
+     $(".combobox").prop("selectedIndex", -1);
     });
 
 
@@ -63,6 +67,9 @@ $("#combobox2").change(function() {
 
 //***************end********************************************************************************************//
   
+ //************************set the select value to be empty need this for clear the form*****************************************************//
+
+ //************end**********************************************************************************************// 
 
     //this is for click the show all button when page load
     $('#toggle0').click();
