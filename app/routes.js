@@ -101,6 +101,7 @@ module.exports = function(app) {
 	       dateEnd:req.body.dateEnd,
 	       confidenceFlag:req.body.confidenceFlag,
 	       userId:req.user.id,   //the id property is lower case on user
+	       userName:req.user.username //we can access the user name directly from the req.user object, not realize this previously.
 	      /* userName:userName*/
 		});
 		//need to put this end here when making a post request.
@@ -114,8 +115,10 @@ module.exports = function(app) {
            word:req.body.word,
            verbcode:req.body.verbcode,
            confidenceFlag:req.body.confidenceFlag,
-           userId:req.user.Id
+           userName: req.user.username,
+           userId:req.user.id
          });
+         res.end();
     });
 
 
