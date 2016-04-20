@@ -3,9 +3,10 @@ var Agent=require('./models/agent');
 var Secondrole=require('./models/secondrole');
 var Verb=require('./models/verb');
 var SourceDictionary=require('./models/sourceDictionary');
+var VerbDictionary=require('./models/verbDictionary');
 var User=require('./models/user');
 var mongoose = require('mongoose');
-var ObjectId = mongoose.Types.ObjectId
+var ObjectId = mongoose.Types.ObjectId;
 
 function getAllVerbs(res){
 	Verb.find(function(err,verbs){
@@ -106,10 +107,19 @@ module.exports = function(app) {
 		res.end();
 		/*});*/
 		/*console.log("this is the user name "+req.user.id);*/
-
-		
-
 	});
+    app.post('/api/addVerbDictionary',function(req,res){
+        
+         VerbDictionary.create({
+           word:req.body.word,
+           verbcode:req.body.verbcode,
+           confidenceFlag:req.body.confidenceFlag,
+           userId:req.user.Id
+         });
+    });
+
+
+
 	app.get('/summaryTable',function(req,res){
 		var queryword=req.param('queryword');
 		SourceDictionary.find({'word':queryword}, function(err, data){

@@ -134,11 +134,32 @@ $scope.sourceForm.submitSourceForm=function(item,event){
           console.log("Submitting source form is successful!");
        });
         responsePromise.error(function(data, status, headers, config) {
-          alert("Submitting form failed!");
+          alert("Submitting source form failed!");
        });
 }
 
 /**********end of source Form***************************************/
+
+/*****************verb form********************************************/
+$scope.verbForm={};
+$scope.verbForm.submitVerbForm=function(item,event){
+    var verbDicObject={
+      word:$('#verbword').val(),
+     verbcode:$('#combobox6input').val(),
+     confidenceFlag:$('#verbflag').val()
+    };
+
+      var responsePromise = $http.post("/api/addVerbDictionary", verbDicObject);
+       responsePromise.success(function(dataFromServer, status, headers, config) {
+          console.log("Submitting verb form is successful!");
+       });
+        responsePromise.error(function(data, status, headers, config) {
+          alert("Submitting verb form failed!");
+       }); 
+}
+
+
+/************end of verb form*******************************************/
 
 /**********target Form***************************************/
 

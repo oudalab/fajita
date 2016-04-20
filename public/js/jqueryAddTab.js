@@ -87,6 +87,9 @@ $("#combobox1").change(function() {
 $("#combobox2").change(function() {
     $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
     });
+$("#combobox3").change(function() {
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
+    });
 $("#combobox4").change(function() {
     $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
     });
