@@ -5,6 +5,7 @@ var Verb=require('./models/verb');
 var SourceDictionary=require('./models/sourceDictionary');
 var VerbDictionary=require('./models/verbDictionary');
 var User=require('./models/user');
+var Sentence=require('./models/sentence');
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
@@ -43,6 +44,19 @@ function getAllSecondroleActors(res){
       if(err)
       	res.send(err)
       res.json(secondrole);
+	});
+}
+//only show the non-tagged sentences
+function getOneNotTaggedSentence(res)
+{
+	Sentence.find(function(err,sentences)
+	{
+		if(err)
+			res.send(err)
+		var nottagged=sentences.filter(function(el){
+			return el.tagged==0;
+		})
+		res.json(nottagged[0]);
 	});
 }
 
@@ -87,10 +101,6 @@ module.exports = function(app) {
 		{
 			req.body.dateEnd=new Date("1800-01-01");
 		}
-	/*	var userName="";
-		User.find({'_id':ObjectId(req.user.id),'userid':req.user.id},function(err,data){
-                 userName=data.username;
-                 console.log("this is the user name : "+userName);*/
 
            SourceDictionary.create({
 		   word: req.body.word,
@@ -133,6 +143,12 @@ module.exports = function(app) {
 		     
 		    });
        
+	})
+
+//this is for loop through the sentence
+	app.get('/sentences',function(req,res){
+       
+      getOneNotTaggedSentence(res);
 	})
 
 	// application -------------------------------------------------------------
