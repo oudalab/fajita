@@ -24,8 +24,6 @@ angular.module('mainServiceModule').factory('AuthService',
       }
     }
 
-    //var noop=function(){};
-
     function getUserStatus() {
       console.log("user status has been checked");
    
