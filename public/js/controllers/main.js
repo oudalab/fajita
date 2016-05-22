@@ -34,10 +34,24 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
  		}
  	}]);
 
+    app.factory('Sentences', ['$http',function($http) {
+    return {
+      get : function() {
+      return $http.get('/sentences');
+
+      }
+      post: function(sentenceId)
+      {
+        
+      }
+    }
+  }]);
+
 	// inject the Todo service factory into our controller
-	app.controller('mainController', ['$scope','$http','$location','Actors','Agents','Secondroles','Verbs','AuthService', function($scope,$http,$location,Actors,Agents,Secondroles,Verbs,AuthService) {
+	app.controller('mainController', ['$scope','$http','$location','Actors','Agents','Secondroles','Verbs','Sentences','AuthService', function($scope,$http,$location,Actors,Agents,Secondroles,Verbs,Sentences,AuthService) {
 		//date picker
 		  $scope.myDate = new Date();
+
 
 		  $scope.minDate = new Date(
 		      $scope.myDate.getFullYear(),
@@ -64,6 +78,22 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 	        });
 		};
 
+    $scope.nextSentence=function()
+    {
+          Sentences.get()
+         .success(function(data){
+           $scope.wholeSentence=data.wholeSentence;
+           $scope.sentenceSource=data.actor;
+           $scope.sentenceVerb=data.verb;
+           $scope.sentenceTarget=data['target'];
+         });
+    }
+//when commit the whole sentence, change the tagged to be true
+    $scope.commitSentence=function()
+    {
+         
+
+    }
 
 	  	Actors.get()
 		   .success(function(data){
@@ -104,6 +134,17 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
               	selectedOption:data[0].name
               }
 		    });  
+
+    Sentences.get()
+         .success(function(data){
+           $scope.wholeSentence=data.wholeSentence;
+           $scope.sentenceSource=data.actor;
+           $scope.sentenceVerb=data.verb;
+           $scope.sentenceTarget=data['target'];
+           $scope.currentSentenceId=data._id;
+          
+           //alert(data._id);
+         });
 /**********source Form***************************************/
 
 $scope.sourceForm={};

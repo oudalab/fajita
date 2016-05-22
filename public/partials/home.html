@@ -38,19 +38,28 @@
                 </div>
               </div>
             <div id="currentSentence" class="row well">
-              <strong>This is a test sentence</strong>
+              <strong>{{wholeSentence}}</strong>
             </div>
             <div class="row well">
             <strong>Source:</strong>
+            {{sentenceSource}}
             </div>
             <div class="row well">
             <strong>Verb:</strong>
+            {{sentenceVerb}}
             </div>
             <div class="row well">
             <strong>Target:</strong>
+            {{sentenceTarget}}
             </div>
-            <button type="button" class="btn btn-success" style="padding:2px;width:100px;float:left">Next Sentence</button>
-           
+            <div class="row">
+            <div class="col-md-5">
+               <button type="button" class="btn btn-success" style="padding:2px;width:120px;float:left;margin:10px" ng-click="nextSentence()">Next Sentence</button>
+                </div>
+                <div class="col-md-7">
+               <button type="button" class="btn btn-success" style="padding:2px;width:160px;float:left;margin:10px" ng-click="commitSentence()">Commit Sentence</button>
+                </div>
+            </div>
          </div>
          <div class="col-md-8">
             <div id="tabs" class="source row well well-lg"  style="height:470px;margin-bottom:5px;">

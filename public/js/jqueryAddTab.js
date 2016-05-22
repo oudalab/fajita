@@ -1,6 +1,6 @@
  //this javascript is for the add tab button for multiple rows. 
  //originally want to only put the tab handle code here,
- //now put all the after page load js code here
+ //now put all the after page load js code here, can put the jquery event handler code here.
 $(function() {
     var tabs= $( "#tabs" ).tabs();
     $( "#tabs1" ).tabs();
