@@ -40,9 +40,10 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
       return $http.get('/sentences');
 
       }
-    /*  post: function(sentenceId)
+    /*  post: function()
       {
-        
+        //{docId:}: this is the way to put data in request body.
+        return ;
       }*/
     }
   }]);
@@ -91,7 +92,15 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 //when commit the whole sentence, change the tagged to be true
     $scope.commitSentence=function()
     {
-         
+        var sentenceId=$scope.currentSentenceId;
+        alert("this is the sentenceId"+sentenceId);
+
+        /*Sentences.post().success(function(data){
+          console.log("sentence tag is updated!");
+        });*/
+       $http.post('/updateSentenceTag',{'sentenceId':$scope.currentSentenceId}).success(function(data){
+              console.log("sentence tag is updated!");
+       });
 
     }
 

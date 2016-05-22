@@ -133,8 +133,9 @@ module.exports = function(app) {
  
     //finally figure out this is the correct way in mongoose and express to update data.
     app.post('/updateSentenceTag',function(req,res){
-
-     Sentence.findOneAndUpdate({docId:req.body.docId},{$set:{tagged:1}},function(err,sentence){
+      
+     //make the tag of the sentence to be 1 when commit the whole sentence tagging
+     Sentence.findOneAndUpdate({_id:req.body.sentenceId},{$set:{tagged:1}},function(err,sentence){
        
        });
       res.end();
