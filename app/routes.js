@@ -130,10 +130,14 @@ module.exports = function(app) {
          });
          res.end();
     });
+ 
+    //finally figure out this is the correct way in mongoose and express to update data.
+    app.post('/updateSentenceTag',function(req,res){
 
-    app.post('/updateSentenceTag/',function(req,res){
+     Sentence.findOneAndUpdate({docId:req.body.docId},{$set:{tagged:1}},function(err,sentence){
        
-     
+       });
+      res.end();
     });
 
 

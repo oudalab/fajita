@@ -40,10 +40,10 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
       return $http.get('/sentences');
 
       }
-      post: function(sentenceId)
+    /*  post: function(sentenceId)
       {
         
-      }
+      }*/
     }
   }]);
 
