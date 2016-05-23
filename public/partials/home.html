@@ -69,7 +69,7 @@
                </ul>
                <div id="tabs-1">
                  <form id="sourceForm">
-                  <input id="sourceWord"/>
+                  <strong>Source:</strong><input id="sourceWord" value={{sentenceSource}} readonly>
                   <div class="row" style="padding:0px">
                      <div class="col-md-6" style="font-weight:bold">ACTOR-SECTION</div>
                      <div class="col-md-3 col-md-offset-3">
@@ -141,7 +141,9 @@
                 <div id="summary"></div>
                 </div>
             </div>
+             <form id="verbForm">
             <div class="verbwell row well well-lg" style="height:240px;margin-bottom:0px;background-color:#fbc97f;">
+           <strong>Verb:</strong><input id="verbword" value={{sentenceVerb}} readonly>
                <div class="row" style="padding:0px">
                   <div class="col-md-6" style="font-weight:bold">VERB-SECTION</div>
                   <div class="col-md-3 col-md-offset-3">
@@ -149,10 +151,8 @@
                   </div>
                </div>
                <div class="row" style="padding:2px">
-                 <form id="verbForm">
-                  <input id="verbword"/>
+                
                   <div class="ui-widget col-md-6">
-                     <label>verb....</label>
                      <input hidden id="combobox6input" class="comboboxinput"/>
                      <select id='combobox3' ng-options="item as item.name for item in verbdata.availableOptions track by item.id" ng-model="selected3"></select>
                      <div>
@@ -172,7 +172,7 @@
                </ul>
                <div id="tabs-3">
                  <form id="targetForm">
-                  <input id="targetWord"/>
+                  <strong>Target:</strong><input id="targetWord" value={{sentenceTarget}} readonly>
                   <div class="row" style="padding:0px">
                      <div class="col-md-6" style="font-weight:bold">TARGET-SECTION</div>
                      <div class="col-md-3 col-md-offset-3">

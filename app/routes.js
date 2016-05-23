@@ -141,7 +141,14 @@ module.exports = function(app) {
       res.end();
     });
 
-
+    //to get the current sentence object, in order to make sure when we click the next sentence, the current sentence already get commited.
+    app.post('/getCurrentSentence',function(req,res){
+        var sentenceId=req.body.currentSentenceId;
+        Sentence.find({'_id':sentenceId},function(err,data){
+          res.json(data);
+        });
+       // res.end();
+    });
 
 	app.get('/summaryTable',function(req,res){
 		var queryword=req.param('queryword');
@@ -153,7 +160,7 @@ module.exports = function(app) {
 		     
 		    });
        
-	})
+	});
 
 //this is for loop through the sentence
 	app.get('/sentences',function(req,res){

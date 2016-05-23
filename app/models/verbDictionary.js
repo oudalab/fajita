@@ -1,5 +1,4 @@
 var mongoose=require("mongoose");
-
 module.exports=mongoose.model('verbDictionary',{
  word:{type:String},
  verbcode:{type:String},

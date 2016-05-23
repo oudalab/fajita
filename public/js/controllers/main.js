@@ -88,6 +88,7 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
            $scope.sentenceVerb=data.verb;
            $scope.sentenceTarget=data['target'];
          });
+         
     }
 //when commit the whole sentence, change the tagged to be true
     $scope.commitSentence=function()
