@@ -90,20 +90,7 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
          });
          
     }
-//when commit the whole sentence, change the tagged to be true
-    $scope.commitSentence=function()
-    {
-        var sentenceId=$scope.currentSentenceId;
-        alert("this is the sentenceId"+sentenceId);
 
-        /*Sentences.post().success(function(data){
-          console.log("sentence tag is updated!");
-        });*/
-       $http.post('/updateSentenceTag',{'sentenceId':$scope.currentSentenceId}).success(function(data){
-              console.log("sentence tag is updated!");
-       });
-
-    }
 
 	  	Actors.get()
 		   .success(function(data){
@@ -212,6 +199,8 @@ $scope.verbForm.submitVerbForm=function(item,event){
 
 /************end of verb form*******************************************/
 
+
+
 /**********target Form***************************************/
 
 $scope.targetForm={};
@@ -248,6 +237,47 @@ $scope.targetForm.submitTargetForm=function(item,event){
 }
 
 /**********end of target Form***************************************/
+
+/**********commit the whole sentence********************************/
+
+    $scope.commitSentence=function()
+    {
+        var sentenceId=$scope.currentSentenceId;
+
+        var wholeSentenceObject={
+          sentenceId:sentenceId,
+          sourceCountryCode:$('#combobox0input').val(),
+          sourceFirstroleCode:$('#combobox1input').val(),
+          sourceSecondroleCode:$('#combobox2input').val(),
+          sourceStartDate:$scope.sourceForm.startdate,
+          sourceEndDate:$scope.sourceForm.enddate,
+          verbCode:$('#combobox6input').val(),
+          targetCountryCode:$('#combobox3input').val(),
+          targetFirstroleCode:$('#combobox4input').val(),
+          targetSecondroleCode:$('#combobox5input').val(),
+          targetStartDate:$scope.targetForm.startdate,
+          targetEndDate:$scope.targetForm.enddate
+          }
+      //delete later.   
+      alert("this is the sentenceId: "+sentenceId);
+
+      
+      //make the tag to be 1 after commit the whole sentence.
+       $http.post('/updateSentenceTag',{'sentenceId':sentenceId}).success(function(data){
+              console.log("sentence tag is updated!");
+       });
+
+      //create the new tagging result
+      var responsePromise = $http.post("/api/addSentenceTaggingResult", wholeSentenceObject);
+       responsePromise.success(function(dataFromServer, status, headers, config) {
+          console.log("Submitting source form is successful!");
+       });
+        responsePromise.error(function(data, status, headers, config) {
+          alert("Submitting form failed!");
+      });
+
+    }
+/**************end of commit the whole sentence**********************/
 
 
 

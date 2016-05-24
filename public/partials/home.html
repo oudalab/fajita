@@ -58,6 +58,7 @@
                 </div>
                 <div class="col-md-7">
                <button type="button" class="btn btn-success" style="padding:2px;width:160px;float:left;margin:10px" ng-click="commitSentence()">Commit Sentence</button>
+      
                 </div>
             </div>
          </div>
@@ -80,7 +81,7 @@
 
                      <div class="ui-widget col-md-6">
                         <label>country </label>
-                        <input hidden id="combobox0input" class="comboboxinput"/>
+                        <input hidden id="combobox0input" class="comboboxinput">
                         <select id='combobox0' class="comboboxGroup" ng-model="sourceForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
                         <div>
                            <button id="toggle0">Hide Underlying Select</button>
@@ -128,7 +129,7 @@
                      </div>
                      <div class="col-md-6">
                         <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                           <input ng-model="sourceForm.enddate" />
+                           <input ng-model="sourceForm.enddate"/>
                         </datepicker>
                      </div>
                      <div class="col-md-3 col-md-offset-1">

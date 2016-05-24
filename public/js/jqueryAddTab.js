@@ -78,26 +78,45 @@ $(function() {
     
 //*************************************when underlying box change make the hidden input change*********************//
 
+//test//
+/*$('#combobox0input').change(function(){
+  console.log("hahah I AM HERE!");
+  $('#wholeSentenceForm-SourceCountryCode').val($(this).val());
+
+});*/
+/* $('#combobox0input').on("change",function(){
+
+     $('#wholeSentenceForm-SourceCountryCode').val("yanyan");
+ });*/
+//test//
+
+/*$('.custom-combobox-input').change(function(){
+$(this).closest('.comboboxGroup').val($(this).val());
+});*/
+
 $("#combobox0").change(function() {
-    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
-    });
+$(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
+/*('#wholeSentenceForm-SourceCountryCode').val($(this).val());*/
+
+});
+
 $("#combobox1").change(function() {
-    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
     });
 $("#combobox2").change(function() {
-    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
     });
 $("#combobox3").change(function() {
-    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
     });
 $("#combobox4").change(function() {
-    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
     });
 $("#combobox5").change(function() {
-    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
     });
 $("#combobox6").change(function() {
-    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val());
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
     });
 
 //***************end********************************************************************************************//

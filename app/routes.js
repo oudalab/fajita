@@ -6,8 +6,11 @@ var SourceDictionary=require('./models/sourceDictionary');
 var VerbDictionary=require('./models/verbDictionary');
 var User=require('./models/user');
 var Sentence=require('./models/sentence');
+var SentenceTaggingResult=require('./models/sentenceTaggingResult');
 var mongoose = require('mongoose');
+
 var ObjectId = mongoose.Types.ObjectId;
+
 
 function getAllVerbs(res){
 	Verb.find(function(err,verbs){
@@ -116,8 +119,6 @@ module.exports = function(app) {
 		});
 		//need to put this end here when making a post request.
 		res.end();
-		/*});*/
-		/*console.log("this is the user name "+req.user.id);*/
 	});
     app.post('/api/addVerbDictionary',function(req,res){
         
@@ -129,6 +130,27 @@ module.exports = function(app) {
            userId:req.user.id
          });
          res.end();
+    });
+    app.post('/api/addSentenceTaggingResult',function(req,res){
+
+      SentenceTaggingResult.create({
+      	sentenceId:req.body.sentenceId,
+      	sourceCountryCode:req.body.sourceCountryCode,
+      	sourceFirstroleCode:req.body.sourceFirstroleCode,
+      	sourceSecondroleCode:req.body.sourceSecondroleCode,
+      	sourceStartDate:req.body.sourceStartDate,
+      	sourceEndDate:req.body.sourceEndDate,
+      	verbCode:req.body.verbCode,
+      	targetCountryCode:req.body.targetCountryCode,
+      	targetFirstroleCode:req.body.targetFirstroleCode,
+      	targetSecondroleCode:req.body.targetSecondroleCode,
+      	targetStartDate:req.body.targetStartDate,
+      	targetEndDate:req.body.targetEndDate,
+      	userId:req.user.id
+      },function(){
+      	   res.end();
+      });
+   
     });
  
     //finally figure out this is the correct way in mongoose and express to update data.
