@@ -87,6 +87,8 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
            $scope.sentenceSource=data.actor;
            $scope.sentenceVerb=data.verb;
            $scope.sentenceTarget=data['target'];
+           $scope.currentSentenceId=data._id;
+
          });
          
     }
@@ -161,8 +163,10 @@ $scope.sourceForm.submitSourceForm=function(item,event){
   {
     flagged=true;
   }
+   var sentenceId=$scope.currentSentenceId;
 	var sourceDicObject={
        word: $('#sourceWord').val(),
+       sentenceId:sentenceId,
        //this is they way to go there is bug in combobox auto complete use jquery directly
        countryCode:$('#combobox0input').val(), //countryCode
        firstRoleCode:$('#combobox1input').val(), //firstRoleCode
@@ -187,12 +191,14 @@ $scope.sourceForm.submitSourceForm=function(item,event){
 $scope.verbForm={};
 $scope.verbForm.submitVerbForm=function(item,event){
     var flagged=false;
-  if($('#sourceflag').prop("checked"))
+  if($('#verbflag').prop("checked"))
   {
     flagged=true;
   }
+   var sentenceId=$scope.currentSentenceId;
     var verbDicObject={
       word:$('#verbword').val(),
+      sentenceId:sentenceId,
      verbcode:$('#combobox6input').val(),
      confidenceFlag:flagged
     };
@@ -226,11 +232,13 @@ $scope.targetForm.targetflag="";
 $scope.targetForm.submitTargetForm=function(item,event){
  
     var flagged=false;
-  if($('#sourceflag').prop("checked"))
+  if($('#targetflag').prop("checked"))
   {
     flagged=true;
   }
+   var sentenceId=$scope.currentSentenceId;
   var sourceDicObject={
+       sentenceId:sentenceId,
        word: $('#targetWord').val(), 
        //this is they way to go there is bug in combobox auto complete use jquery directly
        countryCode:$('#combobox3input').val(), //countryCode

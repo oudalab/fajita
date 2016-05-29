@@ -106,6 +106,7 @@ module.exports = function(app) {
 		}
 
            SourceDictionary.create({
+           sentenceId:req.body.sentenceId,
 		   word: req.body.word,
 	       countryCode:req.body.countryCode,
 	       firstRoleCode:req.body.firstRoleCode,
@@ -123,6 +124,7 @@ module.exports = function(app) {
     app.post('/api/addVerbDictionary',function(req,res){
         
          VerbDictionary.create({
+         sentenceId:req.body.sentenceId,
            word:req.body.word,
            verbcode:req.body.verbcode,
            confidenceFlag:req.body.confidenceFlag,
