@@ -37,7 +37,6 @@ $(function() {
         }
       });
     });
-
 //*******************************clear the form when click on add another button************************//
 
     $("#addSource").click(function(){ 
@@ -148,18 +147,38 @@ $("#combobox6").change(function() {
       }
      } 
     });
-    $("#trackYourPerformance").on("click",function(){
-      dialog.dialog("open");
+ 
 
-/*       $.ajax({
+    $("#trackYourPerformance").on("click",function(){
+        //get total source count
+        $.ajax({
+        method: "GET",
+        url:"/getSourceTaggingCountForCurrentUser",
+      
+        success:function(result){
+          $("#sourceCount").text(result); //text() working here but html() is not working not sure why.
+        }
+      });
+        //get total target count
+        $.ajax({
+        method: "GET",
+        url:"/getVerbTaggingCountForCurrentUser",
+      
+        success:function(result){
+          $("#verbCount").text(result); //text() working here but html() is not working not sure why.
+        }
+      });
+        //get total sentence count
+        $.ajax({
         method: "GET",
         url:"/getSentenceTaggingCountForCurrentUser",
       
         success:function(result){
-          alert(result);
+          $("#sentenceCount").text(result); //text() working here but html() is not working not sure why.
         }
       });
-*/
+
+      dialog.dialog("open");
     })
     
   });

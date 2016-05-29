@@ -35,7 +35,22 @@
                 </div>
                 <div class="col-md-7">
                <button id="trackYourPerformance" type="button" class="btn btn-success" style="padding:2px;width:160px;float:left;margin:10px">Track Your Performance</button>
-               <div id="trackYourPerformanceDialog" hidden></div>
+               <div id="trackYourPerformanceDialog" hidden>
+                   <ul class="list-group">
+                    <li class="list-group-item">
+                      <span  id="sourceCount" class="label label-default label-pill pull-xs-right"></span>
+                      Source Items have been tagged by you. 
+                    </li>
+                    <li class="list-group-item">
+                      <span id="verbCount" class="label label-default label-pill pull-xs-right"></span>
+                      Verb Items have been tagged by you.
+                    </li>
+                    <li class="list-group-item">
+                     <span id="sentenceCount" class="label label-default label-pill pull-xs-right"></span>
+                     Whole Sentences have been tagged by you.
+                    </li>
+                  </ul> 
+               </div>
                 </div>
               </div>
             <div id="currentSentence" class="row well">
