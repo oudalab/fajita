@@ -164,7 +164,8 @@ $("#combobox6").change(function() {
         url:"/getFlaggedSourceTaggingCountForCurrentUser",
         success:function(result){
           $("#sourceFlagged").html("<strong>"+result+"</strong>"); 
-        });
+        }
+      });
         //get total target count
         $.ajax({
         method: "GET",

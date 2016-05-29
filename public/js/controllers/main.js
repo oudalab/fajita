@@ -155,7 +155,12 @@ $scope.sourceForm.sourceflag="";
 
 
 $scope.sourceForm.submitSourceForm=function(item,event){
-	console.log("-->submit source form");
+	
+  var flagged=false;
+  if($('#sourceflag').prop("checked"))
+  {
+    flagged=true;
+  }
 	var sourceDicObject={
        word: $('#sourceWord').val(),
        //this is they way to go there is bug in combobox auto complete use jquery directly
@@ -164,7 +169,7 @@ $scope.sourceForm.submitSourceForm=function(item,event){
        secondRoleCode:$('#combobox2input').val(),//secondRoleCode
        dateStart:$scope.sourceForm.startdate,
        dateEnd:$scope.sourceForm.enddate,
-       confidenceFlag:$('#sourceflag').val()
+       confidenceFlag:flagged
        //get the useId from the req in api.
 	};
 	var responsePromise = $http.post("/api/addSourceDictionary", sourceDicObject);
@@ -181,10 +186,15 @@ $scope.sourceForm.submitSourceForm=function(item,event){
 /*****************verb form********************************************/
 $scope.verbForm={};
 $scope.verbForm.submitVerbForm=function(item,event){
+    var flagged=false;
+  if($('#sourceflag').prop("checked"))
+  {
+    flagged=true;
+  }
     var verbDicObject={
       word:$('#verbword').val(),
      verbcode:$('#combobox6input').val(),
-     confidenceFlag:$('#verbflag').val()
+     confidenceFlag:flagged
     };
 
       var responsePromise = $http.post("/api/addVerbDictionary", verbDicObject);
@@ -214,7 +224,12 @@ $scope.targetForm.targetflag="";
 
 
 $scope.targetForm.submitTargetForm=function(item,event){
-  console.log("-->submit source form");
+ 
+    var flagged=false;
+  if($('#sourceflag').prop("checked"))
+  {
+    flagged=true;
+  }
   var sourceDicObject={
        word: $('#targetWord').val(), 
        //this is they way to go there is bug in combobox auto complete use jquery directly
@@ -223,7 +238,7 @@ $scope.targetForm.submitTargetForm=function(item,event){
        secondRoleCode:$('#combobox5input').val(),//secondRoleCode
        dateStart:$scope.sourceForm.startdate,
        dateEnd:$scope.sourceForm.enddate,
-       confidenceFlag:$('#targetflag').val()
+       confidenceFlag:flagged
        //get the useId from the req in api.
   };
   //targetDictionary and sourceDictionary share the same schema.
