@@ -133,5 +133,33 @@ $("#combobox6").change(function() {
     $('#toggle4').click();
     $('#toggle5').click();
     $('#toggle6').click();
+
+    //this is to define the click event on the track performance button
+    //and also defin the dialog here
+    var dialog=$("#trackYourPerformanceDialog").dialog({
+     autoOpen:false,
+     height:500,
+     width:550,
+     modal:true,
+     title: "Tagging Performance",
+     buttons:{
+      Close:function(){
+        dialog.dialog("close");
+      }
+     } 
+    });
+    $("#trackYourPerformance").on("click",function(){
+      dialog.dialog("open");
+
+/*       $.ajax({
+        method: "GET",
+        url:"/getSentenceTaggingCountForCurrentUser",
+      
+        success:function(result){
+          alert(result);
+        }
+      });
+*/
+    })
     
   });

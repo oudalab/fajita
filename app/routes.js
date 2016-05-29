@@ -206,6 +206,30 @@ module.exports = function(app) {
 		    });
        
 	});
+	//this is to get the total sourceDictionary tagging for this student
+	app.get('/getSourceTaggingCountForCurrentUser',function(req,res){
+       
+      SourceDictionary.find({'userId':req.user.id},function(err,data){
+      	res.json(data.length);
+      	//console.log(data.length);
+      	res.end();
+      });
+      //by the way if you put res.end() here it will end the res immedaitely and callbacs res.json might try to change res, so it will give u an error 
+	})
+	//get the total verb tagging for current student
+	app.get('/getVerbTaggingCountForCurrentUser',function(req,res){
+      VerbDictionary.find({'userId':req.user.id},function(err,data){
+       res.json(data.length);
+       res.end();
+      });
+	})
+	//get the total sentence tagging for current student
+    app.get('/getSentenceTaggingCountForCurrentUser',function(req,res){
+    	SentenceTaggingResult.find({'userId':req.user.id},function(err,data){
+         res.json(data.length);
+         res.end();
+    	});
+    })
 
 //this is for loop through the sentence
 	app.get('/sentences',function(req,res){
