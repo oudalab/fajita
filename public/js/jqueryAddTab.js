@@ -159,6 +159,12 @@ $("#combobox6").change(function() {
           $("#sourceCount").text(result); //text() working here but html() is not working not sure why.
         }
       });
+        $.ajax({
+        method: "GET",
+        url:"/getFlaggedSourceTaggingCountForCurrentUser",
+        success:function(result){
+          $("#sourceFlagged").html("<strong>"+result+"</strong>"); 
+        });
         //get total target count
         $.ajax({
         method: "GET",
@@ -166,6 +172,14 @@ $("#combobox6").change(function() {
       
         success:function(result){
           $("#verbCount").text(result); //text() working here but html() is not working not sure why.
+        }
+      });
+        $.ajax({
+        method: "GET",
+        url:"/getFlaggedVerbTaggingCountForCurrentUser",
+      
+        success:function(result){
+          $("#verbFlagged").html("<strong>"+result+"</strong>"); 
         }
       });
         //get total sentence count

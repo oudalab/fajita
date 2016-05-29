@@ -39,11 +39,16 @@
                    <ul class="list-group">
                     <li class="list-group-item">
                       <span  id="sourceCount" class="label label-default label-pill pull-xs-right"></span>
+                      
                       Source Items have been tagged by you. 
+                      <a id="sourceFlagged"></a>
+                       of them are flagged as not sure.
                     </li>
                     <li class="list-group-item">
                       <span id="verbCount" class="label label-default label-pill pull-xs-right"></span>
                       Verb Items have been tagged by you.
+                      <a id="verbFlagged"></a> 
+                      of them are flagged as not sure.
                     </li>
                     <li class="list-group-item">
                      <span id="sentenceCount" class="label label-default label-pill pull-xs-right"></span>
@@ -136,7 +141,7 @@
                         </datepicker>
                      </div>
                      <div class="col-md-3 col-md-offset-1">
-                        <label> <input type="checkbox" name="sourcecheck" id="sourceflag" ng-model="sourceForm.sourceflag">sure?</label>
+                        <label> <input type="checkbox" name="sourcecheck" id="sourceflag" ng-model="sourceForm.sourceflag">not sure?</label>
                      </div>
                   </div>
                   <div class="row" style="padding:2px">
@@ -164,7 +169,7 @@
                <div class="row" style="padding:0px">
                   <div class="col-md-6" style="font-weight:bold">VERB-SECTION</div>
                   <div class="col-md-3 col-md-offset-3">
-                     <label> <input type="checkbox" name="verbcheck" id="verbflag" >sure?</label>
+                     <label> <input type="checkbox" name="verbcheck" id="verbflag" >not sure?</label>
                   </div>
                </div>
                <div class="row" style="padding:2px">
@@ -239,7 +244,7 @@
                         </datepicker>
                      </div>
                      <div class="col-md-3 col-md-offset-1">
-                        <label> <input type="checkbox" name="targetcheck" id="targetflag" ng-model="targetForm.targetflag">sure?</label>
+                        <label> <input type="checkbox" name="targetcheck" id="targetflag" ng-model="targetForm.targetflag">not sure?</label>
                      </div>
                   </div>
                   <div class="row" style="padding:2px">

@@ -230,6 +230,25 @@ module.exports = function(app) {
          res.end();
     	});
     })
+    //find flagged source count
+    app.get('/getFlaggedSourceTaggingCountForCurrentUser',function(req,res){
+       //flagged=1 means the user is not sure
+      SourceDictionary.find({'userId':req.user.id,'confidenceFlag':true},function(err,data){
+      	res.json(data.length);
+  
+      	res.end();
+      });
+     })
+
+    //find flagged verb count
+       app.get('/getFlaggedVerbTaggingCountForCurrentUser',function(req,res){
+       //flagged=1 means the user is not sure
+      VerbDictionary.find({'userId':req.user.id,'confidenceFlag':true},function(err,data){
+      	res.json(data.length);
+      	res.end();
+      });
+     })
+
 
 //this is for loop through the sentence
 	app.get('/sentences',function(req,res){
