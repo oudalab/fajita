@@ -132,7 +132,23 @@ module.exports = function(app) {
          res.end();
     });
     app.post('/api/addSentenceTaggingResult',function(req,res){
+      if(req.body.sourceStartDate==="")
+		{
+			req.body.sourceStartDate=new Date("1800-01-01");
+		}
+		if(req.body.sourceEndDate==="")
+		{
+			req.body.sourceEndDate=new Date("1800-01-01");
+		}
 
+		 if(req.body.targetStartDate==="")
+		{
+			req.body.targetStartDate=new Date("1800-01-01");
+		}
+		if(req.body.targetEndDate==="")
+		{
+			req.body.targetEndDate=new Date("1800-01-01");
+		}
       SentenceTaggingResult.create({
       	sentenceId:req.body.sentenceId,
       	sourceCountryCode:req.body.sourceCountryCode,
@@ -147,9 +163,16 @@ module.exports = function(app) {
       	targetStartDate:req.body.targetStartDate,
       	targetEndDate:req.body.targetEndDate,
       	userId:req.user.id
-      },function(){
-      	   res.end();
+      },function(err,data){
+      	if(err)
+      		console.error(err);
+      	else
+      	{
+      		res.end();
+      	}
       });
+      /*console.log("the sentence has been posted!");*/
+     /* res.end();*/
    
     });
  
