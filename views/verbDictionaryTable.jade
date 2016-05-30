@@ -10,7 +10,7 @@ div(id="verbTable" class="table table-bordered")
     tbody
       each source in verbdictionary
         tr
-          td <a href="#">#{source.sentenceId}</a>
+          td <button class="linkButton">#{source.sentenceId}</button>
           td #{source.word}
           td #{source.verbcode}
           td #{source.userName}

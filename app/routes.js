@@ -193,9 +193,19 @@ module.exports = function(app) {
         var sentenceId=req.body.currentSentenceId;
         Sentence.find({'_id':sentenceId},function(err,data){
           res.json(data);
+          res.end();
         });
-       // res.end();
+       
     });
+        //get sentence string by giving sentenceId
+     app.post('/getSentenceStringById',function(req,res){
+     
+       var sentenceId=req.body.sentenceId;
+           Sentence.find({'_id':sentenceId},function(err,data){
+          res.json(data.wholeSentence);
+          res.end();
+        });
+       });
 
 	app.get('/summaryTable',function(req,res){
 		var queryword=req.param('queryword');
@@ -268,7 +278,6 @@ module.exports = function(app) {
            res.end();
         });
        })
-
 
 
 

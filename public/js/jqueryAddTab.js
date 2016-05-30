@@ -252,6 +252,9 @@ $("#combobox6").change(function() {
         //data:{"queryword":sourceword},
         success:function(result){
           $("#sourceSummaryTable").html(result);
+          $('.linkButton').on("click",function(){
+          alert("hello!");
+        });
         }
       });
 
@@ -261,10 +264,20 @@ $("#combobox6").change(function() {
         //data:{"queryword":sourceword},
         success:function(result){
           $("#verbSummaryTable").html(result);
+          //the event has to be attahced here instead of after dialog load, since when page all load the button on dialog does not exist yet.
+        $('.linkButton').on("click",function(){
+         alert("hello!");
+        });
         }
       });
   
     mostRecentActivityDialog.dialog("open");
+    //after the dialog open attach event now
+/*    $(function() {
+
+  
+     });*/
+
    });
 
    $('#FlaggedSummaryButton').on("click",function(){
@@ -275,5 +288,7 @@ $("#combobox6").change(function() {
    $('#TotalFinishedButton').on("click",function(){
      totalFinishedDialog.dialog("open");
    });
+
+   //link event to link button that is for sentenceId
 
   });

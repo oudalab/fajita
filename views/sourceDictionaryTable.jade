@@ -2,7 +2,7 @@ div(id="sourceTable" class="table table-sm")
   table 
     thead
       tr
-        th Sentence
+        th SentenceId(click)
         th Word
         th Country
         th 1st Role
@@ -14,7 +14,7 @@ div(id="sourceTable" class="table table-sm")
     tbody
       each source in sourcedictionary
         tr
-          td <a href="#">#{source.sentenceId}</a>
+          td <button class="linkButton">#{source.sentenceId}</button>
           td #{source.word}
           td #{source.countryCode}
           td #{source.firstRoleCode}
