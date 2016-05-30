@@ -133,6 +133,7 @@ $("#combobox6").change(function() {
     $('#toggle5').click();
     $('#toggle6').click();
 
+/******************define dialog part************************************************/
     //this is to define the click event on the track performance button
     //and also defin the dialog here
     var dialog=$("#trackYourPerformanceDialog").dialog({
@@ -147,8 +148,51 @@ $("#combobox6").change(function() {
       }
      } 
     });
- 
 
+    var mostRecentActivityDialog=$('#MostRecentActivityDialog').dialog({
+      autoOpen:false,
+      height:900,
+       width:950,
+       modal:true,
+       title:"Most Recent Activity",
+       buttons:{
+        Close:function(){
+          mostRecentActivityDialog.dialog("close");
+        }
+       }
+
+    });
+
+    var flaggedSummaryDialog=$('#FlaggedSummaryDialog').dialog({
+     autoOpen:false,
+     height:500,
+     width:550,
+     modal:true,
+     title:"Flagged Summary",
+     buttons:{
+      Close:function(){
+        flaggedSummaryDialog.dialog("close");
+      }
+     }
+    });
+
+   var totalFinishedDialog=$('#TotalFinishedDialog').dialog({
+    autoOpen:false,
+    height:500,
+    width:550,
+    modal:true,
+    title:"Total Finished Summary",
+    buttons:{
+      Close:function(){
+        totalFinishedDialog.dialog("close");
+      }
+    }
+   });
+
+
+ /*********************end of define dialog part************************************/
+
+    //student track performance by themselves button
     $("#trackYourPerformance").on("click",function(){
         //get total source count
         $.ajax({
@@ -163,8 +207,8 @@ $("#combobox6").change(function() {
         method: "GET",
         url:"/getFlaggedSourceTaggingCountForCurrentUser",
         success:function(result){
-          $("#sourceFlagged").html("<strong>"+result+"</strong>"); 
-        }
+          $("#sourceFlagged").html("<strong>"+result+"</strong>");
+         }
       });
         //get total target count
         $.ajax({
@@ -194,6 +238,42 @@ $("#combobox6").change(function() {
       });
 
       dialog.dialog("open");
-    })
-    
+    });
+
+   $('#MostRecentActivityButton').on("click",function(){
+
+
+      //var sourceword=$('#sourceWord').val();
+      /*console.log("this is the sourceword"+sourceword);*/
+
+      $.ajax({
+        method: "GET",
+        url:"/getLatestSourceDictionItems",
+        //data:{"queryword":sourceword},
+        success:function(result){
+          $("#sourceSummaryTable").html(result);
+        }
+      });
+
+        $.ajax({
+        method: "GET",
+        url:"/getLatestVerbDictionItems",
+        //data:{"queryword":sourceword},
+        success:function(result){
+          $("#verbSummaryTable").html(result);
+        }
+      });
+  
+    mostRecentActivityDialog.dialog("open");
+   });
+
+   $('#FlaggedSummaryButton').on("click",function(){
+   
+    flaggedSummaryDialog.dialog("open");
+   });
+   
+   $('#TotalFinishedButton').on("click",function(){
+     totalFinishedDialog.dialog("open");
+   });
+
   });

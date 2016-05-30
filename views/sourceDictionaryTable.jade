@@ -1,0 +1,26 @@
+div(id="sourceTable" class="table table-sm")
+  table 
+    thead
+      tr
+        th Sentence
+        th Word
+        th Country
+        th 1st Role
+        th 2nd Role
+        th Start
+        th End
+        th Who Added
+        th Tag Time
+    tbody
+      each source in sourcedictionary
+        tr
+          td <a href="#">#{source.sentenceId}</a>
+          td #{source.word}
+          td #{source.countryCode}
+          td #{source.firstRoleCode}
+          td #{source.secondRoleCode}
+          td #{source.dateStart}
+          td #{source.dateEnd}
+          td #{source.userName}
+          td #{source.taggingTime}
+

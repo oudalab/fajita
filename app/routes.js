@@ -231,7 +231,7 @@ module.exports = function(app) {
          res.json(data.length);
          res.end();
     	});
-    })
+    });
     //find flagged source count
     app.get('/getFlaggedSourceTaggingCountForCurrentUser',function(req,res){
        //flagged=1 means the user is not sure
@@ -240,7 +240,7 @@ module.exports = function(app) {
   
       	res.end();
       });
-     })
+     });
 
     //find flagged verb count
        app.get('/getFlaggedVerbTaggingCountForCurrentUser',function(req,res){
@@ -249,17 +249,40 @@ module.exports = function(app) {
       	res.json(data.length);
       	res.end();
       });
-     })
+     });
+
+    //get the most recent 5 sourceDictionary record
+       app.get('/getLatestSourceDictionItems',function(req,res){
+        
+        SourceDictionary.find({}).sort('-taggingTime').limit(5).exec(function(err,data){
+           res.render('./sourceDictionaryTable.jade',{sourcedictionary:data});
+           res.end();
+        });
+       });
+
+       //get the most recent 5 verbdictionary records
+       app.get('/getLatestVerbDictionItems',function(req,res){
+
+       	   VerbDictionary.find({}).sort('-taggingTime').limit(5).exec(function(err,data){
+           res.render('./verbDictionaryTable.jade',{verbdictionary:data});
+           res.end();
+        });
+       })
+
+
 
 
 //this is for loop through the sentence
 	app.get('/sentences',function(req,res){
        
       getOneNotTaggedSentence(res);
-	})
+	});
 
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
 		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
 	});
+
+	
+
 };

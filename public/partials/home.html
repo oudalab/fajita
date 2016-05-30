@@ -79,8 +79,28 @@
                 </div>
                 <div class="col-md-7">
                <button type="button" class="btn btn-success" style="padding:2px;width:160px;float:left;margin:10px" ng-click="commitSentence()">Commit Sentence</button>
-      
                 </div>
+            </div>
+            <div class="row well" id="adminWell">
+              <div class="row well">
+              <h3>Administration Tool</h3></div>
+             <div class="row well">
+               <div class="btn-group-vertical">
+                <button type="button" class="btn btn-primary" id="MostRecentActivityButton">Most Recent Activity</button>
+                <button type="button" class="btn btn-primary" id="FlaggedSummaryButton">Flagged Summary</button>
+                <button type="button" class="btn btn-primary" id="TotalFinishedButton">Total Finished</button>
+              </div>
+              <div id="MostRecentActivityDialog" hidden>  
+               <div><h4>Most Recent Source Items:</h4></div>             
+                <div id="sourceSummaryTable">
+                </div>
+                 <div><h4>Most Recent Verb Items:</h4></div>             
+                <div id="verbSummaryTable">
+                </div>
+              </div>
+              <div id="FlaggedSummaryDialog" hidden></div>
+              <div id="TotalFinishedDialog" hidden></div>
+              </div>
             </div>
          </div>
          <div class="col-md-8">

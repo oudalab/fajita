@@ -2,7 +2,7 @@ var mongoose=require("mongoose");
 var FormatDate=mongoose.Schema.Types.FormatDate=require('../../node_modules/mongoose-schema-formatdate/formatdate')
 
 module.exports=mongoose.model('sourceDictionary',{
- setenceId:{type:String},
+ sentenceId:{type:String},
  word:{type:String},
  countryCode:{type:String},
  firstRoleCode:{type:String},

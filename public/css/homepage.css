@@ -63,8 +63,18 @@ tr:nth-child(even){background-color: #f2f2f2}
 
 .label-default
 {
-	background-color: blue;
+	background-color:	#0066CC;
 }
+
+.btn.btn-primary
+{
+	
+	width:180px;
+	margin-bottom:5px;
+
+}
+
+
 
 
 
