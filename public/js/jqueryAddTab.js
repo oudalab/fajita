@@ -188,8 +188,6 @@ $("#combobox6").change(function() {
       }
     }
    });
-
-
  /*********************end of define dialog part************************************/
 
     //student track performance by themselves button
@@ -252,8 +250,15 @@ $("#combobox6").change(function() {
         //data:{"queryword":sourceword},
         success:function(result){
           $("#sourceSummaryTable").html(result);
-          $('.linkButton').on("click",function(){
-          alert("hello!");
+          $('.linkButtonSource').on("click",function(){
+           $.ajax({
+               method: "POST",
+               url:"/getSentenceStringById",
+               data:{sentenceId:$(this).text()},
+               success:function(sentenceResult){
+                $('#sentenceContext1').val(sentenceResult);
+               }
+           });
         });
         }
       });
@@ -265,18 +270,14 @@ $("#combobox6").change(function() {
         success:function(result){
           $("#verbSummaryTable").html(result);
           //the event has to be attahced here instead of after dialog load, since when page all load the button on dialog does not exist yet.
-        $('.linkButton').on("click",function(){
-         alert("hello!");
+        $('.linkButtonVerb').on("click",function(){
+        
+         alert($(this).text());
         });
         }
       });
   
     mostRecentActivityDialog.dialog("open");
-    //after the dialog open attach event now
-/*    $(function() {
-
-  
-     });*/
 
    });
 

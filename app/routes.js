@@ -201,8 +201,9 @@ module.exports = function(app) {
      app.post('/getSentenceStringById',function(req,res){
      
        var sentenceId=req.body.sentenceId;
+       console.log(sentenceId);
            Sentence.find({'_id':sentenceId},function(err,data){
-          res.json(data.wholeSentence);
+          res.json(data[0].wholeSentence);
           res.end();
         });
        });

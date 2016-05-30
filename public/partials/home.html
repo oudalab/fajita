@@ -91,10 +91,14 @@
                 <button type="button" class="btn btn-primary" id="TotalFinishedButton">Total Finished</button>
               </div>
               <div id="MostRecentActivityDialog" hidden>  
-               <div><h4>Most Recent Source Items:</h4></div>             
+              <div id="contextContainer">
+              <label for="textarea">Sentence:</label>
+               <textarea class="sentenceContext" id="sentenceContext1" style="width:850px">your sentence will be showed here</textarea>
+               </div>
+               <div><strong>Most Recent Source Items:</strong></div>             
                 <div id="sourceSummaryTable">
                 </div>
-                 <div><h4>Most Recent Verb Items:</h4></div>             
+                 <div><strong>Most Recent Verb Items:</strong></div>             
                 <div id="verbSummaryTable">
                 </div>
               </div>

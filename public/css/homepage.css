@@ -78,6 +78,15 @@ tr:nth-child(even){background-color: #f2f2f2}
 	background-color:	#D8D8D8 ;
 }
 
+.sentenceContext
+{
+	background-color: azure ;
+}
+.table thead
+{
+  background-color: #D8D8D8 ;
+}
+
 
 
 
