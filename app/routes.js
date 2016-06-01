@@ -201,7 +201,7 @@ module.exports = function(app) {
      app.post('/getSentenceStringById',function(req,res){
      
        var sentenceId=req.body.sentenceId;
-       console.log(sentenceId);
+       //console.log(sentenceId);
            Sentence.find({'_id':sentenceId},function(err,data){
           res.json(data[0].wholeSentence);
           res.end();
@@ -211,9 +211,7 @@ module.exports = function(app) {
 	app.get('/summaryTable',function(req,res){
 		var queryword=req.param('queryword');
 		SourceDictionary.find({'word':queryword}, function(err, data){
-		       //console.log(">>>> " + data );
-		       //dynamically add user name
-	
+		
 		      res.render('./summaryTable.jade',{sourcedictionary:data});
 		     
 		    });

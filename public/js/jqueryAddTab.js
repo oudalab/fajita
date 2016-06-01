@@ -2,6 +2,7 @@
  //originally want to only put the tab handle code here,
  //now put all the after page load js code here, can put the jquery event handler code here.
 $(function() {
+   
     var tabs= $( "#tabs" ).tabs();
     $( "#tabs1" ).tabs();
 
@@ -272,7 +273,14 @@ $("#combobox6").change(function() {
           //the event has to be attahced here instead of after dialog load, since when page all load the button on dialog does not exist yet.
         $('.linkButtonVerb').on("click",function(){
         
-         alert($(this).text());
+            $.ajax({
+               method: "POST",
+               url:"/getSentenceStringById",
+               data:{sentenceId:$(this).text()},
+               success:function(sentenceResult){
+                $('#sentenceContext1').val(sentenceResult);
+               }
+           });
         });
         }
       });
@@ -290,6 +298,9 @@ $("#combobox6").change(function() {
      totalFinishedDialog.dialog("open");
    });
 
-   //link event to link button that is for sentenceId
+   /********************test*********************************/
+
+
+   /***************end of test*****************************/
 
   });
