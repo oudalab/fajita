@@ -108,7 +108,18 @@
               </div>
               <div id="FlaggedSummaryDialog" hidden></div>
               <div id="TotalFinishedDialog" hidden>
-               <div id="myDiv" style="width: 480px; height: 380px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+                 <div class="well well-sm"><strong>Sentences Summary Total: </strong><span id="sentenceCountTotal"></span></div>
+                <fieldset class="the-fieldset">
+                    <legend>Source Dictionary Summary  Total: <span id="sourceCountTotal"></span></legend>
+                    <div id="sourcePie" class="well well-sm"></div>
+                </fieldset>
+
+                  <fieldset class="the-fieldset">
+                    <legend>Verb Dictionary Summary  Total: <span id="verbCountTotal"></span></legend>
+                    <div id="verbPie" class="well well-sm"></div>
+                </fieldset>
+              
+            
               </div>
 
               </div>
@@ -309,18 +320,66 @@
  <!-- sometimes the dialog not load might because the way u render it in a javascript file may need to make it an object like my company setup structure -->
    <script>
    $(function(){
-      var data = [{
-        values: [19, 26, 55],
-        labels: ['Residential', 'Non-Residential', 'Utility'],
+
+           
+      $.ajax({
+        method: "GET",
+        url:"/getSentenceTotalCount",
+      
+        success:function(result){
+          $('#sentenceCountTotal').text(result);
+     }
+   });
+
+ 
+     $.ajax({
+        method: "GET",
+        url:"/getTotalAndFlaggedSourceCountArray",
+      
+        success:function(result){
+           var sourceCountArray=[];
+          sourceCountArray.push(result[0]-result[1]);
+          sourceCountArray.push(result[1]); 
+        var data = [{
+        values:sourceCountArray,
+        labels: ['Confidence', 'Doubt'],
         type: 'pie'
       }];
 
       var layout = {
-        height: 400,
-        width: 500
+        height: 300,
+        width: 400
       };
-      //var container=$('#myDiv');
-      Plotly.plot('myDiv', data, layout);
+      $('#sourceCountTotal').text(result[0]);
+     Plotly.plot('sourcePie', data, layout);
+        }
+      });
+
+      $.ajax({
+        method: "GET",
+        url:"/getTotalAndFlaggedVerbCountArray",
+      
+        success:function(result){
+
+         var verbCountArray=[];
+          verbCountArray.push(result[0]-result[1]);
+          verbCountArray.push(result[1]); 
+        var data1= [{
+        values:verbCountArray,
+        labels: ['Confidence', 'Doubt'],
+        type: 'pie'
+      }];
+
+      var layout1 = {
+        height: 300,
+        width: 400
+      };
+      $('#verbCountTotal').text(result[0]);
+      Plotly.plot('verbPie', data1, layout1);
+        }
+      });
+  
+
    });
    </script>
 

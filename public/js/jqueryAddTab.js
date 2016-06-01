@@ -179,7 +179,7 @@ $("#combobox6").change(function() {
 
    var totalFinishedDialog=$('#TotalFinishedDialog').dialog({
     autoOpen:false,
-    height:500,
+    height:900,
     width:550,
     modal:true,
     title:"Total Finished Summary",

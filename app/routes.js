@@ -173,8 +173,6 @@ module.exports = function(app) {
       		res.end();
       	}
       });
-      /*console.log("the sentence has been posted!");*/
-     /* res.end();*/
    
     });
  
@@ -278,7 +276,41 @@ module.exports = function(app) {
         });
        })
 
+     //get count of all the sourcedictionary 
+      app.get('/getTotalAndFlaggedSourceCountArray',function(req,res){
+         SourceDictionary.find({},function(err,data){
+           var countlist=[];
+           countlist.push(data.length);
+           SourceDictionary.find({'confidenceFlag':true},function(err1,data1){
+            countlist.push(data1.length);
+            res.json(countlist);
+            res.end();
+           });
+         });
+      });
+      //get count of all the verb dictionary 
+        app.get('/getTotalAndFlaggedVerbCountArray',function(req,res){
+         VerbDictionary.find({},function(err,data){
+           var countlist=[];
+           countlist.push(data.length);
+    
+           VerbDictionary.find({'confidenceFlag':true},function(err1,data1){
+          
+            countlist.push(data1.length);
+            res.json(countlist);
+            res.end();
+           });
+         });
+      });
 
+        //get count of the whole sentence count
+        app.get('/getSentenceTotalCount',function(req,res){
+         SentenceTaggingResult.find({},function(err,data){
+            res.json(data.length);
+            res.end();
+         });
+        
+        });
 
 //this is for loop through the sentence
 	app.get('/sentences',function(req,res){
