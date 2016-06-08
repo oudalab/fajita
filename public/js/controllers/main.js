@@ -1,4 +1,18 @@
 var app=angular.module('mainServiceModule', ['720kb.datepicker']);
+
+ app.directive('onFinishRender', function ($timeout) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            if (scope.$last === true) {
+                $timeout(function () {
+                    scope.$emit('ngRepeatFinished');
+                });
+            }
+        }
+    }
+});
+
   app.factory('Actors', ['$http',function($http) {
  		return {
  			get : function() {
@@ -79,6 +93,23 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 	        });
 		};
 
+    $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+         //define a directive that will listen the ngRepeat finish event
+        $('.sourceLink').click(function(e){
+          e.preventDefault();
+         
+          $('#sourceWord').val($(this).text());
+           $('#sourceWord').select();
+        });
+
+        $('.verbLink').click(function(e){
+          e.preventDefault();
+          $('#verbword').val($(this).text());
+           $('#verbword').select();
+
+        });
+      });
+
     $scope.nextSentence=function()
     {
           Sentences.get()
@@ -92,8 +123,6 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
          });
          
     }
-
-
 	  	Actors.get()
 		   .success(function(data){
               
@@ -139,7 +168,7 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
            $scope.wholeSentence=data.wholeSentence;
            $scope.sentenceSource=data.actor;
            $scope.sentenceVerb=data.verb;
-           $scope.sentenceTarget=data['target'];
+           
            $scope.currentSentenceId=data._id;
           
            //alert(data._id);

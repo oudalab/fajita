@@ -32,8 +32,8 @@
 <div  ng-controller="mainController">
    <div class="container" >
       <div class="row">
-         <div class="col-md-4 well well-lg" style="height:1190px;padding-top:0">
-            <div class="row">
+         <div class="col-md-4 well well-lg" style="height:880px;padding-top:0">
+            <div class="row  well well-sm">
                <div class="col-md-5">
                <button type="button" class="btn btn-success" style="padding:2px;width:100px;float:left;margin:10px" ng-click="signmeOut()">Sign Out</button>
                 </div>
@@ -43,7 +43,6 @@
                    <ul class="list-group">
                     <li class="list-group-item">
                       <span  id="sourceCount" class="label label-default label-pill pull-xs-right"></span>
-                      
                       Source Items have been tagged by you. 
                       <a id="sourceFlagged"></a>
                        of them are flagged as not sure.
@@ -65,19 +64,25 @@
             <div id="currentSentence" class="row well">
               <strong>{{wholeSentence}}</strong>
             </div>
-            <div class="row well">
-            <strong>Source:</strong>
+            <div class="row well well-sm">
+            <strong>Nouns:</strong>
             {{sentenceSource}}
+              <div>
+                <ul>
+                    <li ng-repeat="source in sentenceSource" on-finish-render="ngRepeatFinished" class="sourceLink"><a href="#">{{source}}</a></li>
+                </ul>
             </div>
-            <div class="row well">
+            </div>
+            <div class="row well well-small">
             <strong>Verb:</strong>
             {{sentenceVerb}}
+            <div>
+                <ul>
+                    <li ng-repeat="verb in sentenceVerb" on-finish-render="ngRepeatFinished" class="verbLink"><a href="#">{{verb}}</a></li>
+                </ul>
             </div>
-            <div class="row well">
-            <strong>Target:</strong>
-            {{sentenceTarget}}
             </div>
-            <div class="row">
+            <div class="row well well-sm">
             <div class="col-md-5">
                <button type="button" class="btn btn-success" style="padding:2px;width:120px;float:left;margin:10px" ng-click="nextSentence()">Next Sentence</button>
                 </div>
@@ -126,20 +131,35 @@
             </div>
          </div>
          <div class="col-md-8">
-            <div id="tabs" class="source row well well-lg"  style="height:470px;margin-bottom:5px;">
+            <div class="heading row well well-sm" style="height:27px"><strong>Nouns Tagging Section</strong><div>
+            <div id="tabs" class="source row well well-lg"  style="height:495px;margin-bottom:5px;">
+               
                <ul id="sourceTabs">
-                  <li><a href="#tabs-1" id="tabid1">Add-Source-Role</a></li>
-                  <li><a href="#tabs-2" id="tabid2">Source-Summary</a></li>
+                  <li><a href="#tabs-1" id="tabid1">Role</a></li>
+                  <li><a href="#tabs-2" id="tabid2">Role-Summary</a></li>
                </ul>
                <div id="tabs-1">
                  <form id="sourceForm">
-                  <strong>Source:</strong><input id="sourceWord" value={{sentenceSource}} readonly>
-                  <div class="row" style="padding:0px">
-                     <div class="col-md-6" style="font-weight:bold">ACTOR-SECTION</div>
-                     <div class="col-md-3 col-md-offset-3">
-                        <button type="button" id="addSource" class="glyphicon glyphicon-plus" style="background-color:#5cb85c" >Add Another Role</button>
+                         <div class="row" style="padding:0px">
+                     <div class="col-md-6" style="font-weight:bold">
+                       <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Source">Source
+                          </label>
+                          <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Target">Target
+                          </label>
+                          <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Other">Other
+                          </label>
                      </div>
-                  </div>
+                     <div class="col-md-3 col-md-offset-3">
+                        <!-- <button type="button" id="addSource" class="glyphicon glyphicon-plus" style="background-color:#5cb85c" >Add Another Role</button> -->
+                         <button type="button" class="btn btn-success" id="addSource" style="padding:2px;width:150x;">Add Another Role</button>
+                     </div>
+                     </div>
+                       
+                  <strong>Source:</strong><input id="sourceWord">
+                 
                   <div class="row" style="padding:2px">
 
                      <div class="ui-widget col-md-6">
@@ -182,9 +202,7 @@
                            <input ng-model="sourceForm.startdate"/>
                         </datepicker>
                      </div>
-                     <div class="col-md-3 col-md-offset-1">
-                        <label> <input type="checkbox" name="sourcecheck" id="sourceflag" ng-model="sourceForm.sourceflag">not sure?</label>
-                     </div>
+                    
                   </div>
                   <div class="row" style="padding:2px">
                      <div class="col-md-2" style="font-weight:bold">
@@ -195,7 +213,13 @@
                            <input ng-model="sourceForm.enddate"/>
                         </datepicker>
                      </div>
-                     <div class="col-md-3 col-md-offset-1">
+                     
+                  </div>
+                  <div class="row" style="padding:2px">
+                     <div class="col-md-3">   
+                        <label> <input type="checkbox" name="sourcecheck" id="sourceflag" ng-model="sourceForm.sourceflag">not sure?</label>
+                     </div>
+                     <div class="col-md-3  col-md-offset-6">
                         <button type="button" class="btn btn-success" ng-click="sourceForm.submitSourceForm()" style="padding:2px;width:100px;">commit</button>
                      </div>
                   </div>
@@ -206,15 +230,14 @@
                 <div id="summary"></div>
                 </div>
             </div>
-             <form id="verbForm">
-            <div class="verbwell row well well-lg" style="height:240px;margin-bottom:0px;background-color:#fbc97f;">
-           <strong>Verb:</strong><input id="verbword" value={{sentenceVerb}} readonly>
-               <div class="row" style="padding:0px">
-                  <div class="col-md-6" style="font-weight:bold">VERB-SECTION</div>
-                  <div class="col-md-3 col-md-offset-3">
-                     <label> <input type="checkbox" name="verbcheck" id="verbflag" >not sure?</label>
-                  </div>
-               </div>
+            <div class="heading row well well-sm" style="height:27px"><strong>Verb Tagging Section</strong><div>
+            <form id="verbForm">
+             
+            <div class="verbwell row well well-lg" style="height:315px;margin-bottom:0px;background-color:#fbc97f;">
+             
+              <strong>Verb:</strong><input id="verbword">
+
+              
                <div class="row" style="padding:2px">
                 
                   <div class="ui-widget col-md-6">
@@ -224,92 +247,19 @@
                         <button id="toggle3">Hide Underlying Select</button>
                      </div>
                   </div>
-                  <div class="col-md-3 col-md-offset-3">
+                 
+               </div>
+                <div class="row" style="padding:2px">
+                 
+                  <div class="col-md-3">
+                     <label> <input type="checkbox" name="verbcheck" id="verbflag" >not sure?</label>
+                  </div>
+                   <div class="col-md-3 col-md-offset-6">
                      <button type="button" class="btn btn-success" ng-click="verbForm.submitVerbForm()" style="padding:2px;width:100px;">commit</button>
                   </div>
-                 
+               </div>
                   </form>
                </div>
-            </div>
-             <div id="tabs1" class="target row well well-lg"  style="height:470px;margin-bottom:5px;">
-               <ul id="targetTabs">
-                  <li><a href="#tabs-3" id="tabid3">Add-Target-Role</a></li>
-                  <li><a href="#tabs-4" id="tabid4">Target-Summary</a></li>
-               </ul>
-               <div id="tabs-3">
-                 <form id="targetForm">
-                  <strong>Target:</strong><input id="targetWord" value={{sentenceTarget}} readonly>
-                  <div class="row" style="padding:0px">
-                     <div class="col-md-6" style="font-weight:bold">TARGET-SECTION</div>
-                     <div class="col-md-3 col-md-offset-3">
-                        <button type="button" id="addTarget" class="glyphicon glyphicon-plus" style="background-color:#5cb85c" >Add Another Role</button>
-                     </div>
-                  </div>
-                  <div class="row" style="padding:2px">
-
-                     <div class="ui-widget col-md-6">
-                        <label>country </label>
-                        <input hidden id="combobox3input" class="comboboxinput"/>
-                        <select id='combobox4' class="comboboxGroup" ng-model="targetForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
-                        <div>
-                           <button id="toggle4">Hide Underlying Select</button>
-                        </div>
-                     </div>
-                  </div>
-                 
-                  <div class="row" style="padding:2px">
-                     <div class="ui-widget col-md-6">
-                        <label>1st role</label>
-                        <input hidden id="combobox4input" class="comboboxinput"/>
-                        <select id='combobox5' class="comboboxGroup" ng-model="targetForm.rolefirst" ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ></select>
-                        <div>
-                           <button id="toggle5">Hide Underlying Select</button>
-                        </div>
-                     </div>
-                  </div>
-                    <div class="row" style="padding:2px">
-                     <div class="ui-widget col-md-6">
-                        <label>2nd role </label>
-                        <input hidden id="combobox5input" class="comboboxinput"/>
-                        <select id='combobox6' class="comboboxGroup" ng-model="targetForm.rolesecond" ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ></select>
-                        <div>
-                           <button id="toggle6">Hide Underlying Select</button>
-                        </div>
-                     </div>
-                  </div>
-                
-                  <div class="row" style="padding:2px">
-                     <div class="col-md-2" style="font-weight:bold">
-                        from:
-                     </div>
-                     <div class="col-md-6">
-                        <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                           <input ng-model="targetForm.startdate"/>
-                        </datepicker>
-                     </div>
-                     <div class="col-md-3 col-md-offset-1">
-                        <label> <input type="checkbox" name="targetcheck" id="targetflag" ng-model="targetForm.targetflag">not sure?</label>
-                     </div>
-                  </div>
-                  <div class="row" style="padding:2px">
-                     <div class="col-md-2" style="font-weight:bold">
-                        to:
-                     </div>
-                     <div class="col-md-6">
-                        <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                           <input ng-model="targetForm.enddate" />
-                        </datepicker>
-                     </div>
-                     <div class="col-md-3 col-md-offset-1">
-                        <button type="button" class="btn btn-success" ng-click="targetForm.submitTargetForm()" style="padding:2px;width:100px;">commit</button>
-                     </div>
-                  </div>
-                  
-               </form>
-               </div>
-                <div id="tabs-4">
-                <div id="summaryTarget"></div>
-                </div>
             </div>
             
          </div>
@@ -320,6 +270,19 @@
  <!-- sometimes the dialog not load might because the way u render it in a javascript file may need to make it an object like my company setup structure -->
    <script>
    $(function(){
+
+     var test=function()
+     {
+      alert("hello world");
+     }
+
+    $('a').click( function(e) {
+      e.preventDefault(); 
+      /*your_code_here;*/
+   /*   alert($(this).text());*/
+     console.log("hello world!");
+      return false; 
+    });
 
            
       $.ajax({
