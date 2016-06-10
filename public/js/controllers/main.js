@@ -192,7 +192,13 @@ $scope.sourceForm.submitSourceForm=function(item,event){
   {
     flagged=true;
   }
-  if()
+   if ($("input:radio[name='inlineRadioOptions']:checked").length!=1 ) 
+   {
+      alert('You have to choose from [Source],[Target] or [Other] before commit');
+      return false;
+   }
+  
+
   var sentenceId=$scope.currentSentenceId;
 	var sourceDicObject={
        word: $('#sourceWord').val(),
@@ -266,12 +272,6 @@ $scope.targetForm.submitTargetForm=function(item,event){
   {
     flagged=true;
   }
-
-/* if ($("input:radio[name='inlineRadioOptions']:checked").val() <0 ) 
-     {
-        alert('Nothing is checked!');
-        return false;
-     }*/
 
   var sentenceId=$scope.currentSentenceId;
   var sourceDicObject={
