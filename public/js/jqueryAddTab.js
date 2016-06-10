@@ -44,17 +44,21 @@ $(function() {
     //alert they commit the current one  
 
      if(confirm("This will clear all the input,please make sure you commit the current role first")){
-       $('#sourceForm')[0].reset();
+      var sourceWordOld=$('#sourceWord').val();
+      $('#sourceForm')[0].reset();
     //need this otherwise when clear it will show up the first option in the input.
      //$(".combobox").prop("selectedIndex", -1);--class won't work when changing only the underlying input and try to clear it later
      $("#combobox0").prop("selectedIndex", -1);
      $("#combobox1").prop("selectedIndex", -1);
      $("#combobox2").prop("selectedIndex", -1);
-
+      $('#sourceWord').val(sourceWordOld);
+     
+     
     }
     else{
         return false;
     }  
+
     });
       $("#addTarget").click(function(){ 
     //alert they commit the current one  

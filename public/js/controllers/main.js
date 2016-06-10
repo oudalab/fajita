@@ -183,7 +183,8 @@ $scope.sourceForm.rolesecond="";
 $scope.sourceForm.startdate="";
 $scope.sourceForm.enddate="";
 $scope.sourceForm.sourceflag="";
-
+ //define the temp list that is going to submit for the whole sentences
+ var nouns=[];
 
 $scope.sourceForm.submitSourceForm=function(item,event){
 	
@@ -197,11 +198,13 @@ $scope.sourceForm.submitSourceForm=function(item,event){
       alert('You have to choose from [Source],[Target] or [Other] before commit');
       return false;
    }
-  
 
+   //now if the one of the radio button options has been chosen
+   var word=$('#sourceWord').val();
+  
   var sentenceId=$scope.currentSentenceId;
 	var sourceDicObject={
-       word: $('#sourceWord').val(),
+       word: word,
        sentenceId:sentenceId,
        //this is they way to go there is bug in combobox auto complete use jquery directly
        countryCode:$('#combobox0input').val(), //countryCode
@@ -212,6 +215,15 @@ $scope.sourceForm.submitSourceForm=function(item,event){
        confidenceFlag:flagged
        //get the useId from the req in api.
 	};
+    if ($("input:radio[name='inlineRadioOptions']:checked").val()==="Source")
+    { 
+      nouns.push(word);
+      if(nouns.length===2)
+      {
+        alert(nouns[0]+" "+nouns[1]);
+      }
+    } 
+
 	var responsePromise = $http.post("/api/addSourceDictionary", sourceDicObject);
        responsePromise.success(function(dataFromServer, status, headers, config) {
           console.log("Submitting source form is successful!");
