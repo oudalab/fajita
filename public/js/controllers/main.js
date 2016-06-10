@@ -184,7 +184,9 @@ $scope.sourceForm.startdate="";
 $scope.sourceForm.enddate="";
 $scope.sourceForm.sourceflag="";
  //define the temp list that is going to submit for the whole sentences
- var nouns=[];
+ var sourceList=[];
+ var targetList=[];
+ var verbList=[];
 
 $scope.sourceForm.submitSourceForm=function(item,event){
 	
@@ -203,25 +205,44 @@ $scope.sourceForm.submitSourceForm=function(item,event){
    var word=$('#sourceWord').val();
   
   var sentenceId=$scope.currentSentenceId;
+  var countryCode=$('#combobox0input').val();
+  var firstRoleCode=$('#combobox1input').val();
+  var secondRoleCode=$('#combobox2input').val();
+  var dateStart=$scope.sourceForm.startdate;
+  var dateEnd=$scope.sourceForm.enddate;
+
 	var sourceDicObject={
        word: word,
        sentenceId:sentenceId,
        //this is they way to go there is bug in combobox auto complete use jquery directly
-       countryCode:$('#combobox0input').val(), //countryCode
-       firstRoleCode:$('#combobox1input').val(), //firstRoleCode
-       secondRoleCode:$('#combobox2input').val(),//secondRoleCode
-       dateStart:$scope.sourceForm.startdate,
-       dateEnd:$scope.sourceForm.enddate,
+       countryCode:countryCode, //countryCode
+       firstRoleCode:firstRoleCode, //firstRoleCode
+       secondRoleCode:secondRoleCode,//secondRoleCode
+       dateStart:dateStart,
+       dateEnd:dateEnd,
        confidenceFlag:flagged
        //get the useId from the req in api.
 	};
-    if ($("input:radio[name='inlineRadioOptions']:checked").val()==="Source")
+  //if it is source push into sourcelist 
+  var chosenOption=$("input:radio[name='inlineRadioOptions']:checked").val();
+    if (chosenOption!="Other")
     { 
-      nouns.push(word);
-      if(nouns.length===2)
-      {
-        alert(nouns[0]+" "+nouns[1]);
-      }
+        var hiddenNounObject={
+          word:word,
+          countryCode:countryCode,
+          firstRoleCode:firstRoleCode,
+          secondRoleCode:secondRoleCode,
+          dateStart:dateStart,
+          dateEnd:dateEnd
+        }
+        if(chosenOption==="Source")
+        {
+          sourceList.push(hiddenNounObject);
+        }
+        else(chosenOption==="Target")
+        {
+          targetList.push(hiddenNounObject);
+        }
     } 
 
 	var responsePromise = $http.post("/api/addSourceDictionary", sourceDicObject);
@@ -243,21 +264,29 @@ $scope.verbForm.submitVerbForm=function(item,event){
   {
     flagged=true;
   }
+  var word=$('#verbword').val();
+  var verbcode=$('#combobox6input').val();
+
    var sentenceId=$scope.currentSentenceId;
     var verbDicObject={
-      word:$('#verbword').val(),
+      word:word,
       sentenceId:sentenceId,
-     verbcode:$('#combobox6input').val(),
+     verbcode:verbcode,
      confidenceFlag:flagged
     };
 
-      var responsePromise = $http.post("/api/addVerbDictionary", verbDicObject);
-       responsePromise.success(function(dataFromServer, status, headers, config) {
-          console.log("Submitting verb form is successful!");
-       });
-        responsePromise.error(function(data, status, headers, config) {
-          alert("Submitting verb form failed!");
-       }); 
+    var hiddenVerbObject={
+      word:word,
+      verbcode:verbcode
+    }
+    verbList.push(hiddenVerbObject);
+    var responsePromise = $http.post("/api/addVerbDictionary", verbDicObject);
+     responsePromise.success(function(dataFromServer, status, headers, config) {
+        console.log("Submitting verb form is successful!");
+     });
+      responsePromise.error(function(data, status, headers, config) {
+        alert("Submitting verb form failed!");
+     }); 
 }
 
 
@@ -267,7 +296,7 @@ $scope.verbForm.submitVerbForm=function(item,event){
 
 /**********target Form***************************************/
 
-$scope.targetForm={};
+/*$scope.targetForm={};
 $scope.targetForm.word="";
 $scope.targetForm.country="";
 $scope.targetForm.rolefirst="";
@@ -307,7 +336,7 @@ $scope.targetForm.submitTargetForm=function(item,event){
           alert("Submitting form failed!");
       });
 }
-
+*/
 /**********end of target Form***************************************/
 
 /**********commit the whole sentence********************************/
