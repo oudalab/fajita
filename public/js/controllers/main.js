@@ -192,7 +192,8 @@ $scope.sourceForm.submitSourceForm=function(item,event){
   {
     flagged=true;
   }
-   var sentenceId=$scope.currentSentenceId;
+  if()
+  var sentenceId=$scope.currentSentenceId;
 	var sourceDicObject={
        word: $('#sourceWord').val(),
        sentenceId:sentenceId,
@@ -265,7 +266,14 @@ $scope.targetForm.submitTargetForm=function(item,event){
   {
     flagged=true;
   }
-   var sentenceId=$scope.currentSentenceId;
+
+/* if ($("input:radio[name='inlineRadioOptions']:checked").val() <0 ) 
+     {
+        alert('Nothing is checked!');
+        return false;
+     }*/
+
+  var sentenceId=$scope.currentSentenceId;
   var sourceDicObject={
        sentenceId:sentenceId,
        word: $('#targetWord').val(), 
