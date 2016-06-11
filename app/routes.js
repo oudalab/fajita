@@ -133,48 +133,23 @@ module.exports = function(app) {
          });
          res.end();
     });
-    app.post('/api/addSentenceTaggingResult',function(req,res){
-/*      if(req.body.sourceStartDate==="")
-		{
-			req.body.sourceStartDate=new Date("1800-01-01");
-		}
-		if(req.body.sourceEndDate==="")
-		{
-			req.body.sourceEndDate=new Date("1800-01-01");
-		}
 
-		 if(req.body.targetStartDate==="")
-		{
-			req.body.targetStartDate=new Date("1800-01-01");
-		}
-		if(req.body.targetEndDate==="")
-		{
-			req.body.targetEndDate=new Date("1800-01-01");
-		}*/
+    app.post('/addNewSentenceTaggingResult',function(req,res){
+   
+
       SentenceTaggingResult.create({
-      	sentenceId:req.body.sentenceId,
-      	/*sourceCountryCode:req.body.sourceCountryCode,
-      	sourceFirstroleCode:req.body.sourceFirstroleCode,
-      	sourceSecondroleCode:req.body.sourceSecondroleCode,
-      	sourceStartDate:req.body.sourceStartDate,
-      	sourceEndDate:req.body.sourceEndDate,
-      	verbCode:req.body.verbCode,
-      	targetCountryCode:req.body.targetCountryCode,
-      	targetFirstroleCode:req.body.targetFirstroleCode,
-      	targetSecondroleCode:req.body.targetSecondroleCode,
-      	targetStartDate:req.body.targetStartDate,
-      	targetEndDate:req.body.targetEndDate,*/
+        sentenceId:req.body.sentenceId,
         sourceList:req.body.sourceList,
         verbList:req.body.verbList,
         targetList: req.body.targetList,
-      	userId:req.user.id
+        userId:req.user.id
       },function(err,data){
-      	if(err)
-      		console.error(err);
-      	else
-      	{
-      		res.end();
-      	}
+        if(err)
+          console.error(err);
+        else
+        {
+          res.end();
+        }
       });
    
     });

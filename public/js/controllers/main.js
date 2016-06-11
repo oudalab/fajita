@@ -186,7 +186,7 @@ $scope.sourceForm.sourceflag="";
  //define the temp list that is going to submit for the whole sentences
  var sourceList=[];
  var targetList=[];
- var verbList=[];
+
 
 $scope.sourceForm.submitSourceForm=function(item,event){
 	
@@ -213,12 +213,12 @@ $scope.sourceForm.submitSourceForm=function(item,event){
 
     if(dateStart==="")
     {
-      dateStart=new Date("1800-01-01");
+      dateStart="1800-01-01";
     }
 
     if(dateEnd==="")
     {
-      dateEnd=new Date("1800-01-01");
+      dateEnd="1800-01-01";
     }
 
 	var sourceDicObject={
@@ -247,8 +247,8 @@ $scope.sourceForm.submitSourceForm=function(item,event){
               sourceSecondRoleCode:secondRoleCode,
               sourceStartDate:dateStart,
               sourceEndDate:dateEnd
-
               }
+
           sourceList.push(hiddenNounObject);
         }
         else if(chosenOption==="Target")
@@ -260,7 +260,6 @@ $scope.sourceForm.submitSourceForm=function(item,event){
               targteSecondRoleCode:secondRoleCode,
               targetStartDate:dateStart,
               targetEndDate:dateEnd
-
               }
           targetList.push(hiddenNounObject);
         }
@@ -279,6 +278,7 @@ $scope.sourceForm.submitSourceForm=function(item,event){
 
 /*****************verb form********************************************/
 $scope.verbForm={};
+ var verbList=[];
 $scope.verbForm.submitVerbForm=function(item,event){
     var flagged=false;
   if($('#verbflag').prop("checked"))
@@ -297,8 +297,8 @@ $scope.verbForm.submitVerbForm=function(item,event){
     };
 
     var hiddenVerbObject={
-      word:word,
-      verbcode:verbcode
+      verbWord:word,  //verbWord has to be the same in the sentenceTaggingResult.js model
+      verbCode:verbcode //verbCode has to be the same with in the sentenceTaggingResult.js model
     }
     verbList.push(hiddenVerbObject);
     var responsePromise = $http.post("/api/addVerbDictionary", verbDicObject);
@@ -314,52 +314,6 @@ $scope.verbForm.submitVerbForm=function(item,event){
 /************end of verb form*******************************************/
 
 
-
-/**********target Form***************************************/
-
-/*$scope.targetForm={};
-$scope.targetForm.word="";
-$scope.targetForm.country="";
-$scope.targetForm.rolefirst="";
-$scope.targetForm.rolesecond="";
-$scope.targetForm.startdate="";
-$scope.targetForm.enddate="";
-$scope.targetForm.targetflag="";
-
-
-$scope.targetForm.submitTargetForm=function(item,event){
- 
-    var flagged=false;
-  if($('#targetflag').prop("checked"))
-  {
-    flagged=true;
-  }
-
-  var sentenceId=$scope.currentSentenceId;
-  var sourceDicObject={
-       sentenceId:sentenceId,
-       word: $('#targetWord').val(), 
-       //this is they way to go there is bug in combobox auto complete use jquery directly
-       countryCode:$('#combobox3input').val(), //countryCode
-       firstRoleCode:$('#combobox4input').val(), //firstRoleCode
-       secondRoleCode:$('#combobox5input').val(),//secondRoleCode
-       dateStart:$scope.sourceForm.startdate,
-       dateEnd:$scope.sourceForm.enddate,
-       confidenceFlag:flagged
-       //get the useId from the req in api.
-  };
-  //targetDictionary and sourceDictionary share the same schema.
-  var responsePromise = $http.post("/api/addSourceDictionary", sourceDicObject);
-       responsePromise.success(function(dataFromServer, status, headers, config) {
-          console.log("Submitting source form is successful!");
-       });
-        responsePromise.error(function(data, status, headers, config) {
-          alert("Submitting form failed!");
-      });
-}
-*/
-/**********end of target Form***************************************/
-
 /**********commit the whole sentence********************************/
 
     $scope.commitSentence=function()
@@ -367,7 +321,6 @@ $scope.targetForm.submitTargetForm=function(item,event){
         var sentenceId=$scope.currentSentenceId;
 
         var wholeSentenceObject={
-
           sentenceId:sentenceId,
           sourceList:sourceList,
           verbList:verbList,
@@ -382,19 +335,22 @@ $scope.targetForm.submitTargetForm=function(item,event){
        });
 
       //create the new tagging result
-      var responsePromise = $http.post("/api/addSentenceTaggingResult", wholeSentenceObject);
+      var responsePromise = $http.post("/addNewSentenceTaggingResult", wholeSentenceObject);
        responsePromise.success(function(dataFromServer, status, headers, config) {
           console.log("Submitting source form is successful!");
-                sourceList=[];
-                verbList=[];
-                targetList=[];
+          //clear the list
+          sourceList=[];
+          targetList=[];
+          verbList=[];
        });
         responsePromise.error(function(data, status, headers, config) {
-          alert("Submitting form failed!");
+          //alert("Submitting form failed!");
+          console.log("Submitting source form failed!");
+             //clear the list
+          sourceList=[];
+          targetList=[];
+          verbList=[];
       });
-
-      //refresh the list
-
     }
 /**************end of commit the whole sentence**********************/
 
