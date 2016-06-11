@@ -326,9 +326,6 @@ $scope.verbForm.submitVerbForm=function(item,event){
           verbList:verbList,
           targetList:targetList
           }
-      //delete later.   
-      alert("this is the sentenceId: "+sentenceId);
-
       //make the tag to be 1 after commit the whole sentence.
        $http.post('/updateSentenceTag',{'sentenceId':sentenceId}).success(function(data){
               console.log("sentence tag is updated!");

@@ -91,6 +91,11 @@ tr:nth-child(even){background-color: #f2f2f2}
 {
 	background-color:beige;
 }
+.alert
+{
+	padding:0px;
+	margin:0px;
+}
 
 ::selection {
     background-color:#5cb85c;

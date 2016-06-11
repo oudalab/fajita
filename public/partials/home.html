@@ -82,12 +82,18 @@
                 </ul>
             </div>
             </div>
-            <div class="row well well-sm">
+            <div class="row well well-sm" style="height:60px">
             <div class="col-md-5">
                <button type="button" class="btn btn-success" style="padding:2px;width:120px;float:left;margin:10px" ng-click="nextSentence()">Next Sentence</button>
                 </div>
                 <div class="col-md-7">
-               <button type="button" class="btn btn-success" style="padding:2px;width:160px;float:left;margin:10px" ng-click="commitSentence()">Commit Sentence</button>
+               <button type="button" class="btn btn-success" style="padding:2px;width:160px;float:left;margin:10px" id="sentencecommit" ng-click="commitSentence()">Commit Sentence</button>
+                <div class="pull-right">
+                        <div class="alert alert-success fade" id="sentencealert">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          <strong>Done!</strong>
+                        </div>
+                      </div>
                 </div>
             </div>
             <div class="row well" id="adminWell">
@@ -154,7 +160,7 @@
                             <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Other">Other
                           </label>
                      </div>
-                     <div class="col-md-3 col-md-offset-3">
+                     <div class="col-md-3">
                         <!-- <button type="button" id="addSource" class="glyphicon glyphicon-plus" style="background-color:#5cb85c" >Add Another Role</button> -->
                          <button type="button" class="btn btn-success" id="addSource" style="padding:2px;width:150x;">Add Another Role</button>
                      </div>
@@ -224,8 +230,14 @@
                      <div class="col-md-3">   
                         <label> <input type="checkbox" name="sourcecheck" id="sourceflag" ng-model="sourceForm.sourceflag">not sure?</label>
                      </div>
-                     <div class="col-md-3  col-md-offset-6">
-                        <button type="button" class="btn btn-success" ng-click="sourceForm.submitSourceForm()" style="padding:2px;width:100px;">commit</button>
+                     <div class="col-md-3  col-md-offset-3">
+                        <button type="button" class="btn btn-success" ng-click="sourceForm.submitSourceForm()" style="padding:2px;width:100px;" id="nouncommit">commit</button>
+                        <div class="pull-right">
+                        <div class="alert alert-success fade" id="nounalert">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          <strong>Done!</strong>
+                        </div>
+                      </div>
                      </div>
                   </div>
                  
@@ -257,10 +269,16 @@
                 <div class="row" style="padding:2px">
                  
                   <div class="col-md-3">
-                     <label> <input type="checkbox" name="verbcheck" id="verbflag" >not sure?</label>
+                     <label> <input type="checkbox" name="verbcheck" id="verbflag" style="margin:5px">not sure?</label>
                   </div>
-                   <div class="col-md-3 col-md-offset-6">
-                     <button type="button" class="btn btn-success" ng-click="verbForm.submitVerbForm()" style="padding:2px;width:100px;">commit</button>
+                   <div class="col-md-3 col-md-offset-3">
+                     <button type="button" class="btn btn-success" ng-click="verbForm.submitVerbForm()" style="padding:2px;width:100px;" id="verbcommit">commit</button>
+                       <div class="pull-right">
+                        <div class="alert alert-success fade" id="verbalert">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          <strong>Done!</strong>
+                        </div>
+                      </div>
                   </div>
                </div>
                   </form>
@@ -275,7 +293,29 @@
  <!-- sometimes the dialog not load might because the way u render it in a javascript file may need to make it an object like my company setup structure -->
    <script>
    $(function(){
-           
+
+     //aninamation for click button
+     $("#nouncommit").on("click", function() {
+      //if the option is not be chosen then no success animation should show up.
+      if ($("input:radio[name='inlineRadioOptions']:checked").length===1 ) 
+      {
+        $("#nounalert").removeClass("in").show();
+      $("#nounalert").delay(200).addClass("in").fadeOut(300);
+      }
+      
+    });
+
+     $("#verbcommit").on("click", function() {
+      $("#verbalert").removeClass("in").show();
+      $("#verbalert").delay(200).addClass("in").fadeOut(300);
+    });
+
+      $("#sentencecommit").on("click", function() {
+      $("#sentencealert").removeClass("in").show();
+      $("#sentencealert").delay(200).addClass("in").fadeOut(300);
+    });
+
+     //end of animation for clicking button      
       $.ajax({
         method: "GET",
         url:"/getSentenceTotalCount",
