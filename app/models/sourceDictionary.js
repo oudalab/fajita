@@ -1,5 +1,5 @@
 var mongoose=require("mongoose");
-var FormatDate=mongoose.Schema.Types.FormatDate=require('../../node_modules/mongoose-schema-formatdate/formatdate')
+var FormatDate=mongoose.Schema.Types.FormatDate=require('../../node_modules/mongoose-schema-formatdate/formatdate');
 
 module.exports=mongoose.model('sourceDictionary',{
  sentenceId:{type:String},

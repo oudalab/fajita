@@ -211,6 +211,16 @@ $scope.sourceForm.submitSourceForm=function(item,event){
   var dateStart=$scope.sourceForm.startdate;
   var dateEnd=$scope.sourceForm.enddate;
 
+    if(dateStart==="")
+    {
+      dateStart=new Date("1800-01-01");
+    }
+
+    if(dateEnd==="")
+    {
+      dateEnd=new Date("1800-01-01");
+    }
+
 	var sourceDicObject={
        word: word,
        sentenceId:sentenceId,
@@ -227,20 +237,31 @@ $scope.sourceForm.submitSourceForm=function(item,event){
   var chosenOption=$("input:radio[name='inlineRadioOptions']:checked").val();
     if (chosenOption!="Other")
     { 
-        var hiddenNounObject={
-          word:word,
-          countryCode:countryCode,
-          firstRoleCode:firstRoleCode,
-          secondRoleCode:secondRoleCode,
-          dateStart:dateStart,
-          dateEnd:dateEnd
-        }
+       
         if(chosenOption==="Source")
         {
+              var hiddenNounObject={
+              sourceWord:word,
+              sourceCountryCode:countryCode,
+              sourceFirstRoleCode:firstRoleCode,
+              sourceSecondRoleCode:secondRoleCode,
+              sourceStartDate:dateStart,
+              sourceEndDate:dateEnd
+
+              }
           sourceList.push(hiddenNounObject);
         }
-        else(chosenOption==="Target")
+        else if(chosenOption==="Target")
         {
+           var hiddenNounObject={
+              targetWord:word,
+              targteCountryCode:countryCode,
+              targetFirstRoleCode:firstRoleCode,
+              targteSecondRoleCode:secondRoleCode,
+              targetStartDate:dateStart,
+              targetEndDate:dateEnd
+
+              }
           targetList.push(hiddenNounObject);
         }
     } 
@@ -346,23 +367,15 @@ $scope.targetForm.submitTargetForm=function(item,event){
         var sentenceId=$scope.currentSentenceId;
 
         var wholeSentenceObject={
+
           sentenceId:sentenceId,
-          sourceCountryCode:$('#combobox0input').val(),
-          sourceFirstroleCode:$('#combobox1input').val(),
-          sourceSecondroleCode:$('#combobox2input').val(),
-          sourceStartDate:$scope.sourceForm.startdate,
-          sourceEndDate:$scope.sourceForm.enddate,
-          verbCode:$('#combobox6input').val(),
-          targetCountryCode:$('#combobox3input').val(),
-          targetFirstroleCode:$('#combobox4input').val(),
-          targetSecondroleCode:$('#combobox5input').val(),
-          targetStartDate:$scope.targetForm.startdate,
-          targetEndDate:$scope.targetForm.enddate
+          sourceList:sourceList,
+          verbList:verbList,
+          targetList:targetList
           }
       //delete later.   
       alert("this is the sentenceId: "+sentenceId);
 
-      
       //make the tag to be 1 after commit the whole sentence.
        $http.post('/updateSentenceTag',{'sentenceId':sentenceId}).success(function(data){
               console.log("sentence tag is updated!");
@@ -372,10 +385,15 @@ $scope.targetForm.submitTargetForm=function(item,event){
       var responsePromise = $http.post("/api/addSentenceTaggingResult", wholeSentenceObject);
        responsePromise.success(function(dataFromServer, status, headers, config) {
           console.log("Submitting source form is successful!");
+                sourceList=[];
+                verbList=[];
+                targetList=[];
        });
         responsePromise.error(function(data, status, headers, config) {
           alert("Submitting form failed!");
       });
+
+      //refresh the list
 
     }
 /**************end of commit the whole sentence**********************/

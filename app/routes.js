@@ -134,7 +134,7 @@ module.exports = function(app) {
          res.end();
     });
     app.post('/api/addSentenceTaggingResult',function(req,res){
-      if(req.body.sourceStartDate==="")
+/*      if(req.body.sourceStartDate==="")
 		{
 			req.body.sourceStartDate=new Date("1800-01-01");
 		}
@@ -150,10 +150,10 @@ module.exports = function(app) {
 		if(req.body.targetEndDate==="")
 		{
 			req.body.targetEndDate=new Date("1800-01-01");
-		}
+		}*/
       SentenceTaggingResult.create({
       	sentenceId:req.body.sentenceId,
-      	sourceCountryCode:req.body.sourceCountryCode,
+      	/*sourceCountryCode:req.body.sourceCountryCode,
       	sourceFirstroleCode:req.body.sourceFirstroleCode,
       	sourceSecondroleCode:req.body.sourceSecondroleCode,
       	sourceStartDate:req.body.sourceStartDate,
@@ -163,7 +163,10 @@ module.exports = function(app) {
       	targetFirstroleCode:req.body.targetFirstroleCode,
       	targetSecondroleCode:req.body.targetSecondroleCode,
       	targetStartDate:req.body.targetStartDate,
-      	targetEndDate:req.body.targetEndDate,
+      	targetEndDate:req.body.targetEndDate,*/
+        sourceList:req.body.sourceList,
+        verbList:req.body.verbList,
+        targetList: req.body.targetList,
       	userId:req.user.id
       },function(err,data){
       	if(err)
