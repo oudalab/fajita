@@ -8,9 +8,6 @@ var User=require('./models/user');
 var Sentence=require('./models/sentence');
 var SentenceTaggingResult=require('./models/sentenceTaggingResult');
 var mongoose = require('mongoose');
-var paginate = require('mongoose-paginate');
-
-
 
 // keep this before all routes that will use pagination
 
@@ -259,22 +256,26 @@ module.exports = function(app) {
            res.end();
         });
        })
-
-       //get all the flagged noun records
-    /*   app.get('/getAllFlaggedNouns',function(req,res){
-         SourceDictionary.find({}).paginate({page:req.query.page},function(err,data){
-            res.render('./sourceDictionaryTableWithEdit.jade',{allFlaggedNouns:data});
-            res.end();
-         });
-       });*/
         
         app.get('/getAllFlaggedNouns', function(req, res, next) {
-                SourceDictionary.paginate({}, { page: 10, limit: 50 }, function(err, data) {
-                    /*res.render('./sourceDictionaryTableWithEdit.jade',{allFlaggedNouns:data.docs});*/
-                    console.log(data.total);
-
+                SourceDictionary.paginate({'confidenceFlag':true}, { page: req.query.page, limit: req.query.limit }).then(function(result)
+                {
+                    
+                    var totalPages=0;
+                    if(result.total%req.query.limit===0)
+                    {
+                       totalPages=Math.trunc(result.total/req.query.limit);
+                    }
+                    else
+                    {
+                      totalPages=Math.trunc(result.total/req.query.limit)+1;
+                    }
+                    
+                    res.render('./sourceDictionaryTableWithEdit.jade',{allFlaggedNouns:result.docs,totalPages:totalPages});
+                    
                     res.end();
-              });
+                  });
+     
         });
 
      //get count of all the sourcedictionary 

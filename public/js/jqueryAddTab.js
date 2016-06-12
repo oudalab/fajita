@@ -177,6 +177,7 @@ $("#combobox6").change(function() {
      buttons:{
       Close:function(){
         flaggedSummaryDialog.dialog("close");
+
       }
      }
     });
@@ -303,10 +304,34 @@ $("#combobox6").change(function() {
      $.ajax({
       method:"GET",
       url:"/getAllFlaggedNouns",
+      data:{page:1,limit:10},
       success:function(flaggedResult){
         $('#flaggedTable').html(flaggedResult);
+
+        var goButton = $('#goButton');
+        //make sure the click event is only attahced once
+        //if(-1 === $.inArray(onButtonClicked, goButton.data('events').click))
+              //the unbind will make sure this click event will only be fired once.
+              goButton.unbind().click(function(){
+             $.ajax({
+                  method:"GET",
+                  url:"/getAllFlaggedNouns",
+                  data:{page:$('#gotoPage').val(),limit:10},
+                  success:function(flaggedResult){
+                    $('#flaggedTable').html(flaggedResult);
+                  }
+
+             });
+
+        });
+
+       
+    
+    
       }
      });
+
+
 
    });
 

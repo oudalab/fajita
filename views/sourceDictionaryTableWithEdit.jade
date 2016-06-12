@@ -1,4 +1,9 @@
 div(id="sourceEditTable" class="table table-sm")
+  div#searchwell&attributes({'class': 'searchwell row'})
+    div#totalPages1&attributes({'class':"col-md-2"})
+      p!= '<strong>Total Pages:</strong>' 
+    div#totalPages2&attributes({'class':"col-md-1"})
+      p #{totalPages}
   table 
     thead
       tr
