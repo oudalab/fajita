@@ -1,0 +1,27 @@
+div(id="sourceEditTable" class="table table-sm")
+  table 
+    thead
+      tr
+        th SentenceId(click)
+        th Word
+        th Country
+        th 1st Role
+        th 2nd Role
+        th Start
+        th End
+        th Who Added
+        th Tag Time
+        th Tool
+    tbody
+      each source in allFlaggedNouns
+        tr
+          td <button class="linkButtonSource">#{source.sentenceId}</button>
+          td #{source.word}
+          td #{source.countryCode}
+          td #{source.firstRoleCode}
+          td #{source.secondRoleCode}
+          td #{source.dateStart}
+          td #{source.dateEnd}
+          td #{source.userName}
+          td #{source.taggingTime}
+          td <button class="editSourceButton">Edit</button>

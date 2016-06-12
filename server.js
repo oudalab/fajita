@@ -2,7 +2,7 @@
 var express  = require('express');
 var app      = express(); 								// create our app w/ express
 var mongoose = require('mongoose'); 					// mongoose for mongodb
-var port  	 = process.env.PORT || 8081; 				// set the port
+var port  	 = process.env.PORT || 8095; 				// set the port
 var database = require('./config/database'); 			// load the database config
 var morgan   = require('morgan');
 var bodyParser = require('body-parser');
@@ -18,6 +18,7 @@ var localStrategy = require('passport-local' ).Strategy;
 var User=require('./app/models/user.js');
 var routes = require('./loginapi.js');
 var stylus = require('stylus');
+
 
 // configuration ===============================================================
 mongoose.connect(database.url); 	// connect to mongoDB database on modulus.io

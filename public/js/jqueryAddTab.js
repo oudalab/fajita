@@ -170,8 +170,8 @@ $("#combobox6").change(function() {
 
     var flaggedSummaryDialog=$('#FlaggedSummaryDialog').dialog({
      autoOpen:false,
-     height:500,
-     width:550,
+     height:900,
+     width:950,
      modal:true,
      title:"Flagged Summary",
      buttons:{
@@ -244,11 +244,6 @@ $("#combobox6").change(function() {
     });
 
    $('#MostRecentActivityButton').on("click",function(){
-
-
-      //var sourceword=$('#sourceWord').val();
-      /*console.log("this is the sourceword"+sourceword);*/
-
       $.ajax({
         method: "GET",
         url:"/getLatestSourceDictionItems",
@@ -297,9 +292,22 @@ $("#combobox6").change(function() {
    
     flaggedSummaryDialog.dialog("open");
    });
+
    
    $('#TotalFinishedButton').on("click",function(){
      totalFinishedDialog.dialog("open");
+   });
+
+   //show allTaggedNouns Button click inside of FLagged Summary dialog
+   $('#showFlaggedNouns').on('click',function(){
+     $.ajax({
+      method:"GET",
+      url:"/getAllFlaggedNouns",
+      success:function(flaggedResult){
+        $('#flaggedTable').html(flaggedResult);
+      }
+     });
+
    });
 
    /********************test*********************************/

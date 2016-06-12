@@ -8,6 +8,12 @@ var User=require('./models/user');
 var Sentence=require('./models/sentence');
 var SentenceTaggingResult=require('./models/sentenceTaggingResult');
 var mongoose = require('mongoose');
+var paginate = require('mongoose-paginate');
+
+
+
+// keep this before all routes that will use pagination
+
 
 var ObjectId = mongoose.Types.ObjectId;
 
@@ -253,6 +259,23 @@ module.exports = function(app) {
            res.end();
         });
        })
+
+       //get all the flagged noun records
+    /*   app.get('/getAllFlaggedNouns',function(req,res){
+         SourceDictionary.find({}).paginate({page:req.query.page},function(err,data){
+            res.render('./sourceDictionaryTableWithEdit.jade',{allFlaggedNouns:data});
+            res.end();
+         });
+       });*/
+        
+        app.get('/getAllFlaggedNouns', function(req, res, next) {
+                SourceDictionary.paginate({}, { page: 10, limit: 50 }, function(err, data) {
+                    /*res.render('./sourceDictionaryTableWithEdit.jade',{allFlaggedNouns:data.docs});*/
+                    console.log(data.total);
+
+                    res.end();
+              });
+        });
 
      //get count of all the sourcedictionary 
       app.get('/getTotalAndFlaggedSourceCountArray',function(req,res){
