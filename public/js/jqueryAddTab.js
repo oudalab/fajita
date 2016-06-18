@@ -309,9 +309,8 @@ $("#combobox6").change(function() {
         $('#flaggedTable').html(flaggedResult);
 
         var goButton = $('#goButton');
-        //make sure the click event is only attahced once
-        //if(-1 === $.inArray(onButtonClicked, goButton.data('events').click))
-              //the unbind will make sure this click event will only be fired once.
+      
+
               goButton.unbind().click(function(){
              $.ajax({
                   method:"GET",
@@ -332,6 +331,37 @@ $("#combobox6").change(function() {
      });
 
 
+
+   });
+
+   //show allTaggedVebs Button click inside of FLagged Summary dialog
+   $('#showFlaggedVerbs').on('click',function(){
+     $.ajax({
+       method:"GET",
+       url:"/getAllFlaggedVerbs",
+       data:{page:1,limit:10},
+       success:function(flaggedResult){
+         $('#flaggedTable').html(flaggedResult);
+
+              var goButton = $('#goButton');
+      
+      
+              goButton.unbind().click(function(){
+             $.ajax({
+                  method:"GET",
+                  url:"/getAllFlaggedVerbs",
+                  data:{page:$('#gotoPage').val(),limit:10},
+                  success:function(flaggedResult){
+                    $('#flaggedTable').html(flaggedResult);
+                  }
+
+             });
+
+        });
+
+       }
+
+     });
 
    });
 

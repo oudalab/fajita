@@ -258,7 +258,7 @@ module.exports = function(app) {
        })
         
         app.get('/getAllFlaggedNouns', function(req, res, next) {
-                SourceDictionary.paginate({'confidenceFlag':true}, { page: req.query.page, limit: req.query.limit }).then(function(result)
+                SourceDictionary.paginate({'confidenceFlag':true}, { page: req.query.page, limit: req.query.limit}).then(function(result)
                 {
                     
                     var totalPages=0;
@@ -277,6 +277,26 @@ module.exports = function(app) {
                   });
      
         });
+
+        app.get('/getAllFlaggedVerbs',function(req,res,next){
+            VerbDictionary.paginate({'confidenceFlag':true},{page:req.query.page, limit:req.query.limit}).then(
+              function(result)
+              {
+                   var totalPages=0;
+                    if(result.total%req.query.limit===0)
+                    {
+                       totalPages=Math.trunc(result.total/req.query.limit);
+                    }
+                    else
+                    {
+                      totalPages=Math.trunc(result.total/req.query.limit)+1;
+                    }
+                     res.render('./verbDictionaryTableWithEdit.jade',{allFlaggedVerbs:result.docs,totalPages:totalPages});
+                     res.end();
+              });
+        });
+
+
 
      //get count of all the sourcedictionary 
       app.get('/getTotalAndFlaggedSourceCountArray',function(req,res){

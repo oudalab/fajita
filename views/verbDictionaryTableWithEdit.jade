@@ -1,0 +1,26 @@
+div(id="verbEditTable" class="table table-sm")
+  div#searchwell&attributes({'class': 'searchwell row'})
+    div#totalPages1&attributes({'class':"col-md-2"})
+      p!= '<strong>Total Pages:</strong>' 
+    div#totalPages2&attributes({'class':"col-md-1"})
+      p #{totalPages}
+  table 
+    thead
+      tr
+        th SentenceId(click)
+        th Word
+        th VerbCode
+        th Who Added
+        th Tag Time
+        th Tool
+    tbody
+      each verb in allFlaggedVerbs
+        tr
+          td <button class="linkButtonVerb">#{verb.sentenceId}</button>
+          td #{verb.word}
+          td #{verb.verbcode}
+          td #{verb.userName}
+          td #{verb.taggingTime}
+          td <button class="editVerbButton">Edit</button>
+
+
