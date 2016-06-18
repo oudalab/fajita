@@ -315,7 +315,7 @@ $("#combobox6").change(function() {
              $.ajax({
                   method:"GET",
                   url:"/getAllFlaggedNouns",
-                  data:{page:$('#gotoPage').val(),limit:10},
+                  data:{'page':$('#gotoPage').val(),'limit':10},
                   success:function(flaggedResult){
                     $('#flaggedTable').html(flaggedResult);
                   }
@@ -324,18 +324,13 @@ $("#combobox6").change(function() {
 
         });
 
-       
-    
-    
       }
      });
-
-
-
    });
 
    //show allTaggedVebs Button click inside of FLagged Summary dialog
    $('#showFlaggedVerbs').on('click',function(){
+
      $.ajax({
        method:"GET",
        url:"/getAllFlaggedVerbs",
@@ -344,13 +339,11 @@ $("#combobox6").change(function() {
          $('#flaggedTable').html(flaggedResult);
 
               var goButton = $('#goButton');
-      
-      
               goButton.unbind().click(function(){
-             $.ajax({
+              $.ajax({
                   method:"GET",
                   url:"/getAllFlaggedVerbs",
-                  data:{page:$('#gotoPage').val(),limit:10},
+                  data:{'page':$('#gotoPage').val(),'limit':10},
                   success:function(flaggedResult){
                     $('#flaggedTable').html(flaggedResult);
                   }
@@ -358,6 +351,50 @@ $("#combobox6").change(function() {
              });
 
         });
+             $('.editVerbButton').click(function(){
+               
+               //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
+               if($(this).text()==="Edit")
+               {
+                var input=$(this).closest("tr").find("input");
+                 input.prop('readonly', false);
+                 //hight the input box
+                 input.select();
+                 $(this).html('Save');
+               }
+               //this is when the button showed is a save button.
+               else
+               {
+                $(this).closest("tr").find("input").prop('readonly', true);
+                $(this).html("Edit");
+                //now it is save then when it click it should make an ajax to post the data.
+                var dicid=$(this).closest("tr").find('.verbDictionaryClass').text();
+                var verbcode=$(this).closest("tr").find('.verbcode').val();
+
+                $.ajax({
+                  method:"POST",
+                  url:"/updateVerbDictionary",
+                  data:{'dicId':dicid,'verbcode':verbcode},
+                  success:function(data){
+                    console.log("update verb dictionary success!");
+                  }
+
+                });
+               }
+             });
+
+             //when click the sentenceId button show sentence
+                $('.linkButtonVerb').on("click",function(){
+            
+                $.ajax({
+                   method: "POST",
+                   url:"/getSentenceStringById",
+                   data:{sentenceId:$(this).text()},
+                   success:function(sentenceResult){
+                    $('#sentenceContext2').val(sentenceResult);
+                   }
+               });
+            });
 
        }
 

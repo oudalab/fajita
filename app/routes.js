@@ -161,7 +161,7 @@ module.exports = function(app) {
     app.post('/updateSentenceTag',function(req,res){
       
      //make the tag of the sentence to be 1 when commit the whole sentence tagging
-     Sentence.findOneAndUpdate({_id:req.body.sentenceId},{$set:{tagged:1}},function(err,sentence){
+     Sentence.findOneAndUpdate({"_id":req.body.sentenceId},{$set:{"tagged":1}},function(err,sentence){
        
        });
       res.end();
@@ -260,7 +260,7 @@ module.exports = function(app) {
         app.get('/getAllFlaggedNouns', function(req, res, next) {
                 SourceDictionary.paginate({'confidenceFlag':true}, { page: req.query.page, limit: req.query.limit}).then(function(result)
                 {
-                    
+                    //ToDO: this is some function that can be extracted, since it is used in both getAllFlaggedNouns and in getAllFlaggedVerbs
                     var totalPages=0;
                     if(result.total%req.query.limit===0)
                     {
@@ -275,12 +275,10 @@ module.exports = function(app) {
                     
                     res.end();
                   });
-     
         });
 
         app.get('/getAllFlaggedVerbs',function(req,res,next){
-            VerbDictionary.paginate({'confidenceFlag':true},{page:req.query.page, limit:req.query.limit}).then(
-              function(result)
+            VerbDictionary.paginate({'confidenceFlag':true},{page:req.query.page, limit:req.query.limit}).then(function(result)
               {
                    var totalPages=0;
                     if(result.total%req.query.limit===0)
@@ -291,6 +289,7 @@ module.exports = function(app) {
                     {
                       totalPages=Math.trunc(result.total/req.query.limit)+1;
                     }
+
                      res.render('./verbDictionaryTableWithEdit.jade',{allFlaggedVerbs:result.docs,totalPages:totalPages});
                      res.end();
               });
@@ -324,6 +323,17 @@ module.exports = function(app) {
            });
          });
       });
+
+
+        //update the verb code in verb dictionary
+        app.post('/updateVerbDictionary',function(req,res){
+         VerbDictionary.findOneAndUpdate({"_id":req.body.dicId},{$set:{"verbcode":req.body.verbcode}},function(err,dic){
+
+          console.log(err);
+         });
+         res.end();
+        });
+
 
         //get count of the whole sentence count
         app.get('/getSentenceTotalCount',function(req,res){

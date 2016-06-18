@@ -113,6 +113,11 @@ tr:nth-child(even){background-color: #f2f2f2}
 	margin:0px;
 }
 
+.verbcode
+{
+	width:45px;
+}
+
 ::selection {
     background-color:#5cb85c;
     color: #fff;
