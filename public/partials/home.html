@@ -790,22 +790,70 @@ $("#combobox6").change(function() {
            var goButton = $('#goButton');
            if($('#nounOrVerbFlag').val()==="noun")
            {
-               goButton.unbind().click(function(){
+             //when click the new button , need to attach the event of edit button (don't need date time picker since when page change the input will be kept the content is different but the button are newly created, that is why the edit event need to be reattached.)
+             goButton.unbind().click(function(){
              $.ajax({
                   method:"GET",
                   url:"/getAllFlaggedNouns",
                   data:{'page':$('#gotoPage').val(),'limit':10},
                   success:function(flaggedResult){
                     $('#flaggedTable').html(flaggedResult);
+                    //reattach the edit button event , this edit event can extracted, since it is used in both the flagged button click and goButton click
+              $('.editSourceButton').click(function(){               
+                      //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
+               if($(this).text()==="Edit")
+               {
+                var input=$(this).closest("tr").find("input");
+                 input.prop('readonly', false);
+                 //hight the input box
+                 input.select();
+                 $(this).html('Save');
+                //bind the datetime picker
+
+                  $(this).closest("tr").find(".dateStart").datepicker({
+                      changeMonth: true,
+                      changeYear: true
+                    });
+
+                 $(this).closest("tr").find(".dateEnd").datepicker({
+                      changeMonth: true,
+                      changeYear: true
+                    });
+               }
+
+              else
+               {
+                $(this).closest("tr").find("input").prop('readonly', true);
+                $(this).html("Edit");
+                //now it is save then when it click it should make an ajax to post the data.
+                var dicid=$(this).closest("tr").find('.sourceDictionaryClass').text();
+                var countrycode=$(this).closest("tr").find('.countryCode').val();
+                var firstrolecode=$(this).closest("tr").find('.firstRoleCode').val();
+                var secondrolecode=$(this).closest("tr").find('.secondRoleCode').val();
+                var datestart=$(this).closest("tr").find('.dateStart').val();
+                var dateend=$(this).closest("tr").find('.dateEnd').val();
+                  
+                $.ajax({
+                  method:"POST",
+                  url:"/updateSourceDictionary",
+                  data:{'dicId':dicid,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend},
+                  success:function(data){
+                    console.log("update verb dictionary success!");
+                  }
+                });
+                //unbind the datepicker
+                     $(this).closest("tr").find(".dateStart").datepicker("destroy");
+                     $(this).closest("tr").find(".dateEnd").datepicker("destroy");       
+               }
+             });
+             //end of the can be extracted method.
+
                   }
 
              });
-
+            
           });
            }
-         
-
-
       }
      });
    });
@@ -816,7 +864,7 @@ $("#combobox6").change(function() {
      $.ajax({
        method:"GET",
        url:"/getAllFlaggedVerbs",
-       data:{page:1,limit:10},
+       data:{page:1,limit:2},
        success:function(flaggedResult){
          $('#flaggedTable').html(flaggedResult);
             
@@ -862,9 +910,41 @@ $("#combobox6").change(function() {
                  $.ajax({
                       method:"GET",
                       url:"/getAllFlaggedVerbs",
-                      data:{'page':$('#gotoPage').val(),'limit':10},
+                      data:{'page':$('#gotoPage').val(),'limit':2},
                       success:function(flaggedResult){
                         $('#flaggedTable').html(flaggedResult);
+                               $('.editVerbButton').click(function(){
+               
+               //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
+               if($(this).text()==="Edit")
+               {
+                var input=$(this).closest("tr").find("input");
+                 input.prop('readonly', false);
+                 //hight the input box
+                 input.select();
+                 $(this).html('Save');
+
+               }
+               //this is when the button showed is a save button.
+               else
+               {
+                $(this).closest("tr").find("input").prop('readonly', true);
+                $(this).html("Edit");
+                //now it is save then when it click it should make an ajax to post the data.
+                var dicid=$(this).closest("tr").find('.verbDictionaryClass').text();
+                var verbcode=$(this).closest("tr").find('.verbcode').val();
+
+                $.ajax({
+                  method:"POST",
+                  url:"/updateVerbDictionary",
+                  data:{'dicId':dicid,'verbcode':verbcode},
+                  success:function(data){
+                    console.log("update verb dictionary success!");
+                  }
+
+                });
+               }
+             });
                       }
 
                  });
