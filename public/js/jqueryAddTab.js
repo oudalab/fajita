@@ -307,10 +307,42 @@ $("#combobox6").change(function() {
       data:{page:1,limit:10},
       success:function(flaggedResult){
         $('#flaggedTable').html(flaggedResult);
+          $('.editSourceButton').click(function(){               
+                      //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
+               if($(this).text()==="Edit")
+               {
+                var input=$(this).closest("tr").find("input");
+                 input.prop('readonly', false);
+                 //hight the input box
+                 input.select();
+                 $(this).html('Save');
+               }
 
+              else
+               {
+                $(this).closest("tr").find("input").prop('readonly', true);
+                $(this).html("Edit");
+                //now it is save then when it click it should make an ajax to post the data.
+                var dicid=$(this).closest("tr").find('.sourceDictionaryClass').text();
+                var countrycode=$(this).closest("tr").find('.countryCode').val();
+                var firstrolecode=$(this).closest("tr").find('.firstRoleCode').val();
+                var secondrolecode=$(this).closest("tr").find('.secondRoleCode').val();
+                var datestart=$(this).closest("tr").find('.dateStart').val();
+                var dateend=$(this).closest("tr").find('.dateEnd').val();
+                  
+                $.ajax({
+                  method:"POST",
+                  url:"/updateSourceDictionary",
+                  data:{'dicId':dicid,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend},
+                  success:function(data){
+                    console.log("update verb dictionary success!");
+                  }
+                });
+               }
+             });
+
+        //ToDo: need to think about the binding of the GoButton for Flagged Verb
         var goButton = $('#goButton');
-      
-
               goButton.unbind().click(function(){
              $.ajax({
                   method:"GET",
@@ -323,6 +355,7 @@ $("#combobox6").change(function() {
              });
 
         });
+
 
       }
      });
@@ -351,6 +384,7 @@ $("#combobox6").change(function() {
              });
 
         });
+            
              $('.editVerbButton').click(function(){
                
                //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
@@ -361,6 +395,7 @@ $("#combobox6").change(function() {
                  //hight the input box
                  input.select();
                  $(this).html('Save');
+
                }
                //this is when the button showed is a save button.
                else

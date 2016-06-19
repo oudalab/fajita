@@ -334,6 +334,14 @@ module.exports = function(app) {
          res.end();
         });
 
+        //update source didctionary based on sourceDictionaryId
+        app.post('/updateSourceDictionary',function(req,res){
+                 SourceDictionary.findOneAndUpdate({"_id":req.body.dicId},{$set:{"countryCode":req.body.countryCode,"firstRoleCode":req.body.firstRoleCode,"secondRoleCode":req.body.secondRoleCode,"dateStart":req.body.dateStart,"dateEnd":req.body.dateEnd}},function(err,sourcedic){
+             console.log(err);
+          });
+          res.end();
+        });
+
 
         //get count of the whole sentence count
         app.get('/getSentenceTotalCount',function(req,res){
