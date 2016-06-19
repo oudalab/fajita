@@ -118,6 +118,7 @@
                 </div>
               </div>
               <div id="FlaggedSummaryDialog" hidden>
+                <input id="nounOrVerbFlag" class="hidden" />
                 <div class="row well well-sm">
                   <div class="col-md-4 col-md-offset-2">
                        <button type="button" class="btn btn-success" id="showFlaggedNouns">Show Flagged Nouns</button>
@@ -253,7 +254,7 @@
                    <!--      <input id="nounStartDate"/> -->
                      </div>
                      <div class="col-md-4">
-                        ("mm/dd/yyyy")
+                        ("yyyy-mm-dd")
                      </div>
                   </div>
                   <div class="row" style="padding:2px">
@@ -267,7 +268,7 @@
                        <!--  <input id="nounEndDate"/> -->
                      </div>
                        <div class="col-md-4">
-                        ("mm/dd/yyyy")
+                        ("yyyy-mm-dd")
                      </div>
                   </div>
                   <div class="row" style="padding:2px">
@@ -727,6 +728,9 @@ $("#combobox6").change(function() {
 
    //show allTaggedNouns Button click inside of FLagged Summary dialog
    $('#showFlaggedNouns').on('click',function(){
+    //make the flag to be noun
+     
+     $('#nounOrVerbFlag').val("noun");
      $.ajax({
       method:"GET",
       url:"/getAllFlaggedNouns",
@@ -782,9 +786,11 @@ $("#combobox6").change(function() {
                }
              });
 
-        //ToDo: need to think about the binding of the GoButton for Flagged Verb
-        var goButton = $('#goButton');
-              goButton.unbind().click(function(){
+       
+           var goButton = $('#goButton');
+           if($('#nounOrVerbFlag').val()==="noun")
+           {
+               goButton.unbind().click(function(){
              $.ajax({
                   method:"GET",
                   url:"/getAllFlaggedNouns",
@@ -795,7 +801,9 @@ $("#combobox6").change(function() {
 
              });
 
-        });
+          });
+           }
+         
 
 
       }
@@ -804,27 +812,13 @@ $("#combobox6").change(function() {
 
    //show allTaggedVebs Button click inside of FLagged Summary dialog
    $('#showFlaggedVerbs').on('click',function(){
-
+     $('#nounOrVerbFlag').val("verb");
      $.ajax({
        method:"GET",
        url:"/getAllFlaggedVerbs",
        data:{page:1,limit:10},
        success:function(flaggedResult){
          $('#flaggedTable').html(flaggedResult);
-
-              var goButton = $('#goButton');
-              goButton.unbind().click(function(){
-              $.ajax({
-                  method:"GET",
-                  url:"/getAllFlaggedVerbs",
-                  data:{'page':$('#gotoPage').val(),'limit':10},
-                  success:function(flaggedResult){
-                    $('#flaggedTable').html(flaggedResult);
-                  }
-
-             });
-
-        });
             
              $('.editVerbButton').click(function(){
                
@@ -858,6 +852,25 @@ $("#combobox6").change(function() {
                 });
                }
              });
+
+             
+           
+               var goButton = $('#goButton');
+               if($('#nounOrVerbFlag').val()==="verb")
+               {
+                   goButton.unbind().click(function(){
+                 $.ajax({
+                      method:"GET",
+                      url:"/getAllFlaggedVerbs",
+                      data:{'page':$('#gotoPage').val(),'limit':10},
+                      success:function(flaggedResult){
+                        $('#flaggedTable').html(flaggedResult);
+                      }
+
+                 });
+
+              });
+               }
 
              //when click the sentenceId button show sentence
                 $('.linkButtonVerb').on("click",function(){
