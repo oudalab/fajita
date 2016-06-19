@@ -19,7 +19,7 @@ div(id="sourceEditTable" class="table table-sm")
     tbody
       each source in allFlaggedNouns
         tr
-          td <button class="linkButtonSource">#{source.sentenceId}</button>
+          td <button class="linkButtonNoun">#{source.sentenceId}</button>
           td #{source.word}
           td 
              input(type="text", name="countryCodename",value="#{source.countryCode}" class="countryCode jadeinput" readonly)

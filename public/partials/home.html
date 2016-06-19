@@ -678,7 +678,7 @@ $("#combobox6").change(function() {
         //data:{"queryword":sourceword},
         success:function(result){
           $("#sourceSummaryTable").html(result);
-          $('.linkButtonSource').on("click",function(){
+          $('.linkButtonNoun').on("click",function(){
            $.ajax({
                method: "POST",
                url:"/getSentenceStringById",
@@ -847,6 +847,17 @@ $("#combobox6").change(function() {
                }
              });
              //end of the can be extracted method.
+             //reattach the sentence link button, this one can be extracted too.
+              $('.linkButtonNoun').on("click",function(){
+           $.ajax({
+               method: "POST",
+               url:"/getSentenceStringById",
+               data:{sentenceId:$(this).text()},
+               success:function(sentenceResult){
+                $('#sentenceContext2').val(sentenceResult);
+               }
+           });
+        });
 
                   }
 
@@ -907,6 +918,8 @@ $("#combobox6").change(function() {
                if($('#nounOrVerbFlag').val()==="verb")
                {
                    goButton.unbind().click(function(){
+                   
+
                  $.ajax({
                       method:"GET",
                       url:"/getAllFlaggedVerbs",
@@ -945,6 +958,20 @@ $("#combobox6").change(function() {
                 });
                }
              });
+
+               //reattach the sentence link button
+                     //when click the sentenceId button show sentence
+                $('.linkButtonVerb').on("click",function(){
+            
+                $.ajax({
+                   method: "POST",
+                   url:"/getSentenceStringById",
+                   data:{sentenceId:$(this).text()},
+                   success:function(sentenceResult){
+                    $('#sentenceContext2').val(sentenceResult);
+                   }
+               });
+            });
                       }
 
                  });
