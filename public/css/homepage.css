@@ -117,6 +117,14 @@ tr:nth-child(even){background-color: #f2f2f2}
 {
 	width:45px;
 }
+.dateEnd
+{
+	width:150px;
+}
+.dateStart
+{
+	width:150px;
+}
 
 ::selection {
     background-color:#5cb85c;

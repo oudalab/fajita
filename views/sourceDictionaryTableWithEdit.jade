@@ -12,10 +12,9 @@ div(id="sourceEditTable" class="table table-sm")
         th Country
         th 1st Role
         th 2nd Role
-        th Start(yyyy-mm-dd)
-        th End(yyyy-mm-dd)
+        th Start
+        th End
         th Who Added
-        th Tag Time
         th Tool
     tbody
       each source in allFlaggedNouns
@@ -29,10 +28,9 @@ div(id="sourceEditTable" class="table table-sm")
           td 
              input(type="text", name="secondrolename",value="#{source.secondRoleCode}" class="secondRoleCode jadeinput" readonly)
           td 
-             input(type="text", name="datestartname",value="#{source.dateStart}" class="dateStart jadeinput" readonly)
+             input(type="text", name="datestartname",value="#{source.dateStart}" class="dateStart" readonly)
           td 
-             input(type="text", name="dateendname",value="#{source.dateEnd}" class="dateEnd jadeinput" readonly)
+             input(type="text", name="dateendname",value="#{source.dateEnd}" class="dateEnd" readonly)
           td #{source.userName}
-          td #{source.taggingTime}
           td <button class="editSourceButton">Edit</button>
           td(class="hidden sourceDictionaryClass") #{source._id}

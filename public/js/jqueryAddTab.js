@@ -307,6 +307,7 @@ $("#combobox6").change(function() {
       data:{page:1,limit:10},
       success:function(flaggedResult){
         $('#flaggedTable').html(flaggedResult);
+
           $('.editSourceButton').click(function(){               
                       //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
                if($(this).text()==="Edit")
