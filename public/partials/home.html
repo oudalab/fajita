@@ -1,15 +1,11 @@
 <link rel="stylesheet" href="css/angular-datepicker.css">
 <link rel="stylesheet" href="css/autocomplete.css">
 <link rel="stylesheet" href="css/homepage.css">
-<!-- SPELLS -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-
 <script src="js/jqueryAutocomplete.js"></script>
-<!-- <script src="js/jqueryAddTab.js"></script> -->
 
   <style>
     .custom-combobox {
@@ -678,7 +674,7 @@ $("#combobox6").change(function() {
         //data:{"queryword":sourceword},
         success:function(result){
           $("#sourceSummaryTable").html(result);
-          $('.linkButtonNoun').on("click",function(){
+          $('.linkButtonSource').on("click",function(){
            $.ajax({
                method: "POST",
                url:"/getSentenceStringById",
@@ -875,7 +871,7 @@ $("#combobox6").change(function() {
      $.ajax({
        method:"GET",
        url:"/getAllFlaggedVerbs",
-       data:{page:1,limit:2},
+       data:{page:1,limit:10},
        success:function(flaggedResult){
          $('#flaggedTable').html(flaggedResult);
             
@@ -923,7 +919,7 @@ $("#combobox6").change(function() {
                  $.ajax({
                       method:"GET",
                       url:"/getAllFlaggedVerbs",
-                      data:{'page':$('#gotoPage').val(),'limit':2},
+                      data:{'page':$('#gotoPage').val(),'limit':10},
                       success:function(flaggedResult){
                         $('#flaggedTable').html(flaggedResult);
                                $('.editVerbButton').click(function(){
@@ -1000,8 +996,3 @@ $("#combobox6").change(function() {
   
    });
    </script>
-
-
-<!--
-Copyright 2016 Google Inc. All Rights Reserved. 
-Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
