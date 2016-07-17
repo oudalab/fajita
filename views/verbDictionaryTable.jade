@@ -1,0 +1,18 @@
+div(id="verbTable" class="table table-sm")
+  table 
+    thead
+      tr
+        th SentenceId(click)
+        th Word
+        th VerbCode
+        th Who Added
+        th Tag Time
+    tbody
+      each verb in verbdictionary
+        tr
+          td <button class="linkButtonVerb">#{verb.sentenceId}</button>
+          td #{verb.word}
+          td #{verb.verbcode}
+          td #{verb.userName}
+          td #{verb.taggingTime}
+
