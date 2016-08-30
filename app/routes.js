@@ -55,15 +55,19 @@ function getAllSecondroleActors(res){
 //only show the non-tagged sentences
 function getOneNotTaggedSentence(res)
 {
-	Sentence.find(function(err,sentences)
-	{
-		if(err)
-			res.send(err)
-		var nottagged=sentences.filter(function(el){
-			return el.tagged==0;
-		})
-		res.json(nottagged[0]);
-	});
+   Sentence.count({"tagged":false}).exec(function(err,count){
+      var random=Math.floor(Math.random()*count);
+      Sentence.findOne({"tagged":false}).skip(random).exec(
+          function(err,result)
+         {
+           if(result!=null)
+            res.json(result);
+           else
+            console.log("no more sentences in the database anymore");
+          }
+        )
+       
+   });
 }
 
 module.exports = function(app) {
