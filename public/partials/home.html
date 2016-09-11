@@ -78,12 +78,28 @@
                 </ul>
             </div>
             </div>
+
             <div class="row well well-sm" style="height:60px">
-            <div class="col-md-5">
-               <button type="button" class="btn btn-success" style="padding:2px;width:120px;float:left;margin:10px" ng-click="nextSentence()">Next Sentence</button>
+            <div class="col-md-3">
+               <button type="button" class="btn btn-success" style="padding:2px;width:80px;float:left;margin:10px" ng-click="nextSentence()">Random</button>
+            </div>
+                <div id="sentenceQueryDialog" hidden>
+                    <div id="queryContainer">
+                      <label for="textarea">Search Sentences (Please input key words):</label>
+                       <textarea class="queryCOntent" id="queryContentId" style="width:550px"></textarea>
+                    </div>
+                    <div class="row">
+                       <div class="col-md-5 col-md-offset-7">
+                       <button type="button" class="btn btn-success" id="toQuerySentence" style="margin:20px">Go To Sentence</button>
+                       </div>
+                    </div>
                 </div>
-                <div class="col-md-7">
-               <button type="button" class="btn btn-success" style="padding:2px;width:160px;float:left;margin:10px" id="sentencecommit" ng-click="commitSentence()">Commit Sentence</button>
+              <div class="col-md-3">
+               <button type="button" class="btn btn-success" style="padding:2px;width:80px;float:left;margin:10px" id="randomSentenceButton">Custom</button>
+                </div>
+               
+                <div class="col-md-3">
+               <button type="button" class="btn btn-success" style="color:red;padding:2px;width:80px;float:left;margin:10px" id="sentencecommit" ng-click="commitSentence()">Commit</button>
                 <div class="pull-right">
                         <div class="alert alert-success fade" id="sentencealert">
                           <button type="button" class="close" data-dismiss="alert">×</button>
@@ -92,6 +108,7 @@
                       </div>
                 </div>
             </div>
+
             <div class="row well" id="adminWell">
               <div class="row well">
               <h3>Administration Tool</h3></div>
@@ -101,6 +118,7 @@
                 <button type="button" class="btn btn-primary" id="FlaggedSummaryButton">Flagged Summary</button>
                 <button type="button" class="btn btn-primary" id="TotalFinishedButton">Total Finished</button>
               </div>
+
               <div id="MostRecentActivityDialog" hidden>  
               <div id="contextContainer">
               <label for="textarea">Sentence:</label>
@@ -174,6 +192,7 @@
 
               </div>
             </div>
+
          </div>
          <div class="col-md-8">
             <div class="hidden" id="sourceHiddenForSentence" >{{sourceObjects}}</div>
@@ -591,6 +610,19 @@ $("#combobox6").change(function() {
 
     });
 
+    var sentenceQueryDialog=$('#sentenceQueryDialog').dialog({
+      autoOpen:false,
+      height:300,
+      width:700,
+      modal:true,
+      title:"Query Sentences",
+      buttons:{
+        Close:function(){
+          sentenceQueryDialog.dialog("close");
+        }
+      }
+    });
+
     var flaggedSummaryDialog=$('#FlaggedSummaryDialog').dialog({
      autoOpen:false,
      height:900,
@@ -666,7 +698,7 @@ $("#combobox6").change(function() {
 
       dialog.dialog("open");
     });
-
+    
    $('#MostRecentActivityButton').on("click",function(){
       $.ajax({
         method: "GET",
@@ -709,6 +741,51 @@ $("#combobox6").change(function() {
       });
   
     mostRecentActivityDialog.dialog("open");
+
+   });
+
+   $('#randomSentenceButton').on("click",function(){
+      /*$.ajax({
+        method: "GET",
+        url:"/getLatestSourceDictionItems",
+        //data:{"queryword":sourceword},
+        success:function(result){
+          $("#sourceSummaryTable").html(result);
+          $('.linkButtonSource').on("click",function(){
+           $.ajax({
+               method: "POST",
+               url:"/getSentenceStringById",
+               data:{sentenceId:$(this).text()},
+               success:function(sentenceResult){
+                $('#sentenceContext1').val(sentenceResult);
+               }
+           });
+        });
+        }
+      });
+
+        $.ajax({
+        method: "GET",
+        url:"/getLatestVerbDictionItems",
+        //data:{"queryword":sourceword},
+        success:function(result){
+          $("#verbSummaryTable").html(result);
+          //the event has to be attahced here instead of after dialog load, since when page all load the button on dialog does not exist yet.
+        $('.linkButtonVerb').on("click",function(){
+        
+            $.ajax({
+               method: "POST",
+               url:"/getSentenceStringById",
+               data:{sentenceId:$(this).text()},
+               success:function(sentenceResult){
+                $('#sentenceContext1').val(sentenceResult);
+               }
+           });
+        });
+        }
+      });*/
+  
+    sentenceQueryDialog.dialog("open");
 
    });
 

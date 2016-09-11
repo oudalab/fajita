@@ -200,6 +200,34 @@ module.exports = function(app) {
 		    });
        
 	});
+  //this is to get one untagged sentence with some specific words in it
+  app.get('/getOneQuerySentence',function(req,res){
+       var r = new RegExp(".*"+req.param('word'),'i');
+        Sentence.count({"tagged":false,"wholeSentence":{$regex:r}}).exec(function(err,count){
+          var random=Math.floor(Math.random()*count);
+          //var queryword=req.param('word');
+         
+          Sentence.findOne({"tagged":false,"wholeSentence":{$regex:r}}).skip(random).exec(
+              function(err,result)
+             {
+               if(result!=null)
+               {
+                res.json(result);
+               }
+                
+               else
+                console.log("find 0 sentence with this query");
+              }
+            )
+           
+       });
+/*  var r = new RegExp(".*"+req.param('word'),'i');
+  console.log("this is word being queried "+req.param('word'));
+  Sentence.count({"tagged":false,"wholeSentence":{$regex:r}}).exec(function(err,count){
+          console.log("this is how much sentence find: "+count);*/
+  
+
+  });
 	//this is to get the total sourceDictionary tagging for this student
 	app.get('/getSourceTaggingCountForCurrentUser',function(req,res){
        
@@ -209,14 +237,14 @@ module.exports = function(app) {
       	res.end();
       });
       //by the way if you put res.end() here it will end the res immedaitely and callbacs res.json might try to change res, so it will give u an error 
-	})
+	});
 	//get the total verb tagging for current student
 	app.get('/getVerbTaggingCountForCurrentUser',function(req,res){
       VerbDictionary.find({'userId':req.user.id},function(err,data){
        res.json(data.length);
        res.end();
       });
-	})
+	});
 	//get the total sentence tagging for current student
     app.get('/getSentenceTaggingCountForCurrentUser',function(req,res){
     	SentenceTaggingResult.find({'userId':req.user.id},function(err,data){
