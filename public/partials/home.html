@@ -28,7 +28,7 @@
 <div  ng-controller="mainController">
    <div class="container" >
       <div class="row">
-         <div class="col-md-4 well well-lg" style="height:880px;padding-top:0">
+         <div class="col-md-4 well well-lg" style="height:940px;padding-top:0">
             <div class="row  well well-sm">
                <div class="col-md-5">
                <button type="button" class="btn btn-success" style="padding:2px;width:100px;float:left;margin:10px" ng-click="signmeOut()">Sign Out</button>
@@ -78,27 +78,20 @@
                 </ul>
             </div>
             </div>
-
             <div class="row well well-sm" style="height:60px">
-            <div class="col-md-3">
-               <button type="button" class="btn btn-success" style="padding:2px;width:80px;float:left;margin:10px" ng-click="nextSentence()">Random</button>
+              <label for="textarea">Search Sentences (Please input key words):</label>
+              <input class="queryContent" style="width:275px;height:20px" ng-model="queryword"></input>
+              <button type="button" class="btn btn-success" style="height:20px;padding-top:1px;margin-bottom:5px;float:right;" ng-click="querygo()">Go</button>
             </div>
-                <div id="sentenceQueryDialog" hidden>
-                    <div id="queryContainer">
-                      <label for="textarea">Search Sentences (Please input key words):</label>
-                       <textarea class="queryCOntent" id="queryContentId" style="width:550px"></textarea>
-                    </div>
-                    <div class="row">
-                       <div class="col-md-5 col-md-offset-7">
-                       <button type="button" class="btn btn-success" id="toQuerySentence" style="margin:20px">Go To Sentence</button>
-                       </div>
-                    </div>
-                </div>
-              <div class="col-md-3">
+            <div class="row well well-sm" style="height:60px">
+            <div class="col-md-7">
+               <button type="button" class="btn btn-success" style="padding:2px;width:180px;float:left;margin:10px" ng-click="nextSentence()">Random Sentences</button>
+            </div>
+             <!--  <div class="col-md-3">
                <button type="button" class="btn btn-success" style="padding:2px;width:80px;float:left;margin:10px" id="randomSentenceButton">Custom</button>
-                </div>
+                </div> -->
                
-                <div class="col-md-3">
+                <div class="col-md-5">
                <button type="button" class="btn btn-success" style="color:red;padding:2px;width:80px;float:left;margin:10px" id="sentencecommit" ng-click="commitSentence()">Commit</button>
                 <div class="pull-right">
                         <div class="alert alert-success fade" id="sentencealert">
@@ -156,23 +149,7 @@
                      <button class="btn btn-success" id="goButton">Go</button>
                    </div>
                 </div>
-          <!--       <div id="searchwell" class="row well well-sm">
-                   <div class="col-md-2">
-                     <strong>Total Pages:</strong>
-                   </div>
-                   <div id="totalPages" class="col-md-1">
-       
-                    </div>
-                  <div class="col-md-2">
-                     <strong>Go To Page:</strong>
-                   </div> 
-                   <div class="col-md-2">
-                     <input id="gotoPage" />  
-                   </div> 
-
-                </div> -->
-                   <div id="flaggedTable"> </div>
-               
+                <div id="flaggedTable"> </div>
               </div>
 
               <div id="TotalFinishedDialog" hidden>
@@ -743,52 +720,6 @@ $("#combobox6").change(function() {
     mostRecentActivityDialog.dialog("open");
 
    });
-
-   $('#randomSentenceButton').on("click",function(){
-      /*$.ajax({
-        method: "GET",
-        url:"/getLatestSourceDictionItems",
-        //data:{"queryword":sourceword},
-        success:function(result){
-          $("#sourceSummaryTable").html(result);
-          $('.linkButtonSource').on("click",function(){
-           $.ajax({
-               method: "POST",
-               url:"/getSentenceStringById",
-               data:{sentenceId:$(this).text()},
-               success:function(sentenceResult){
-                $('#sentenceContext1').val(sentenceResult);
-               }
-           });
-        });
-        }
-      });
-
-        $.ajax({
-        method: "GET",
-        url:"/getLatestVerbDictionItems",
-        //data:{"queryword":sourceword},
-        success:function(result){
-          $("#verbSummaryTable").html(result);
-          //the event has to be attahced here instead of after dialog load, since when page all load the button on dialog does not exist yet.
-        $('.linkButtonVerb').on("click",function(){
-        
-            $.ajax({
-               method: "POST",
-               url:"/getSentenceStringById",
-               data:{sentenceId:$(this).text()},
-               success:function(sentenceResult){
-                $('#sentenceContext1').val(sentenceResult);
-               }
-           });
-        });
-        }
-      });*/
-  
-    sentenceQueryDialog.dialog("open");
-
-   });
-
    $('#FlaggedSummaryButton').on("click",function(){
    
     flaggedSummaryDialog.dialog("open");

@@ -52,7 +52,9 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
     return {
       get : function() {
       return $http.get('/sentences');
-
+      },
+      post:function(wordobject){
+        return $http.post('/getOneQuerySentence',wordobject);
       }
     /*  post: function()
       {
@@ -109,7 +111,30 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 
         });
       });
-
+/*
+    $scope.querySentence=function()
+    {
+      alert("hello you clicked this!");
+    }*/
+    $scope.querygo=function()
+    {
+      Sentences.post({'word':$scope.queryword}).success(function(data)
+        {
+          if(data.output=="notfound")
+          {
+           alert("no sentence with the key word "+$scope.queryword+" found in the system!");
+          }
+          else
+          {
+           $scope.wholeSentence=data.wholeSentence;
+           $scope.sentenceSource=data.actor;
+           $scope.sentenceVerb=data.verb;
+           $scope.sentenceTarget=data['target'];
+           $scope.currentSentenceId=data._id;
+          }
+           
+        });
+    }
     $scope.nextSentence=function()
     {
           Sentences.get()
@@ -119,10 +144,10 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
            $scope.sentenceVerb=data.verb;
            $scope.sentenceTarget=data['target'];
            $scope.currentSentenceId=data._id;
-
          });
-         
     }
+ 
+
 	  	Actors.get()
 		   .success(function(data){
               
@@ -168,10 +193,7 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
            $scope.wholeSentence=data.wholeSentence;
            $scope.sentenceSource=data.actor;
            $scope.sentenceVerb=data.verb;
-           
            $scope.currentSentenceId=data._id;
-          
-           //alert(data._id);
          });
 /**********source Form***************************************/
 

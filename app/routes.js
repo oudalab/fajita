@@ -201,7 +201,7 @@ module.exports = function(app) {
        
 	});
   //this is to get one untagged sentence with some specific words in it
-  app.get('/getOneQuerySentence',function(req,res){
+  app.post('/getOneQuerySentence',function(req,res){
        var r = new RegExp(".*"+req.param('word'),'i');
         Sentence.count({"tagged":false,"wholeSentence":{$regex:r}}).exec(function(err,count){
           var random=Math.floor(Math.random()*count);
@@ -216,7 +216,10 @@ module.exports = function(app) {
                }
                 
                else
-                console.log("find 0 sentence with this query");
+                {
+                  res.json({'output':'notfound'});
+                  console.log("find 0 sentence with this query");
+                }
               }
             )
            
@@ -389,6 +392,7 @@ module.exports = function(app) {
        
       getOneNotTaggedSentence(res);
 	});
+
 
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
