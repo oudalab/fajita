@@ -59,7 +59,7 @@
                </div>
                 </div>
               </div>
-            <div id="currentSentence" class="row well">
+            <div id="currentSentence" class="row well" style="height:150px;overflow-y:auto">
               <strong>{{wholeSentence}}</strong>
             </div>
             <div class="row well well-sm">
@@ -198,8 +198,7 @@
                           </label>
                      </div>
                      <div class="col-md-3">
-                        <!-- <button type="button" id="addSource" class="glyphicon glyphicon-plus" style="background-color:#5cb85c" >Add Another Role</button> -->
-                         <button type="button" class="btn btn-success" id="addSource" style="padding:2px;width:150x;">Add Another Role</button>
+                         <button type="button" class="btn btn-success" id="ac" style="padding:2px;width:150x;">Add Another Role</button>
                      </div>
                      </div>
                        
@@ -362,6 +361,18 @@
       $("#sentencecommit").on("click", function() {
       $("#sentencealert").removeClass("in").show();
       $("#sentencealert").delay(200).addClass("in").fadeOut(300);
+      
+      //clear all the noun and verb form.
+      $('#sourceForm')[0].reset();
+      $("#combobox0").prop("selectedIndex", -1);
+      $("#combobox1").prop("selectedIndex", -1);
+      $("#combobox2").prop("selectedIndex", -1);
+
+       $('#verbForm')[0].reset();
+/*      $("#combobox4").prop("selectedIndex", -1);
+      $("#combobox5").prop("selectedIndex", -1);
+      $("#combobox6").prop("selectedIndex", -1);*/
+
     });
 
      //end of animation for clicking button      
@@ -481,7 +492,7 @@
     }  
 
     });
-      $("#addTarget").click(function(){ 
+/*    $("#addTarget").click(function(){ 
     //alert they commit the current one  
 
      if(confirm("This will clear all the input,please make sure you commit the current role first")){
@@ -496,7 +507,7 @@
     else{
         return false;
     }  
-    });
+    });*/
 //****************************end of this*******************************************************************//
 
 

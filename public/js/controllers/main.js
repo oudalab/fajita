@@ -292,7 +292,7 @@ $scope.sourceForm.submitSourceForm=function(item,event){
           console.log("Submitting source form is successful!");
        });
         responsePromise.error(function(data, status, headers, config) {
-          alert("Submitting source form failed!");
+          alert("Submitting source form failed,you might want to try logout and re log in to fix the problem.");
        });
 }
 
