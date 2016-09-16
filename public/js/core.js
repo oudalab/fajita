@@ -21,14 +21,14 @@ app.config(function ($routeProvider) {
       controller: 'registerController',
       access: {restricted: false}
     })
-    .when('/one', {
+/*    .when('/one', {
       template: '<h1>This is page one!</h1>',
       access: {restricted: true}
     })
     .when('/two', {
       template: '<h1>This is page two!</h1>',
       access: {restricted: false}
-    })
+    })*/
     .otherwise({
       redirectTo: '/'
     });
@@ -109,15 +109,23 @@ app.controller('registerController',
 
 }]);
 
+/*function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}*/
+
 app.run(function ($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart',
     function (event, next, current) {
-      AuthService.getUserStatus();
-      if (next.access.restricted &&
-          !AuthService.isLoggedIn()) {
-        $location.path('/login');
-        $route.reload();
-      }
+          
+          AuthService.getUserStatus().then(function(){
+              if (next.access.restricted &&
+                !AuthService.isLoggedIn()) {
+              $location.path('/login');
+               //console.log("this is be hit hardely!");
+              $route.reload();
+            }
+          });
+
   });
 });
 

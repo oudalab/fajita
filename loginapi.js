@@ -57,7 +57,7 @@ router.get('/status', function(req, res) {
   if (!req.isAuthenticated()) {
   
     return res.status(200).json({
-      status: false
+      status: true
     });
   }
   res.status(200).json({

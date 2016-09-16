@@ -7,43 +7,49 @@ angular.module('mainServiceModule').factory('AuthService',
 
     // return available functions for use in the controllers
     return ({
-      isLoggedIn: isLoggedIn,
       getUserStatus: getUserStatus,
+      isLoggedIn: isLoggedIn,
+      
       login: login,
       logout: logout,
       register: register
     });
 
     function isLoggedIn() {
+      //getUserStatus();
       if(user) {
-        console.log("return true here");
+        console.log("user logged in ");
         return true;
       } else {
-        console.log("return false here");
+        console.log("user not logged in ");
         return false;
       }
     }
 
     function getUserStatus() {
-      console.log("user status has been checked");
-   
+      //console.log("user status has been checked");
+      var deferred = $q.defer();
       $http.get('/user/status')
       // handle success
       .success(function (data) {
         if(data.status){
           user = true;
+          deferred.resolve();
           console.log("user authenticated!");
          
         } else {
           user = false;
+           deferred.reject();
           console.log("user not get authenticated!");
 
         }
       })
       // handle error
       .error(function (data) {
+        deferred.reject();
         user = false;
       });
+      return deferred.promise;
     }
 
     function login(username, password) {
