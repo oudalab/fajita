@@ -14,7 +14,7 @@ app.config(function ($routeProvider) {
     })
     .when('/logout', {
       controller: 'logoutController',
-      access: {restricted: true}
+      access: {restricted: false}
     })
     .when('/register', {
       templateUrl: '../partials/register.html',
@@ -113,20 +113,27 @@ app.controller('registerController',
   return new Promise((resolve) => setTimeout(resolve, time));
 }*/
 
+/*p.then(function(value) {
+   // fulfillment
+  }, function(reason) {
+  // rejection
+});*/
+
 app.run(function ($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart',
+
     function (event, next, current) {
-          
-          AuthService.getUserStatus().then(function(){
-              if (next.access.restricted &&
-                !AuthService.isLoggedIn()) {
-              $location.path('/login');
-               //console.log("this is be hit hardely!");
-              $route.reload();
-            }
-          });
+     $rootScope.$on('$routeChangeStart',
+      function (event, next, current) {
+      AuthService.getUserStatus();
+     if (next.access.restricted &&
+          !AuthService.isLoggedIn()) {
+        $location.path('/login');
+        $route.reload();
+      }
 
   });
+     });
 });
 
     

@@ -28,28 +28,31 @@ angular.module('mainServiceModule').factory('AuthService',
 
     function getUserStatus() {
       //console.log("user status has been checked");
-      var deferred = $q.defer();
+      //var deferred = $q.defer();
       $http.get('/user/status')
       // handle success
       .success(function (data) {
         if(data.status){
           user = true;
-          deferred.resolve();
+         
           console.log("user authenticated!");
+           //deferred.resolve();
          
         } else {
           user = false;
-           deferred.reject();
+           
           console.log("user not get authenticated!");
+          //deferred.reject();
 
         }
       })
       // handle error
       .error(function (data) {
-        deferred.reject();
+        
         user = false;
+        //deferred.reject();
       });
-      return deferred.promise;
+      //return deferred.promise;
     }
 
     function login(username, password) {
