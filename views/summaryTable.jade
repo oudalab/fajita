@@ -8,7 +8,7 @@ div(id="summary1" class="table table-bordered")
         th 2nd Role
         th Start
         th End
-        th Sure
+        th Unsure
         th Who Added
     tbody
       each source in sourcedictionary
@@ -19,5 +19,5 @@ div(id="summary1" class="table table-bordered")
           td #{source.secondRoleCode}
           td #{source.dateStart}
           td #{source.dateEnd}
-          td #{source.confidenceFlag}
+          td !{source.confidenceFlag}
           td #{source.userName}

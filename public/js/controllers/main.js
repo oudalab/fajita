@@ -328,7 +328,7 @@ $scope.verbForm.submitVerbForm=function(item,event){
         console.log("Submitting verb form is successful!");
      });
       responsePromise.error(function(data, status, headers, config) {
-        alert("Submitting verb form failed!");
+        alert("Submitting verb form failed. you might want to try log out and re log in again.");
      }); 
 }
 
