@@ -198,11 +198,11 @@
                           </label>
                      </div>
                      <div class="col-md-3">
-                         <button type="button" class="btn btn-success" id="addSource" style="padding:2px;width:150x;">Add Another Role</button>
+                         <button type="button" class="btn btn-success" id="addSource" style="padding:2px;width:150x;">Add another role period</button>
                      </div>
                      </div>
                        
-                  <strong>Source:</strong><input id="sourceWord">
+                  <strong>Actor Text:</strong><input id="sourceWord">
                  
                   <div class="row" style="padding:2px">
 
@@ -218,7 +218,7 @@
                  
                   <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
-                        <label>1st role</label>
+                        <label>Primary role</label>
                         <input hidden id="combobox1input" class="comboboxinput"/>
                         <select id='combobox1' class="comboboxGroup" ng-model="sourceForm.rolefirst" ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ></select>
                         <div>
@@ -228,7 +228,7 @@
                   </div>
                     <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
-                        <label>2nd role </label>
+                        <label>Secondary role </label>
                         <input hidden id="combobox2input" class="comboboxinput"/>
                         <select id='combobox2' class="comboboxGroup" ng-model="sourceForm.rolesecond" ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ></select>
                         <div>
