@@ -9,6 +9,7 @@ var Sentence=require('./models/sentence');
 var SentenceTaggingResult=require('./models/sentenceTaggingResult');
 var mongoose = require('mongoose');
 var request = require('request');
+var http=require('http');
 
 // keep this before all routes that will use pagination
 
@@ -73,7 +74,7 @@ function getOneNotTaggedSentence(res)
 
 function test(res)
 {
-  request.post('http://hanover.cs.ou.edu:5051/get_synonyms', {"text" : ["laugh"]}, 
+  request.post('http://localhost:5051/get_synonyms', {"text" : ["laugh"]}, 
     function (error, response, body) {
    if (!error && response.statusCode == 200) {
         console.log(body) // Print the google web page.
@@ -92,15 +93,10 @@ function test(res)
 module.exports = function(app) {
 
 	// api ---------------------------------------------------------------------
-/*  app.get('/api/test',function(req,res)
-  {
-     test(res);
-  });*/
     app.get('/api/verbs', function(req,res){
 		getAllVerbs(res);
 	})
 
-	
 	//get all country actors
 	app.get('/api/actors', function(req,res){
 		getAllCountryActors(res);
@@ -115,40 +111,25 @@ module.exports = function(app) {
 		getSourceDictionary(res);
 	})
   //
-  app.post('/api/test',function(req,res){
-    console.log(req.body.data);
-    /*request.post('http://hanover.cs.ou.edu:5051/get_synonyms', {'text' :["obama"]}, 
-    function (error, response, body) {
-   if (!error && response.statusCode == 200) {
-        console.log("hey tehre!"); // Print the google web page.
-     }
-  })*/
-request({
-    url: 'http://hanover.cs.ou.edu:5051/get_synonyms', //URL to hit
-    //qs: {from: 'blog example', time: +new Date()}, //Query string data
-    method: 'POST',
+  app.post('/api/synonyms',function(req,res){
+    //console.log(req.body.data);
+   request({
+      url: 'http://hanover.cs.ou.edu:5001/get_synonyms',
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        //'Custom-Header': 'Custom Value'
-    },
-    //Lets post the following key/values as form
-    json: {
-        "text": ["obama"]
-        //field2: 'data'
-    }
-}, function(error, response, body){
-    if(error) {
+        'Content-Type': 'application/json'
+       },
+      json: {
+            "text": "['"+req.body.data+"']"
+            }
+       }, function(error, response, body){
+      if(error) {
         console.log(error);
-    } else {
+        } else {
         console.log(response.statusCode, body);
-}
-});
+      }
+    });
   })
-  /*    request('http://www.google.com', function (error, response, body) {
-   if (!error && response.statusCode == 200) {
-        console.log(body) // Print the google web page.
-     }
-  });*/
 	//create new country actor
 	app.post('/api/actors',function(req,res){
 		Actor.create({
