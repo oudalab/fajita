@@ -8,6 +8,7 @@ var User=require('./models/user');
 var Sentence=require('./models/sentence');
 var SentenceTaggingResult=require('./models/sentenceTaggingResult');
 var mongoose = require('mongoose');
+var request = require('request');
 
 // keep this before all routes that will use pagination
 
@@ -70,12 +71,35 @@ function getOneNotTaggedSentence(res)
    });
 }
 
+function test(res)
+{
+  request.post('http://hanover.cs.ou.edu:5051/get_synonyms', {"text" : ["laugh"]}, 
+    function (error, response, body) {
+   if (!error && response.statusCode == 200) {
+        console.log(body) // Print the google web page.
+     }
+  });
+ 
+
+ 
+/*   request('http://www.google.com', function (error, response, body) {
+   if (!error && response.statusCode == 200) {
+        console.log(body) // Print the google web page.
+     }
+  });*/
+}
+
 module.exports = function(app) {
 
 	// api ---------------------------------------------------------------------
+/*  app.get('/api/test',function(req,res)
+  {
+     test(res);
+  });*/
     app.get('/api/verbs', function(req,res){
 		getAllVerbs(res);
 	})
+
 	
 	//get all country actors
 	app.get('/api/actors', function(req,res){
@@ -90,6 +114,41 @@ module.exports = function(app) {
        app.get('/api/sourcedictionary', function(req,res){
 		getSourceDictionary(res);
 	})
+  //
+  app.post('/api/test',function(req,res){
+    console.log(req.body.data);
+    /*request.post('http://hanover.cs.ou.edu:5051/get_synonyms', {'text' :["obama"]}, 
+    function (error, response, body) {
+   if (!error && response.statusCode == 200) {
+        console.log("hey tehre!"); // Print the google web page.
+     }
+  })*/
+request({
+    url: 'http://hanover.cs.ou.edu:5051/get_synonyms', //URL to hit
+    //qs: {from: 'blog example', time: +new Date()}, //Query string data
+    method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        //'Custom-Header': 'Custom Value'
+    },
+    //Lets post the following key/values as form
+    json: {
+        "text": ["obama"]
+        //field2: 'data'
+    }
+}, function(error, response, body){
+    if(error) {
+        console.log(error);
+    } else {
+        console.log(response.statusCode, body);
+}
+});
+  })
+  /*    request('http://www.google.com', function (error, response, body) {
+   if (!error && response.statusCode == 200) {
+        console.log(body) // Print the google web page.
+     }
+  });*/
 	//create new country actor
 	app.post('/api/actors',function(req,res){
 		Actor.create({
@@ -200,6 +259,10 @@ module.exports = function(app) {
 		    });
        
 	});
+  //get synonyms from nght_ridir service
+  app.post('/getSynonyms',function(req,res){
+
+  })
   //this is to get one untagged sentence with some specific words in it
   app.post('/getOneQuerySentence',function(req,res){
        var r = new RegExp(".*"+req.param('word'),'i');
@@ -224,11 +287,6 @@ module.exports = function(app) {
             )
            
        });
-/*  var r = new RegExp(".*"+req.param('word'),'i');
-  console.log("this is word being queried "+req.param('word'));
-  Sentence.count({"tagged":false,"wholeSentence":{$regex:r}}).exec(function(err,count){
-          console.log("this is how much sentence find: "+count);*/
-  
 
   });
 	//this is to get the total sourceDictionary tagging for this student

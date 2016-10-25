@@ -56,11 +56,7 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
       post:function(wordobject){
         return $http.post('/getOneQuerySentence',wordobject);
       }
-    /*  post: function()
-      {
-        //{docId:}: this is the way to put data in request body.
-        return ;
-      }*/
+  
     }
   }]);
 
@@ -99,9 +95,32 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
          //define a directive that will listen the ngRepeat finish event
         $('.sourceLink').click(function(e){
           e.preventDefault();
-         
+          alert($(this).text());
+
+          $http.post({'/api/test':$(this).text()}).success(function(data)
+        {
+          /*if(data.output=="notfound")
+          {
+           alert("no sentence with the key word "+$scope.queryword+" found in the system!");
+          }
+          else
+          {
+           $scope.wholeSentence=data.wholeSentence;
+           $scope.sentenceSource=data.actor;
+           $scope.sentenceVerb=data.verb;
+           $scope.sentenceTarget=data['target'];
+           $scope.currentSentenceId=data._id;
+          }*/
+          alert(data);
+           
+        });
+
+
+
           $('#sourceWord').val($(this).text());
+
            $('#sourceWord').select();
+
         });
 
         $('.verbLink').click(function(e){

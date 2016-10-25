@@ -1,10 +1,10 @@
-
-
+{
   "name": "ou-event-coding-system",
   "version": "0.0.0",
   "description": "app for event data coders",
   "main": "server.js",
   "author": "YanLiang",
+
   "dependencies": {
     "bcrypt": "^0.8.5",
     "bcrypt-node": "^0.1.0",
@@ -22,6 +22,7 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.0.0",
     "plotly.js": "^1.12.0",
+    "request": "^2.75.0",
     "stylus": "^0.54.2"
   }
 }
