@@ -112,7 +112,7 @@ module.exports = function(app) {
 	})
   //
   app.post('/api/synonyms',function(req,res){
-    //console.log(req.body.data);
+    //console.log(req.body.word);
    request({
       url: 'http://hanover.cs.ou.edu:5001/get_synonyms',
       method: 'POST',
@@ -120,15 +120,21 @@ module.exports = function(app) {
         'Content-Type': 'application/json'
        },
       json: {
-            "text": "['"+req.body.data+"']"
+            "text": "['"+req.body.word+"']"
             }
-       }, function(error, response, body){
+       }, function(error, response, data){
       if(error) {
         console.log(error);
+        res.end();
         } else {
-        console.log(response.statusCode, body);
+        console.log(response.statusCode, data);
+        //sent the result back;
+        //res.write(data[0]);
+        res.end(JSON.stringify(data));
       }
+
     });
+   //res.end();
   })
 	//create new country actor
 	app.post('/api/actors',function(req,res){
@@ -240,10 +246,7 @@ module.exports = function(app) {
 		    });
        
 	});
-  //get synonyms from nght_ridir service
-  app.post('/getSynonyms',function(req,res){
 
-  })
   //this is to get one untagged sentence with some specific words in it
   app.post('/getOneQuerySentence',function(req,res){
        var r = new RegExp(".*"+req.param('word'),'i');

@@ -25,6 +25,7 @@
       margin: 0;
       padding: 5px 10px;
     }
+   
   </style>
  
 <div  ng-controller="mainController">
@@ -202,28 +203,51 @@
                      </div>
                      </div>
                        
-                  <strong>Actor Text:</strong><input id="sourceWord">
+                  <strong>Actor Text:</strong><input id="sourceWord">  <button type="button" class="btn btn-success" id="synonym" style="padding:2px;width:50x;">Synonym</button>
                  
                   <div class="row" style="padding:2px">
 
-                     <div class="ui-widget col-md-6">
+                     <div class="ui-widget col-md-8">
                         <label>country </label>
                         <input hidden id="combobox0input" class="comboboxinput">
                         <select id='combobox0' class="comboboxGroup" ng-model="sourceForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
                         <div>
                            <button id="toggle0">Hide Underlying Select</button>
                         </div>
-                     </div>
-                  </div>
-                 
-                  <div class="row" style="padding:2px">
-                     <div class="ui-widget col-md-6">
+                  
                         <label>Primary role</label>
                         <input hidden id="combobox1input" class="comboboxinput"/>
                         <select id='combobox1' class="comboboxGroup" ng-model="sourceForm.rolefirst" ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ></select>
                         <div>
                            <button id="toggle1">Hide Underlying Select</button>
                         </div>
+                     </div>
+                    <div class="ui-widget col-md-4">
+                            <table class = "table table-condensed" id="synonymtable" style="height:50px">
+                             <!-- <caption>Synonyms List</caption> --> 
+                             <thead>
+                                <tr>
+                                   <th>Synonyms</th>
+                                </tr>
+                             </thead>
+                             <tbody>
+                               <!--  <tr>
+                                   <td>syn1</td>
+                                </tr>
+                                <tr>
+                                   <td>syn2</td>
+                                </tr>
+                                <tr>
+                                   <td>syn3</td>
+                                </tr>
+                                <tr>
+                                   <td>syn4</td>
+                                </tr>
+                                <tr>
+                                   <td>syn5</td>
+                                </tr> -->
+                             </tbody>
+                          </table>
                      </div>
                   </div>
                     <div class="row" style="padding:2px">
@@ -333,9 +357,32 @@
    <script>
    $(function(){
 
- /*    $('#sourceWord').change(function(){
-        alert("you called me man!");
+  /*   $('#sourceWord').change(function(){
+        $http.post('/api/synonyms',{"word":$('#sourceWord').text()}).success(function(data)
+        {
+          //console.log("succefully called the get synonyms!");
+        });
+   
      });*/
+
+    /* $('#sourceForm #sourceWord').on('change', function() {
+         alert("I am changed man!");
+      });*/
+      $('#synonym').click(function(){
+        $('#synonymtable tbody').empty();
+         $.ajax({
+               method: "POST",
+               url:"/api/synonyms",
+               data:{"word":$('#sourceWord').val()},
+               success:function(synonyms){
+                var synonymslist=JSON.parse(synonyms);
+                 for(var i = 0; i < synonymslist.length; i++) {
+                     $('#synonymtable').append('<tr><td>'+synonymslist[i]+'</td></tr>');
+                }               
+               }
+           });
+
+      });
      //aninamation for click button
      $("#nouncommit").on("click", function() {
       //if the option is not be chosen then no success animation should show up.

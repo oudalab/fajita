@@ -95,31 +95,27 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
          //define a directive that will listen the ngRepeat finish event
         $('.sourceLink').click(function(e){
           e.preventDefault();
-          alert($(this).text());
-
-          $http.post({'/api/test':$(this).text()}).success(function(data)
+          
+         //actually I am not sure why it got called twice, should be a bug some wher.
+   /*       $http.post('/api/synonyms',{"word":$(this).text()}).success(function(data)
         {
-          /*if(data.output=="notfound")
-          {
-           alert("no sentence with the key word "+$scope.queryword+" found in the system!");
-          }
-          else
-          {
-           $scope.wholeSentence=data.wholeSentence;
-           $scope.sentenceSource=data.actor;
-           $scope.sentenceVerb=data.verb;
-           $scope.sentenceTarget=data['target'];
-           $scope.currentSentenceId=data._id;
-          }*/
-          alert(data);
+          
+          console.log("succefully called the get synonyms!");
            
-        });
+        });*/
+        /*var origword={"word":$(this).text()};
+        var responsePromise = $http.post("/api/synonyms", origword);
+       responsePromise.success(function(dataFromServer, status, headers, config) {
+          console.log("I make a call to get synonyms");
+       });
+        responsePromise.error(function(data, status, headers, config) {
+          alert("fail to get response of the synonyms.");
+       });*/
+          var value=$(this).text();
+          $('#sourceWord').val(value);
+          /*$('#sourceForm #sourceWord').trigger("change");*/
 
-
-
-          $('#sourceWord').val($(this).text());
-
-           $('#sourceWord').select();
+           //$('#sourceWord').select();
 
         });
 
