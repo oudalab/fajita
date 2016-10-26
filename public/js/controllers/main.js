@@ -91,32 +91,53 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 	        });
 		};
 
+    /**********source Form***************************************/
+
+$scope.sourceForm={};
+$scope.sourceForm.word="";
+$scope.sourceForm.country="";
+$scope.sourceForm.rolefirst="";
+$scope.sourceForm.rolesecond="";
+$scope.sourceForm.startdate="";
+$scope.sourceForm.enddate="";
+$scope.sourceForm.sourceflag="";
+ //define the temp list that is going to submit for the whole sentences
+ var sourceList=[];
+ var targetList=[];
+
+
     $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
          //define a directive that will listen the ngRepeat finish event
         $('.sourceLink').click(function(e){
           e.preventDefault();
-          
-         //actually I am not sure why it got called twice, should be a bug some wher.
-   /*       $http.post('/api/synonyms',{"word":$(this).text()}).success(function(data)
-        {
-          
-          console.log("succefully called the get synonyms!");
-           
-        });*/
-        /*var origword={"word":$(this).text()};
-        var responsePromise = $http.post("/api/synonyms", origword);
-       responsePromise.success(function(dataFromServer, status, headers, config) {
-          console.log("I make a call to get synonyms");
-       });
-        responsePromise.error(function(data, status, headers, config) {
-          alert("fail to get response of the synonyms.");
-       });*/
           var value=$(this).text();
           $('#sourceWord').val(value);
           /*$('#sourceForm #sourceWord').trigger("change");*/
 
-           //$('#sourceWord').select();
-
+          $('#sourceWord').select();
+          //make sure this is called once
+        /*  var called=false;
+          if(!called)
+          {*/
+            //this still being called twice!!
+             $http.post('/nounexist',{'word':value}).success(function(data){
+              //console.log(data);
+              //just grab the useful info not all the 000zzz on the date format.
+              $scope.sourceForm.startdate=data.dateStart.substring(0,10);
+              $scope.sourceForm.enddate=data.dateEnd.substring(0,10);
+              if(data.confidenceFlag)
+              {
+                $('#sourceflag').prop('checked',true);
+              }
+              else
+              {
+                $('#sourceflag').prop('checked',false);
+              }
+              });
+             $scope.sourceForm.country=data.countryCode;
+             $scope.sourceForm.rolefirst=data.firstRoleCode;
+             $scope.sourceForm.rolesecond=data.secondRoleCode;
+          //}
         });
 
         $('.verbLink').click(function(e){
@@ -126,11 +147,6 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
 
         });
       });
-/*
-    $scope.querySentence=function()
-    {
-      alert("hello you clicked this!");
-    }*/
     $scope.querygo=function()
     {
       Sentences.post({'word':$scope.queryword}).success(function(data)
@@ -210,19 +226,6 @@ var app=angular.module('mainServiceModule', ['720kb.datepicker']);
            $scope.sentenceVerb=data.verb;
            $scope.currentSentenceId=data._id;
          });
-/**********source Form***************************************/
-
-$scope.sourceForm={};
-$scope.sourceForm.word="";
-$scope.sourceForm.country="";
-$scope.sourceForm.rolefirst="";
-$scope.sourceForm.rolesecond="";
-$scope.sourceForm.startdate="";
-$scope.sourceForm.enddate="";
-$scope.sourceForm.sourceflag="";
- //define the temp list that is going to submit for the whole sentences
- var sourceList=[];
- var targetList=[];
 
 
 $scope.sourceForm.submitSourceForm=function(item,event){
@@ -232,12 +235,11 @@ $scope.sourceForm.submitSourceForm=function(item,event){
   {
     flagged=true;
   }
-   if ($("input:radio[name='inlineRadioOptions']:checked").length!=1 ) 
+  if ($("input:radio[name='inlineRadioOptions']:checked").length!=1 ) 
    {
       alert('You have to choose from [Source],[Target] or [Other] before commit');
       return false;
    }
-
    //now if the one of the radio button options has been chosen
    var word=$('#sourceWord').val();
   

@@ -227,7 +227,7 @@ module.exports = function(app) {
        
     });
         //get sentence string by giving sentenceId
-     app.post('/getSentenceStringById',function(req,res){
+   app.post('/getSentenceStringById',function(req,res){
      
        var sentenceId=req.body.sentenceId;
        //console.log(sentenceId);
@@ -236,6 +236,23 @@ module.exports = function(app) {
           res.end();
         });
        });
+   //if the key exist return the object.
+    app.post('/nounexist',function(req,res){
+        var word=req.body.word;
+        SourceDictionary.findOne({'word':word},function(err,data)
+        {
+          if(data!=null)
+            {
+              res.json(data);
+              //console.log("hey");
+            }
+          else
+            {
+              res.json(data);
+              //console.log("false");
+            }
+        })
+    });
 
 	app.get('/summaryTable',function(req,res){
 		var queryword=req.param('queryword');
@@ -243,9 +260,35 @@ module.exports = function(app) {
 		
 		      res.render('./summaryTable.jade',{sourcedictionary:data});
 		     
-		    });
-       
+		    }); 
 	});
+  //find actor full name
+  app.post('/actorfull',function(req,res){
+    //var queryactor=req.param('queryactor');
+    var queryactor=req.body.queryactor;
+    //console.log(queryactor);
+    Actor.find({'id':queryactor},function(err,data){
+        res.json(data[0].name);
+        //console.log(data[0].name);
+    });
+  });
+  //find agent full name
+   app.post('/agentfull',function(req,res){
+    var queryagent=req.body.queryagent;
+    //console.log(queryactor);
+    Agent.find({'id':queryagent},function(err,data){
+        res.json(data[0].name);
+    });
+  });
+  //find second role full name
+   app.post('/secondrolefull',function(req,res){
+  var querysecondrole=req.body.querysecondrole;
+    //console.log(queryactor);
+    Secondrole.find({'id':querysecondrole},function(err,data){
+        res.json(data[0].name);
+    });
+  });
+
 
   //this is to get one untagged sentence with some specific words in it
   app.post('/getOneQuerySentence',function(req,res){
