@@ -219,7 +219,7 @@
                         </div>
                      </div>
                     <div class="ui-widget col-md-4">
-                            <table class = "table table-condensed" id="synonymtable" style="height:50px">
+                            <table bgcolor="#5cb85c" class = "table table-condensed" id="synonymtable" style="height:50px">
                              <!-- <caption>Synonyms List</caption> --> 
                              <thead>
                                 <tr>
@@ -247,7 +247,7 @@
                      </div>
                      <div class="col-md-4">
                         <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                           <input ng-model="sourceForm.startdate"/>
+                           <input ng-model="sourceForm.startdate" id="startdate"/>
                         </datepicker>
                    <!--      <input id="nounStartDate"/> -->
                      </div>
@@ -261,7 +261,7 @@
                      </div>
                      <div class="col-md-4">
                         <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                           <input ng-model="sourceForm.enddate"/>
+                           <input ng-model="sourceForm.enddate" id="enddate"/>
                         </datepicker>
                        <!--  <input id="nounEndDate"/> -->
                      </div>
@@ -509,13 +509,13 @@
 //************when underlying box change make the hidden input change*********************//
 
 $("#combobox0").change(function() {
-$(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
-/*('#wholeSentenceForm-SourceCountryCode').val($(this).val());*/
-
+  $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
+  //$('#combobox0input').val($(this).val());
 });
 
 $("#combobox1").change(function() {
     $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
+     //$('#combobox0input1').val($(this).val());
     });
 $("#combobox2").change(function() {
     $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");

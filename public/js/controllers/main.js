@@ -125,16 +125,16 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
         //just grab the useful info not all the 000zzz on the date format.
         if (data != null) {
           if (data.dateStart.substring(0, 10) != '1800-01-01') {
-            $scope.sourceForm.startdate = data.dateStart.substring(0, 10);
+            $('#startdate').val(data.dateStart.substring(0, 10));
 
           } else {
-            $scope.sourceForm.startdate = "";
+           $('#startdate').val("");
           }
 
           if (data.dateEnd.substring(0, 10) != '1800-01-01') {
-            $scope.sourceForm.enddate = data.dateEnd.substring(0, 10);
+            $('#enddate').val(data.dateEnd.substring(0, 10));
           } else {
-            $scope.sourceForm.enddate = "";
+            $('#enddate').val("");
           }
 
           if (data.confidenceFlag) {
@@ -252,8 +252,6 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
 
     var sentenceId = $scope.currentSentenceId;
     var countryCode = $('#combobox0input').val();
-    alert(countryCode);
-
     var firstRoleCode = $('#combobox1input').val();
     var secondRoleCode = $('#combobox2input').val();
 /*    var countryCode = $('#combobox0 option:selected').text();
