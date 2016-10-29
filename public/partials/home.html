@@ -89,11 +89,7 @@
             <div class="row well well-sm" style="height:60px">
             <div class="col-md-7">
                <button type="button" class="btn btn-success" style="padding:2px;width:180px;float:left;margin:10px" ng-click="nextSentence()">Random Sentences</button>
-            </div>
-             <!--  <div class="col-md-3">
-               <button type="button" class="btn btn-success" style="padding:2px;width:80px;float:left;margin:10px" id="randomSentenceButton">Custom</button>
-                </div> -->
-               
+            </div>               
                 <div class="col-md-5">
                <button type="button" class="btn btn-success" style="color:red;padding:2px;width:80px;float:left;margin:10px" id="sentencecommit" ng-click="commitSentence()">Commit</button>
                 <div class="pull-right">
@@ -341,17 +337,6 @@
  <!-- sometimes the dialog not load might because the way u render it in a javascript file may need to make it an object like my company setup structure -->
    <script>
    $(function(){
-  /*   $('#sourceWord').change(function(){
-        $http.post('/api/synonyms',{"word":$('#sourceWord').text()}).success(function(data)
-        {
-          //console.log("succefully called the get synonyms!");
-        });
-   
-     });*/
-
-    /* $('#sourceForm #sourceWord').on('change', function() {
-         alert("I am changed man!");
-      });*/
       $('#synonym').click(function(){
         $('#synonymtable tbody').empty();
          $.ajax({
@@ -517,43 +502,11 @@
     }  
 
     });
-/*    $("#addTarget").click(function(){ 
-    //alert they commit the current one  
-
-     if(confirm("This will clear all the input,please make sure you commit the current role first")){
-       $('#targetForm')[0].reset();
-    //need this otherwise when clear it will show up the first option in the input.
-     //$(".combobox").prop("selectedIndex", -1);--class won't work when changing only the underlying input and try to clear it later
-   
-     $("#combobox4").prop("selectedIndex", -1);
-     $("#combobox5").prop("selectedIndex", -1);
-     $("#combobox6").prop("selectedIndex", -1);
-    }
-    else{
-        return false;
-    }  
-    });*/
-//****************************end of this*******************************************************************//
+//****************************end **************************************//
 
 
     
-//*************************************when underlying box change make the hidden input change*********************//
-
-//test//
-/*$('#combobox0input').change(function(){
-  console.log("hahah I AM HERE!");
-  $('#wholeSentenceForm-SourceCountryCode').val($(this).val());
-
-});*/
-/* $('#combobox0input').on("change",function(){
-
-     $('#wholeSentenceForm-SourceCountryCode').val("yanyan");
- });*/
-//test//
-
-/*$('.custom-combobox-input').change(function(){
-$(this).closest('.comboboxGroup').val($(this).val());
-});*/
+//************when underlying box change make the hidden input change*********************//
 
 $("#combobox0").change(function() {
 $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");

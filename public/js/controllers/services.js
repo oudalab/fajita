@@ -1,6 +1,5 @@
-angular.module('mainServiceModule').factory('AuthService',
-  ['$q', '$timeout', '$http',
-  function ($q, $timeout, $http) {
+angular.module('mainServiceModule').factory('AuthService', ['$q', '$timeout', '$http',
+  function($q, $timeout, $http) {
 
     // create user variable
     var user = null;
@@ -9,7 +8,7 @@ angular.module('mainServiceModule').factory('AuthService',
     return ({
       getUserStatus: getUserStatus,
       isLoggedIn: isLoggedIn,
-      
+
       login: login,
       logout: logout,
       register: register
@@ -17,7 +16,7 @@ angular.module('mainServiceModule').factory('AuthService',
 
     function isLoggedIn() {
       //getUserStatus();
-      if(user) {
+      if (user) {
         console.log("user logged in ");
         return true;
       } else {
@@ -30,28 +29,28 @@ angular.module('mainServiceModule').factory('AuthService',
       //console.log("user status has been checked");
       //var deferred = $q.defer();
       $http.get('/user/status')
-      // handle success
-      .success(function (data) {
-        if(data.status){
-          user = true;
-         
-          console.log("user authenticated!");
-           //deferred.resolve();
-         
-        } else {
-          user = false;
-           
-          console.log("user not get authenticated!");
-          //deferred.reject();
+        // handle success
+        .success(function(data) {
+          if (data.status) {
+            user = true;
 
-        }
-      })
-      // handle error
-      .error(function (data) {
-        
-        user = false;
-        //deferred.reject();
-      });
+            console.log("user authenticated!");
+            //deferred.resolve();
+
+          } else {
+            user = false;
+
+            console.log("user not get authenticated!");
+            //deferred.reject();
+
+          }
+        })
+        // handle error
+        .error(function(data) {
+
+          user = false;
+          //deferred.reject();
+        });
       //return deferred.promise;
     }
 
@@ -61,11 +60,13 @@ angular.module('mainServiceModule').factory('AuthService',
       var deferred = $q.defer();
 
       // send a post request to the server
-      $http.post('/user/login',
-        {username: username, password: password})
+      $http.post('/user/login', {
+          username: username,
+          password: password
+        })
         // handle success
-        .success(function (data, status) {
-          if(status === 200 && data.status){
+        .success(function(data, status) {
+          if (status === 200 && data.status) {
             user = true;
             deferred.resolve();
           } else {
@@ -74,7 +75,7 @@ angular.module('mainServiceModule').factory('AuthService',
           }
         })
         // handle error
-        .error(function (data) {
+        .error(function(data) {
           user = false;
           deferred.reject();
         });
@@ -92,12 +93,12 @@ angular.module('mainServiceModule').factory('AuthService',
       // send a get request to the server
       $http.get('/user/logout')
         // handle success
-        .success(function (data) {
+        .success(function(data) {
           user = false;
           deferred.resolve();
         })
         // handle error
-        .error(function (data) {
+        .error(function(data) {
           user = false;
           deferred.reject();
         });
@@ -113,18 +114,20 @@ angular.module('mainServiceModule').factory('AuthService',
       var deferred = $q.defer();
 
       // send a post request to the server
-      $http.post('/user/register',
-        {username: username, password: password})
+      $http.post('/user/register', {
+          username: username,
+          password: password
+        })
         // handle success
-        .success(function (data, status) {
-          if(status === 200 && data.status){
+        .success(function(data, status) {
+          if (status === 200 && data.status) {
             deferred.resolve();
           } else {
             deferred.reject();
           }
         })
         // handle error
-        .error(function (data) {
+        .error(function(data) {
           deferred.reject();
         });
 
@@ -133,4 +136,5 @@ angular.module('mainServiceModule').factory('AuthService',
 
     }
 
-}]);
+  }
+]);

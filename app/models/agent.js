@@ -1,6 +1,10 @@
-var mongoose=require("mongoose");
+var mongoose = require("mongoose");
 
-module.exports=mongoose.model('agent',{
-   id:{type:String},
- name:{type:String}
+module.exports = mongoose.model('agent', {
+	id: {
+		type: String
+	},
+	name: {
+		type: String
+	}
 });
