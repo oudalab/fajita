@@ -251,9 +251,10 @@ module.exports = function(app) {
   //if the key exist return the object.
   app.post('/nounexist', function(req, res) {
     var word = req.body.word;
-    SourceDictionary.findOne({
-      'word': word
-    }, function(err, data) {
+    var r = new RegExp(word,'i');
+    SourceDictionary.findOne(
+      { 'word': {$regex:r} }
+    , function(err, data) {
       if (data != null) {
         res.json(data);
         //console.log("hey");
