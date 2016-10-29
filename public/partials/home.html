@@ -221,7 +221,7 @@
                         </div>
                      </div>
                      <div class="ui-widget col-md-4">
-                            <table class = "table table-condensed" id="synonymtable" style="height:50px;margin-top:-120px">
+                            <table class = "table table-condensed" id="synonymtable" style="height:50px;margin-top:-130px">
                              <thead>
                                 <tr>
                                    <th>Synonyms</th>
@@ -347,12 +347,59 @@
                success:function(synonyms){
                 var synonymslist=JSON.parse(synonyms);
                  for(var i = 0; i < synonymslist.length; i++) {
-                     $('#synonymtable').append('<tr><td>'+synonymslist[i]+'</td></tr>');
-                }               
-               }
+                     $('#synonymtable').append('<tr><td><a href="#" class="clicksynonym">'+synonymslist[i]+'</a></td></tr>');
+                } 
+                
+                //click on each synonym link, need to be here to make sure the class exist on it.
+
+                $('.clicksynonym').click(function(e) {
+                           e.preventDefault();
+                           var sourceword=$(this).text();
+                           $('#sourceForm').trigger("reset");
+                           $('#sourceWord').val(sourceword);
+                          $.ajax({
+                                 method: "POST",
+                                 url:"/nounexist",
+                                 data:{"word":sourceword},
+                                 success:function(data){
+                           
+                                //just grab the useful info not all the 000zzz on the date format.
+                                if (data != null) {
+                                  if (data.dateStart.substring(0, 10) != '1800-01-01') {
+                                    $('#startdate').val(data.dateStart.substring(0, 10));
+
+                                  } else {
+                                   $('#startdate').val("");
+                                  }
+
+                                  if (data.dateEnd.substring(0, 10) != '1800-01-01') {
+                                    $('#enddate').val(data.dateEnd.substring(0, 10));
+                                  } else {
+                                    $('#enddate').val("");
+                                  }
+
+                                  if (data.confidenceFlag) {
+                                    $('#sourceflag').prop('checked', true);
+                                  } else {
+                                    $('#sourceflag').prop('checked', false);
+                                  }
+                             
+                                  $('#combobox0').val(data.countryCode);
+                                  $('#combobox1').val(data.firstRoleCode);
+                                  $('#combobox2').val(data.secondRoleCode);
+                                } else {
+                                    //do nothing since the form has been all cleared.
+                                }
+                      
+                                }
+                              });                                    
+                });              
+            
+             }
            });
 
       });
+    
      //aninamation for click button
      $("#nouncommit").on("click", function() {
       //if the option is not be chosen then no success animation should show up.
