@@ -17,8 +17,16 @@ var http = require('http');
 var ObjectId = mongoose.Types.ObjectId;
 
 
-function getAllVerbs(res) {
+/*function getAllVerbs(res) {
   Verb.find(function(err, verbs) {
+    if (err)
+      res.send(err)
+    res.json(verbs);
+  });
+}*/
+
+function getAllVerbs(res) {
+  Verb.find({}).sort('id').exec(function(err, verbs) {
     if (err)
       res.send(err)
     res.json(verbs);
