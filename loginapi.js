@@ -42,6 +42,7 @@ router.post('/login', function(req, res, next) {
         status: 'Login successful!'
       });
    /*   req.session.user=user;*/
+      
     });
   })(req, res, next);
 });

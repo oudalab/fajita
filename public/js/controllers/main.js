@@ -277,7 +277,9 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
       secondRoleCode: secondRoleCode, //secondRoleCode
       dateStart: dateStart,
       dateEnd: dateEnd,
-      confidenceFlag: flagged
+      confidenceFlag: flagged,
+      username:localStorage.getItem('currentuser'),
+      userid:localStorage.getItem('currentid')
         //get the useId from the req in api.
     };
     //if it is source push into sourcelist 
@@ -313,7 +315,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
       console.log("Submitting source form is successful!");
     });
     responsePromise.error(function(data, status, headers, config) {
-      alert("Submitting source form failed,you might want to try logout and re log in to fix the problem.");
+      alert("Submitting source form failed,please try again.");
     });
   }
 
@@ -335,7 +337,9 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
       word: word,
       sentenceId: sentenceId,
       verbcode: verbcode,
-      confidenceFlag: flagged
+      confidenceFlag: flagged,
+      username:localStorage.getItem('currentuser'),
+      userid:localStorage.getItem('currentid')
     };
 
     var hiddenVerbObject = {
@@ -348,7 +352,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
       console.log("Submitting verb form is successful!");
     });
     responsePromise.error(function(data, status, headers, config) {
-      alert("Submitting verb form failed. you might want to try log out and re log in again.");
+      alert("Submitting verb form failed.please try again right here.");
     });
   }
 
@@ -365,7 +369,8 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
           sentenceId: sentenceId,
           sourceList: sourceList,
           verbList: verbList,
-          targetList: targetList
+          targetList: targetList,
+          userid:localStorage.getItem('currentid')
         }
         //make the tag to be 1 after commit the whole sentence.
       $http.post('/updateSentenceTag', {
@@ -386,10 +391,11 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
       responsePromise.error(function(data, status, headers, config) {
         //alert("Submitting form failed!");
         console.log("Submitting source form failed!");
+        alert("Commit sentence to server failed,please try again.");
         //clear the list
-        sourceList = [];
+       /* sourceList = [];
         targetList = [];
-        verbList = [];
+        verbList = [];*/
       });
     }
     /**************end of commit the whole sentence**********************/

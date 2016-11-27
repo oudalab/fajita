@@ -159,6 +159,15 @@ module.exports = function(app) {
         res.send(res);
     });
   });
+  //get userid by username
+  app.post('/api/getuserid',function(req,res){
+      User.find({
+      'username': req.body.username
+    }, function(err, data) {
+      res.json({"userid":data[0].id});
+      res.end();
+    });
+  });
   //post source form
   app.post('/api/addSourceDictionary', function(req, res) {
     /*console.log("start date: "+req.body.dateStart);*/
@@ -178,8 +187,10 @@ module.exports = function(app) {
       dateStart: req.body.dateStart,
       dateEnd: req.body.dateEnd,
       confidenceFlag: req.body.confidenceFlag,
-      userId: req.user.id, //the id property is lower case on user
-      userName: req.user.username //we can access the user name directly from the req.user object, not realize this previously.
+      //userId: req.user.id, //the id property is lower case on user
+      //userName: req.user.username //we can access the user name directly from the req.user object, not realize this previously.
+      userName:req.body.username,
+      userId:req.body.userid
         /* userName:userName*/
     });
     //need to put this end here when making a post request.
@@ -192,8 +203,10 @@ module.exports = function(app) {
       word: req.body.word,
       verbcode: req.body.verbcode,
       confidenceFlag: req.body.confidenceFlag,
-      userName: req.user.username,
-      userId: req.user.id
+      /*userName: req.user.username,
+      userId: req.user.id*/
+      userName:req.body.username,
+      userId:req.body.userid
     });
     res.end();
   });
@@ -206,7 +219,8 @@ module.exports = function(app) {
       sourceList: req.body.sourceList,
       verbList: req.body.verbList,
       targetList: req.body.targetList,
-      userId: req.user.id
+      //userId: req.user.id
+      userId:req.body.userid
     }, function(err, data) {
       if (err)
         console.error(err);
