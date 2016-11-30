@@ -17,18 +17,10 @@ var http = require('http');
 var ObjectId = mongoose.Types.ObjectId;
 
 
-/*function getAllVerbs(res) {
-  Verb.find(function(err, verbs) {
-    if (err)
-      res.send(err)
-    res.json(verbs);
-  });
-}*/
-
 function getAllVerbs(res) {
   Verb.find({}).sort('id').exec(function(err, verbs) {
     if (err)
-      res.send(err)
+      res.send(err);
     res.json(verbs);
   });
 }
@@ -36,8 +28,8 @@ function getAllVerbs(res) {
 function getAllTaggingSentences(res){
   SentenceTaggingResult.find(function(err,taggingresult){
     if(err)
-       res.send(err)
-     res.json(taggingresult);
+       res.send(err);
+     res.send(JSON.stringify(taggingresult));
   });
 }
 
@@ -45,21 +37,21 @@ function getSourceDictionary(res) {
   SourceDictionary.find(function(err, sourcedictionary) {
     if (err)
       res.send(err);
-    res.json(sourcedictionary);
-  })
+     res.send(JSON.stringify(sourcedictionary));
+  });
 }
 function getVerbDictionary(res){
   VerbDictionary.find(function(err,verbdictionary){
      if(err)
       res.send(err);
-     res.json(verbdictionary);
-  })
+     res.send(JSON.stringify(verbdictionary));
+  });
 }
 
 function getAllCountryActors(res) {
   Actor.find(function(err, actors) {
     if (err)
-      res.send(err)
+      res.send(err);
     res.json(actors);
   });
 }
@@ -108,14 +100,6 @@ function test(res) {
         console.log(body) // Print the google web page.
       }
     });
-
-
-
-  /*   request('http://www.google.com', function (error, response, body) {
-     if (!error && response.statusCode == 200) {
-          console.log(body) // Print the google web page.
-       }
-    });*/
 }
 
 module.exports = function(app) {
