@@ -24,7 +24,7 @@ function getAllVerbs(res) {
     res.json(verbs);
   });
 }
-//get all the tagging result 
+
 function getAllTaggingSentences(res){
   SentenceTaggingResult.find(function(err,taggingresult){
     if(err)
@@ -125,10 +125,9 @@ module.exports = function(app) {
    app.get('/api/verbdictionary', function(req, res) {
       getVerbDictionary(res);
     });
-  app.get('/api/getallwork',function(req,res){
+  app.get('/api/getallwork', function(req,res){
       getAllTaggingSentences(res);
   });
-    //
   app.post('/api/synonyms', function(req, res) {
       //console.log(req.body.word);
       request({
