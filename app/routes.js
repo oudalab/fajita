@@ -32,12 +32,27 @@ function getAllVerbs(res) {
     res.json(verbs);
   });
 }
+//get all the tagging result 
+function getAllTaggingSentences(res){
+  SentenceTaggingResult.find(function(err,taggingresult){
+    if(err)
+       res.send(err)
+     res.json(taggingresult);
+  });
+}
 
 function getSourceDictionary(res) {
   SourceDictionary.find(function(err, sourcedictionary) {
     if (err)
-      res.send(err)
+      res.send(err);
     res.json(sourcedictionary);
+  })
+}
+function getVerbDictionary(res){
+  VerbDictionary.find(function(err,verbdictionary){
+     if(err)
+      res.send(err);
+     res.json(verbdictionary);
   })
 }
 
@@ -122,7 +137,13 @@ module.exports = function(app) {
   })
   app.get('/api/sourcedictionary', function(req, res) {
       getSourceDictionary(res);
-    })
+    });
+   app.get('/api/verbdictionary', function(req, res) {
+      getVerbDictionary(res);
+    });
+  app.get('/api/getallwork',function(req,res){
+      getAllTaggingSentences(res);
+  });
     //
   app.post('/api/synonyms', function(req, res) {
       //console.log(req.body.word);
@@ -342,7 +363,13 @@ module.exports = function(app) {
         $regex: r
       }
     }).exec(function(err, count) {
-      var random = Math.floor(Math.random() * count);
+      var randomnumber=Math.random();
+      var random = Math.floor(randomnumber * count);
+      //var limitcount=0;
+   /*   if(randomnumber<0.5)
+      {
+        var random=Math.floor((randomnumber+0.25)*count);
+      }*/
       //var queryword=req.param('word');
 
       Sentence.findOne({
@@ -350,7 +377,7 @@ module.exports = function(app) {
         "wholeSentence": {
           $regex: r
         }
-      }).skip(random).exec(
+      }).limit(1).skip(random).exec(
         function(err, result) {
           if (result != null) {
             res.json(result);
