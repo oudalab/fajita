@@ -455,10 +455,14 @@ module.exports = function(app) {
 
   app.get('/getAllFlaggedNouns', function(req, res, next) {
     SourceDictionary.paginate({
-      'confidenceFlag': true
+      //this needs to be set back later
+      //'confidenceFlag': true
     }, {
       page: req.query.page,
-      limit: req.query.limit
+      limit: req.query.limit,
+      sort: {
+        taggingTime: 'desc'
+    }
     }).then(function(result) {
       //ToDO: this is some function that can be extracted, since it is used in both getAllFlaggedNouns and in getAllFlaggedVerbs
       var totalPages = 0;
@@ -479,10 +483,13 @@ module.exports = function(app) {
 
   app.get('/getAllFlaggedVerbs', function(req, res, next) {
     VerbDictionary.paginate({
-      'confidenceFlag': true
+      //'confidenceFlag': true
     }, {
       page: req.query.page,
-      limit: req.query.limit
+      limit: req.query.limit,
+          sort: {
+        taggingTime: 'desc'
+    }
     }).then(function(result) {
       var totalPages = 0;
       if (result.total % req.query.limit === 0) {
