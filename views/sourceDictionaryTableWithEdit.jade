@@ -15,6 +15,7 @@ div(id="sourceEditTable" class="table table-sm")
         th Start(mm/dd/yyyy)
         th End(mm/dd/yyyy)
         th Who Added
+        th Tag Time
         th Tool
     tbody
       each source in allFlaggedNouns
@@ -32,5 +33,6 @@ div(id="sourceEditTable" class="table table-sm")
           td 
              input(type="text", name="dateendname",value="#{source.dateEnd}" class="dateEnd" readonly)
           td #{source.userName}
+          td #{source.taggingTime}
           td <button class="editSourceButton">Edit</button>
           td(class="hidden sourceDictionaryClass") #{source._id}
