@@ -197,6 +197,9 @@
                      <div class="col-md-3">
                          <button type="button" class="btn btn-success" id="addSource" style="padding:2px;width:150x;">Add another role period</button>
                      </div>
+                     <div class="col-md-2">
+                         <button type="button" class="btn btn-danger" id="clearnoun" style="padding:2px;width:100x;">CLEAR</button>
+                     </div>
                      </div>
                        
                   <strong>Actor Text:</strong><input id="sourceWord">  <button type="button" class="btn btn-success" id="synonym" style="padding:2px;width:50x;">Synonym</button>
@@ -552,7 +555,17 @@
     });
 //****************************end **************************************//
 
+//click function for clear the source code button 
+    $("#clearnoun").click(function(){ 
 
+    $('#sourceForm')[0].reset();
+     $("#combobox0").prop("selectedIndex", -1);
+     $("#combobox1").prop("selectedIndex", -1);
+     $("#combobox2").prop("selectedIndex", -1);
+      $('#sourceWord').val(sourceWordOld);
+    });
+
+//end of the button click function.
     
 //************when underlying box change make the hidden input change*********************//
 
