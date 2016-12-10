@@ -905,6 +905,7 @@ $("#combobox6").change(function() {
              //end of the can be extracted method.
              //reattach the sentence link button, this one can be extracted too.
               $('.linkButtonNoun').on("click",function(){
+                //console.log("hey I am getting clicked!");
            $.ajax({
                method: "POST",
                url:"/getSentenceStringById",
@@ -921,6 +922,22 @@ $("#combobox6").change(function() {
             
           });
            }
+
+           //test***************
+                     $('.linkButtonNoun').on("click",function(){
+                console.log("hey I am getting clicked!");
+           $.ajax({
+               method: "POST",
+               url:"/getSentenceStringById",
+               data:{sentenceId:$(this).text()},
+               success:function(sentenceResult){
+                $('#sentenceContext2').val(sentenceResult);
+               }
+           });
+        });
+
+
+           //end of test
       }
      });
    });
