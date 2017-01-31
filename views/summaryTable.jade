@@ -1,0 +1,23 @@
+div(id="summary1" class="table table-bordered")
+  table 
+    thead
+      tr
+        th Word
+        th Country
+        th 1st Role
+        th 2nd Role
+        th Start
+        th End
+        th Unsure
+        th Who Added
+    tbody
+      each source in sourcedictionary
+        tr
+          td #{source.word}
+          td #{source.countryCode}
+          td #{source.firstRoleCode}
+          td #{source.secondRoleCode}
+          td #{source.dateStart}
+          td #{source.dateEnd}
+          td !{source.confidenceFlag}
+          td #{source.userName}

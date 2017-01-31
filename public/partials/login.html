@@ -7,14 +7,31 @@
   <form class="form" ng-submit="login()">
     <div class="form-group">
       <label>Username</label>
-      <input type="text" class="form-control" name="username" ng-model="loginForm.username" required>
+      <input type="text" class="form-control" name="username" id="usernameid" ng-model="loginForm.username" required>
     </div>
     <div class="form-group">
       <label>Password</label>
         <input type="password" class="form-control" name="password" ng-model="loginForm.password" required>
       </div>
       <div>
-        <button type="submit" class="btn btn-default" ng-disabled="disabled" style="background-color:#cdbfe3">Login</button>
+        <button type="submit" id="btnid" class="btn btn-default" ng-disabled="disabled" style="background-color:#cdbfe3">Login</button>
       </div>
   </form>
 </div>
+
+<script>
+   $(function(){
+       $('#btnid').click(function(){
+         var user=$('#usernameid').val();
+         $.ajax({
+               method: "POST",
+               url:"/api/getuserid",
+               data:{"username":user},
+               success:function(data){
+                 localStorage.setItem("currentid",data.userid);
+                }});
+        localStorage.setItem("currentuser",user);
+       });
+
+    })
+</script>

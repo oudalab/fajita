@@ -1,9 +1,20 @@
 /*set the tabs content color*/
+/**color for source**/
 #tabs-1
 {
 	background-color: pink;
 }
+/**color for target**/
+#tabs-3
+{
+	background-color: #cdbfe3;
+}
 #tabs
+{
+	border:0;
+	padding:0;
+}
+#tabs1
 {
 	border:0;
 	padding:0;
@@ -21,13 +32,18 @@
 {
 	height:20px;
 	font-size:12px;
-	background-color: #47a447;
+	background-color: #5cb85c;
 	padding-top:2px;
 	padding-bottom:0;
 	font-style: italic;
+
 }
 
 #sourceTabs{
+	padding:0;
+}
+#targetTabs
+{
 	padding:0;
 }
 
@@ -37,8 +53,92 @@ div.col-md-4.well.well-lg{
 
 div.ui-tabs-panel.ui-widget-content.ui-corner-bottom
 {
+	padding:5px;
 	padding-top:0;
 }
+
+#summary1{
+	padding:0;
+}
+tr:nth-child(even){background-color: #f2f2f2}
+
+.label-default
+{
+	background-color:	#0066CC;
+}
+
+.btn.btn-primary
+{
+	
+	width:180px;
+	margin-bottom:5px;
+
+}
+.linkButton
+{
+	background-color:	#D8D8D8 ;
+}
+
+.sentenceContext
+{
+	background-color: azure ;
+}
+.table thead
+{
+  background-color: #D8D8D8 ;
+}
+.headingF
+{
+	background-color:beige;
+}
+.alert
+{
+	padding:0px;
+	margin:0px;
+}
+#gotoPage
+{
+	margin-bottom: 3px;
+	width:40px;
+	height:20px;
+	padding:0px;
+}
+#synonymtable
+{
+	
+  border: 1px solid black;
+}
+
+#synonymtable tr
+{ background-color:  white; }
+#goButton
+{
+	padding-top:0px;
+	padding-bottom:0px;
+}
+.searchwell
+{
+	margin:0px;
+}
+
+.jadeinput
+{
+	width:45px;
+}
+.dateEnd
+{
+	width:150px;
+}
+.dateStart
+{
+	width:150px;
+}
+
+::selection {
+    background-color:#5cb85c;
+    color: #fff;
+}
+
 
 
 

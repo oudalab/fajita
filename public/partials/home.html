@@ -1,12 +1,14 @@
 <link rel="stylesheet" href="css/angular-datepicker.css">
 <link rel="stylesheet" href="css/autocomplete.css">
 <link rel="stylesheet" href="css/homepage.css">
-<!-- SPELLS -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js"></script> -->
+<!-- <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
 <script src="js/jqueryAutocomplete.js"></script>
-<script src="js/jqueryAddTab.js"></script>
   <style>
     .custom-combobox {
       position: relative;
@@ -23,42 +25,223 @@
       margin: 0;
       padding: 5px 10px;
     }
+   
   </style>
+ 
 <div  ng-controller="mainController">
    <div class="container" >
       <div class="row">
-         <div class="col-md-4 well well-lg" style="height:800px;padding-top:0">
-            <div class="row">
-               <button type="button" class="btn btn-success" style="padding:2px;width:75px;float:left" ng-click="signmeOut()">Sign Out</button>
+         <div class="col-md-4 well well-lg" style="height:940px;padding-top:0">
+            <div class="row  well well-sm">
+               <div class="col-md-5">
+               <button type="button" class="btn btn-success" style="padding:2px;width:100px;float:left;margin:10px" ng-click="signmeOut()">Sign Out</button>
+                </div>
+                <div class="col-md-7">
+               <button id="trackYourPerformance" type="button" class="btn btn-success" style="padding:2px;width:160px;float:left;margin:10px">Track Your Performance</button>
+               <div id="trackYourPerformanceDialog" hidden>
+                   <ul class="list-group">
+                    <li class="list-group-item">
+                      <span  id="sourceCount" class="label label-default label-pill pull-xs-right"></span>
+                      Source Items have been tagged by you. 
+                      <a id="sourceFlagged"></a>
+                       of them are flagged as not sure.
+                    </li>
+                    <li class="list-group-item">
+                      <span id="verbCount" class="label label-default label-pill pull-xs-right"></span>
+                      Verb Items have been tagged by you.
+                      <a id="verbFlagged"></a> 
+                      of them are flagged as not sure.
+                    </li>
+                    <li class="list-group-item">
+                     <span id="sentenceCount" class="label label-default label-pill pull-xs-right"></span>
+                     Whole Sentences have been tagged by you.
+                    </li>
+                  </ul> 
+               </div>
+                </div>
+              </div>
+            <div id="currentSentence" class="row well" style="height:150px;overflow-y:auto">
+              <strong>{{wholeSentence}}</strong>
             </div>
+            <div class="row well well-sm" style="height:130px;overflow-y:auto">
+            <strong>Nouns:</strong>
+            {{sentenceSource}}
+              <div>
+                <ul>
+                    <li ng-repeat="source in sentenceSource" on-finish-render="ngRepeatFinished" class="sourceLink"><a href="#">{{source}}</a></li>
+                </ul>
+            </div>
+            </div>
+            <div class="row well well-small" style="height:100px;overflow-y:auto">
+            <strong>Verb:</strong>
+            {{sentenceVerb}}
+            <div>
+                <ul>
+                    <li ng-repeat="verb in sentenceVerb" on-finish-render="ngRepeatFinished" class="verbLink"><a href="#">{{verb}}</a></li>
+                </ul>
+            </div>
+            </div>
+            <div class="row well well-sm" style="height:60px">
+              <label for="textarea">Search Sentences (Please input key words):</label>
+              <input class="queryContent" style="width:275px;height:20px" ng-model="queryword"></input>
+              <button type="button" class="btn btn-success" style="height:20px;padding-top:1px;margin-bottom:5px;float:right;" ng-click="querygo()">Go</button>
+            </div>
+            <div class="row well well-sm" style="height:60px">
+            <div class="col-md-7">
+               <button type="button" class="btn btn-success" style="padding:2px;width:180px;float:left;margin:10px" ng-click="nextSentence()">Random Sentences</button>
+            </div>               
+                <div class="col-md-5">
+               <button type="button" class="btn btn-success" style="color:red;padding:2px;width:80px;float:left;margin:10px" id="sentencecommit" ng-click="commitSentence()">Commit</button>
+                <div class="pull-right">
+                        <div class="alert alert-success fade" id="sentencealert">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          <strong>Done!</strong>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="row well" id="adminWell">
+              <div class="row well">
+              <h3>Administration Tool</h3></div>
+             <div class="row well">
+               <div class="btn-group-vertical">
+                <button type="button" class="btn btn-primary" id="MostRecentActivityButton">Most Recent Activity</button>
+                <button type="button" class="btn btn-primary" id="FlaggedSummaryButton">Flagged Summary</button>
+                <button type="button" class="btn btn-primary" id="TotalFinishedButton">Total Finished</button>
+              </div>
+
+              <div id="MostRecentActivityDialog" hidden>  
+              <div id="contextContainer">
+              <label for="textarea">Sentence:</label>
+               <textarea class="sentenceContext" id="sentenceContext1" style="width:1050px">your sentence will be showed here</textarea>
+               </div>
+               <div><strong>Most Recent Source Items:</strong></div>             
+                <div id="sourceSummaryTable">
+                </div>
+                 <div><strong>Most Recent Verb Items:</strong></div>             
+                <div id="verbSummaryTable">
+                </div>
+              </div>
+              <div id="FlaggedSummaryDialog" hidden>
+                <input id="nounOrVerbFlag" class="hidden" />
+                <div class="row well well-sm">
+                  <div class="col-md-4 col-md-offset-2">
+                       <button type="button" class="btn btn-success" id="showFlaggedNouns">Show Flagged Nouns</button>
+                  </div>
+                  <div class="col-md-4  col-md-offset-1">
+                         <button type="button" class="btn btn-success" id="showFlaggedVerbs">Show Flagged Verbs</button>
+                  </div>
+                </div>
+                 <div id="contextContainer2">
+                <label for="textarea">Sentence:</label>
+                <textarea class="sentenceContext" id="sentenceContext2" style="width:850px">your sentence will be showed here</textarea>
+                </div>
+                <div class="row well well-sm">
+                    <div class="col-md-2">
+                     <strong>Go To Page:</strong>
+                   </div> 
+                   <div class="col-md-2">
+                     <input id="gotoPage" />  
+                   </div> 
+                   <div class="col-md-2">
+                     <button class="btn btn-success" id="goButton">Go</button>
+                   </div>
+                </div>
+                <div id="flaggedTable"> </div>
+              </div>
+
+              <div id="TotalFinishedDialog" hidden>
+                 <div class="well well-sm"><strong>Sentences Summary Total: </strong><span id="sentenceCountTotal"></span></div>
+                <fieldset class="the-fieldset">
+                    <legend>Source Dictionary Summary  Total: <span id="sourceCountTotal"></span></legend>
+                    <div id="sourcePie" class="well well-sm"></div>
+                </fieldset>
+
+                  <fieldset class="the-fieldset">
+                    <legend>Verb Dictionary Summary  Total: <span id="verbCountTotal"></span></legend>
+                    <div id="verbPie" class="well well-sm"></div>
+                </fieldset>
+              
+            
+              </div>
+
+              </div>
+            </div>
+
          </div>
-         <div class="col-md-7">
-            <div id="tabs" class="row well well-lg" style="height:260px;margin-bottom:5px;">
+         <div class="col-md-8">
+            <div class="hidden" id="sourceHiddenForSentence" >{{sourceObjects}}</div>
+            <div class="hidden" id="verbHiddenForSentence">{verbObjects}</div>
+            <div class="heading row well well-sm" style="height:27px"><strong>Nouns Tagging Section</strong><div>
+            <div id="tabs" class="source row well well-lg"  style="height:495px;margin-bottom:5px;">
+               
                <ul id="sourceTabs">
-                  <li><a href="#tabs-1" id="tabid1">role1</a></li>
+                  <li><a href="#tabs-1" id="tabid1">Role</a></li>
+                  <li><a href="#tabs-2" id="tabid2">Role-Summary</a></li>
                </ul>
                <div id="tabs-1">
-                  <div class="row" style="padding:0px">
-                     <div class="col-md-6" style="font-weight:bold">ACTOR-SECTION</div>
-                     <div class="col-md-3 col-md-offset-3">
-                        <button type="button" id="addSource" class="glyphicon glyphicon-plus" style="background-color:#5cb85c" ></button>
+                 <form id="sourceForm">
+                         <div class="row" style="padding:0px">
+                     <div class="col-md-6" style="font-weight:bold">
+                       <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Source">Actor Text
+                          </label>
+                          <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Target">Target
+                          </label>
+                          <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Other">Other
+                          </label>
                      </div>
+                     <div class="col-md-3">
+                         <button type="button" class="btn btn-success" id="addSource" style="padding:2px;width:150x;">Add another role period</button>
+                     </div>
+                     <div class="col-md-2">
+                         <button type="button" class="btn btn-danger" id="clearnoun" style="padding:2px;width:100x;">CLEAR</button>
+                     </div>
+                     </div>
+                       
+                  <strong>Actor Text:</strong><input id="sourceWord">  <button type="button" class="btn btn-success" id="synonym" style="padding:2px;width:50x;">Synonym</button>
+                 
+                  <div class="row" style="padding:2px">
+                     <div class="ui-widget col-md-8">
+                        <label>country </label>
+                        <input hidden id="combobox0input" class="comboboxinput">
+                        <select id='combobox0' class="comboboxGroup" ng-model="sourceForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
+                        <div>
+                           <button id="toggle0">Hide Underlying Select</button>
+                        </div>
+                    </div>
                   </div>
                   <div class="row" style="padding:2px">
-                     <div class="ui-widget col-md-6">
-                        <label>country </label>
-                        <select id='combobox' ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="selected"></select>
+                     <div class="ui-widget col-md-8">
+                        <label>Primary role</label>
+                        <input hidden id="combobox1input" class="comboboxinput"/>
+                        <select id='combobox1' class="comboboxGroup" ng-model="sourceForm.rolefirst" ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ></select>
                         <div>
-                           <button id="toggle">show all</button>
+                           <button id="toggle1">Hide Underlying Select</button>
                         </div>
                      </div>
+                     <div class="ui-widget col-md-4">
+                            <table class = "table table-condensed" id="synonymtable" style="height:50px;margin-top:-130px">
+                             <thead>
+                                <tr>
+                                   <th>Synonyms</th>
+                                </tr>
+                             </thead>
+                             <tbody>
+                             </tbody>
+                          </table>
+                     </div>  
                   </div>
-                  <div class="row" style="padding:2px">
+                    <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
-                        <label>agent...</label>
-                        <select id='combobox1' ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="selected1"></select>
+                        <label>Secondary role </label>
+                        <input hidden id="combobox2input" class="comboboxinput"/>
+                        <select id='combobox2' class="comboboxGroup" ng-model="sourceForm.rolesecond" ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ></select>
                         <div>
-                           <button id="toggle1">show all</button>
+                           <button id="toggle2">Hide Underlying Select</button>
                         </div>
                      </div>
                   </div>
@@ -66,105 +249,827 @@
                      <div class="col-md-2" style="font-weight:bold">
                         from:
                      </div>
-                     <div class="col-md-6">
+                     <div class="col-md-4">
                         <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                           <input ng-model="date0"/>
+                           <input ng-model="sourceForm.startdate" id="startdate"/>
                         </datepicker>
+                   <!--      <input id="nounStartDate"/> -->
                      </div>
-                     <div class="col-md-3 col-md-offset-1">
-                        <label><input type="radio" name="optradio">not sure</label>
+                     <div class="col-md-4">
+                        ("yyyy-mm-dd")
                      </div>
                   </div>
                   <div class="row" style="padding:2px">
                      <div class="col-md-2" style="font-weight:bold">
                         to:
                      </div>
-                     <div class="col-md-6">
+                     <div class="col-md-4">
                         <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                           <input ng-model="date1"/>
+                           <input ng-model="sourceForm.enddate" id="enddate"/>
                         </datepicker>
+                       <!--  <input id="nounEndDate"/> -->
                      </div>
-                     <div class="col-md-3 col-md-offset-1">
-                        <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
+                       <div class="col-md-4">
+                        ("yyyy-mm-dd")
                      </div>
                   </div>
+                  <div class="row" style="padding:2px">
+                     <div class="col-md-3">   
+                        <label> <input type="checkbox" name="sourcecheck" id="sourceflag" ng-model="sourceForm.sourceflag">not sure?</label>
+                     </div>
+                     <div class="col-md-3  col-md-offset-3">
+                        <button type="button" class="btn btn-success" ng-click="sourceForm.submitSourceForm()" style="padding:2px;width:100px;" id="nouncommit">commit</button>
+                        <div class="pull-right">
+                        <div class="alert alert-success fade" id="nounalert">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          <strong>Done!</strong>
+                        </div>
+                      </div>
+                     </div>
+                  </div>
+                 
+               </form>
+               </div>
+                <div id="tabs-2">
+                <div id="summary"></div>
+                </div>
+            </div>
+            <div class="heading row well well-sm" style="height:27px"><strong>Verb Tagging Section</strong><div>
+            <form id="verbForm">
+             
+            <div class="verbwell row well well-lg" style="height:315px;margin-bottom:0px;background-color:#fbc97f;">
+             
+              <strong>Verb:</strong><input id="verbword">
+
+              
+               <div class="row" style="padding:2px">
+                
+                  <div class="ui-widget col-md-6">
+                     <input hidden id="combobox6input" class="comboboxinput"/>
+                     <select id='combobox3' ng-options="item as item.name for item in verbdata.availableOptions track by item.id" ng-model="selected3"></select>
+                     <div>
+                        <button id="toggle3">Hide Underlying Select</button>
+                     </div>
+                  </div>
+                 
+               </div>
+                <div class="row" style="padding:2px">
+                 
+                  <div class="col-md-3">
+                     <label> <input type="checkbox" name="verbcheck" id="verbflag" style="margin:5px">not sure?</label>
+                  </div>
+                   <div class="col-md-3 col-md-offset-3">
+                     <button type="button" class="btn btn-success" ng-click="verbForm.submitVerbForm()" style="padding:2px;width:100px;" id="verbcommit">commit</button>
+                       <div class="pull-right">
+                        <div class="alert alert-success fade" id="verbalert">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          <strong>Done!</strong>
+                        </div>
+                      </div>
+                  </div>
+               </div>
+                  </form>
                </div>
             </div>
-            <div class="row well well-lg" style="height:260px;margin-bottom:5px;background-color:#fbc97f;">
-               <div class="row" style="padding:0px">
-                  <div class="col-md-6" style="font-weight:bold">VERB-SECTION</div>
-                  <div class="col-md-3 col-md-offset-3">
-                     <label><input type="radio" name="optradio">not sure</label>
-                  </div>
-               </div>
-               <div class="row" style="padding:2px">
-                  <div class="ui-widget col-md-6">
-                     <label>verb....</label>
-                     <select id='combobox2' ng-options="item as item.name for item in verbdata.availableOptions track by item.id" ng-model="selected2"></select>
-                     <div>
-                        <button id="toggle2">show all</button>
-                     </div>
-                  </div>
-                  <div class="col-md-3 col-md-offset-3">
-                     <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
-                  </div>
-               </div>
-            </div>
-            <div class="row well well-lg" style="height:260px;margin-bottom:5px;background-color:#cdbfe3;;">
-               <div class="row" style="padding:0px">
-                  <div class="col-md-6" style="font-weight:bold">TARGET-SECTION</div>
-                  <div class="col-md-3 col-md-offset-3"><button type="button" id="addTarget" class="glyphicon glyphicon-plus" style="background-color:#5cb85c"></button></div>
-               </div>
-               <div class="row" style="padding:2px">
-                  <div class="ui-widget col-md-6">
-                     <label>country </label>
-                     <select id='combobox3' ng-options="item as item.name for item in actordata.availableOptions track by item.id" ng-model="selected3"></select>
-                     <div>
-                        <button id="toggle3">show all</button>
-                     </div>
-                  </div>
-               </div>
-               <div class="row" style="padding:2px">
-                  <div class="ui-widget col-md-6">
-                     <label>agent...</label>
-                     <select id='combobox4' ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ng-model="selected4"></select>
-                     <div>
-                        <button id="toggle4">show all</button>
-                     </div>
-                  </div>
-               </div>
-               <div class="row" style="padding:2px">
-                  <div class="col-md-2" style="font-weight:bold">
-                     from:
-                  </div>
-                  <div class="col-md-6">
-                     <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                        <input ng-model="date2"/>
-                     </datepicker>
-                  </div>
-                  <div class="col-md-3 col-md-offset-1">								
-                     <label><input type="radio" name="optradio">not sure</label>
-                  </div>
-               </div>
-               <div class="row" style="padding:2px">
-                  <div class="col-md-2" style="font-weight:bold">
-                     to:
-                  </div>
-                  <div class="col-md-6">
-                     <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
-                        <input ng-model="date3"/>
-                     </datepicker>
-                  </div>
-                  <div class="col-md-3 col-md-offset-1">
-                     <button type="button" class="btn btn-success" style="padding:2px;width:100px;">commit</button>
-                  </div>
-               </div>
-            </div>
+            
          </div>
       </div>
    </div>
 </div>
 
-<!--
-Copyright 2016 Google Inc. All Rights Reserved. 
-Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+ 
+ <!-- sometimes the dialog not load might because the way u render it in a javascript file may need to make it an object like my company setup structure -->
+   <script>
+   $(function(){
+      $('#synonym').click(function(){
+        $('#synonymtable tbody').empty();
+         $.ajax({
+               method: "POST",
+               url:"/api/synonyms",
+               data:{"word":$('#sourceWord').val()},
+               success:function(synonyms){
+                var synonymslist=JSON.parse(synonyms);
+                 for(var i = 0; i < synonymslist.length; i++) {
+                     $('#synonymtable').append('<tr><td><a href="#" class="clicksynonym">'+synonymslist[i]+'</a></td></tr>');
+                } 
+                
+                //click on each synonym link, need to be here to make sure the class exist on it.
+
+                $('.clicksynonym').click(function(e) {
+                           e.preventDefault();
+                           var sourceword=$(this).text();
+                           $('#sourceForm').trigger("reset");
+                           $('#sourceWord').val(sourceword);
+                          $.ajax({
+                                 method: "POST",
+                                 url:"/nounexist",
+                                 data:{"word":sourceword},
+                                 success:function(data){
+                           
+                                //just grab the useful info not all the 000zzz on the date format.
+                                if (data != null) {
+                                  if (data.dateStart.substring(0, 10) != '1800-01-01') {
+                                    $('#startdate').val(data.dateStart.substring(0, 10));
+
+                                  } else {
+                                   $('#startdate').val("");
+                                  }
+
+                                  if (data.dateEnd.substring(0, 10) != '1800-01-01') {
+                                    $('#enddate').val(data.dateEnd.substring(0, 10));
+                                  } else {
+                                    $('#enddate').val("");
+                                  }
+
+                                  if (data.confidenceFlag) {
+                                    $('#sourceflag').prop('checked', true);
+                                  } else {
+                                    $('#sourceflag').prop('checked', false);
+                                  }
+                             
+                                  $('#combobox0').val(data.countryCode);
+                                  $('#combobox1').val(data.firstRoleCode);
+                                  $('#combobox2').val(data.secondRoleCode);
+                                } else {
+                                    //do nothing since the form has been all cleared.
+                                }
+                      
+                                }
+                              });                                    
+                });              
+            
+             }
+           });
+
+      });
+    
+     //aninamation for click button
+     $("#nouncommit").on("click", function() {
+      //if the option is not be chosen then no success animation should show up.
+      if ($("input:radio[name='inlineRadioOptions']:checked").length===1 ) 
+      {
+        $("#nounalert").removeClass("in").show();
+      $("#nounalert").delay(200).addClass("in").fadeOut(300);
+      }
+      
+    });
+
+     $("#verbcommit").on("click", function() {
+      $("#verbalert").removeClass("in").show();
+      $("#verbalert").delay(200).addClass("in").fadeOut(300);
+    });
+
+      $("#sentencecommit").on("click", function() {
+      $("#sentencealert").removeClass("in").show();
+      $("#sentencealert").delay(200).addClass("in").fadeOut(300);
+      
+      //clear all the noun and verb form.
+      $('#sourceForm')[0].reset();
+      $("#combobox0").prop("selectedIndex", -1);
+      $("#combobox1").prop("selectedIndex", -1);
+      $("#combobox2").prop("selectedIndex", -1);
+
+       $('#verbForm')[0].reset();
+/*      $("#combobox4").prop("selectedIndex", -1);
+      $("#combobox5").prop("selectedIndex", -1);
+      $("#combobox6").prop("selectedIndex", -1);*/
+
+    });
+
+     //end of animation for clicking button      
+      $.ajax({
+        method: "GET",
+        url:"/getSentenceTotalCount",
+      
+        success:function(result){
+          $('#sentenceCountTotal').text(result);
+     }
+   });
+
+ 
+     $.ajax({
+        method: "GET",
+        url:"/getTotalAndFlaggedSourceCountArray",
+      
+        success:function(result){
+           var sourceCountArray=[];
+          sourceCountArray.push(result[0]-result[1]);
+          sourceCountArray.push(result[1]); 
+        var data = [{
+        values:sourceCountArray,
+        labels: ['Confidence', 'Doubt'],
+        type: 'pie'
+      }];
+
+      var layout = {
+        height: 300,
+        width: 400
+      };
+      $('#sourceCountTotal').text(result[0]);
+     Plotly.plot('sourcePie', data, layout);
+        }
+      });
+
+      $.ajax({
+        method: "GET",
+        url:"/getTotalAndFlaggedVerbCountArray",
+      
+        success:function(result){
+
+         var verbCountArray=[];
+          verbCountArray.push(result[0]-result[1]);
+          verbCountArray.push(result[1]); 
+        var data1= [{
+        values:verbCountArray,
+        labels: ['Confidence', 'Doubt'],
+        type: 'pie'
+      }];
+
+      var layout1 = {
+        height: 300,
+        width: 400
+      };
+      $('#verbCountTotal').text(result[0]);
+      Plotly.plot('verbPie', data1, layout1);
+        }
+      });
+
+
+      //transfer from jqueryAddTab.js
+         var tabs= $( "#tabs" ).tabs();
+    $( "#tabs1" ).tabs();
+
+
+     var tabTemplate = "<li><a href='#{href}' id='#{tabid}'>#{label}</a></li>";
+     var tabCounter=2;
+
+//for click to see the source summary table
+      $("#tabid2").click(function(){
+      var sourceword=$('#sourceWord').val();
+      /*console.log("this is the sourceword"+sourceword);*/
+
+      $.ajax({
+        method: "GET",
+        url:"/summaryTable",
+        data:{"queryword":sourceword},
+        success:function(result){
+          $("#summary").html(result);
+        }
+      });
+    });
+
+// for click to see the target summary table
+    $("#tabid4").click(function(){
+      var targetword=$('#targetWord').val();
+      //also the source and taget summary they share the same jade table for summary.
+      $.ajax({
+        method: "GET",
+        url:"/summaryTable",
+        data:{"queryword":targetword},
+        success:function(result){
+          $("#summaryTarget").html(result);
+        }
+      });
+    });
+//*******************************clear the form when click on add another button************************//
+
+    $("#addSource").click(function(){ 
+    //alert they commit the current one  
+
+     if(confirm("This will clear all the input,please make sure you commit the current role first")){
+      var sourceWordOld=$('#sourceWord').val();
+      $('#sourceForm')[0].reset();
+    //need this otherwise when clear it will show up the first option in the input.
+     //$(".combobox").prop("selectedIndex", -1);--class won't work when changing only the underlying input and try to clear it later
+     $("#combobox0").prop("selectedIndex", -1);
+     $("#combobox1").prop("selectedIndex", -1);
+     $("#combobox2").prop("selectedIndex", -1);
+      $('#sourceWord').val(sourceWordOld);
+     
+     
+    }
+    else{
+        return false;
+    }  
+
+    });
+//****************************end **************************************//
+
+//click function for clear the source code button 
+    $("#clearnoun").click(function(){ 
+
+    $('#sourceForm')[0].reset();
+     $("#combobox0").prop("selectedIndex", -1);
+     $("#combobox1").prop("selectedIndex", -1);
+     $("#combobox2").prop("selectedIndex", -1);
+      $('#sourceWord').val(sourceWordOld);
+    });
+
+//end of the button click function.
+    
+//************when underlying box change make the hidden input change*********************//
+
+$("#combobox0").change(function() {
+  $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
+  //$('#combobox0input').val($(this).val());
+});
+
+$("#combobox1").change(function() {
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
+     //$('#combobox0input1').val($(this).val());
+    });
+$("#combobox2").change(function() {
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
+    });
+$("#combobox3").change(function() {
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
+    });
+$("#combobox4").change(function() {
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
+    });
+$("#combobox5").change(function() {
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
+    });
+$("#combobox6").change(function() {
+    $(this).closest('div.ui-widget').find('input.comboboxinput').val($(this).val()).trigger("change");
+    });
+
+//***************end********************************************************************************************//
+  
+ //************************set the select value to be empty need this for clear the form*****************************************************//
+
+ //************end**********************************************************************************************// 
+
+    //this is for click the show all button when page load
+    $('#toggle0').click();
+    $('#toggle1').click();
+    $('#toggle2').click();
+    $('#toggle3').click();
+    $('#toggle4').click();
+    $('#toggle5').click();
+    $('#toggle6').click();
+
+/******************define dialog part************************************************/
+    //this is to define the click event on the track performance button
+    //and also defin the dialog here
+    var dialog=$("#trackYourPerformanceDialog").dialog({
+     autoOpen:false,
+     height:500,
+     width:550,
+     modal:true,
+     title: "Tagging Performance",
+     buttons:{
+      Close:function(){
+        dialog.dialog("close");
+      }
+     } 
+    });
+
+    var mostRecentActivityDialog=$('#MostRecentActivityDialog').dialog({
+      autoOpen:false,
+      height:900,
+       width:1050,
+       modal:true,
+       title:"Most Recent Activity",
+       buttons:{
+        Close:function(){
+          mostRecentActivityDialog.dialog("close");
+        }
+       }
+
+    });
+
+    var sentenceQueryDialog=$('#sentenceQueryDialog').dialog({
+      autoOpen:false,
+      height:300,
+      width:700,
+      modal:true,
+      title:"Query Sentences",
+      buttons:{
+        Close:function(){
+          sentenceQueryDialog.dialog("close");
+        }
+      }
+    });
+
+    var flaggedSummaryDialog=$('#FlaggedSummaryDialog').dialog({
+     autoOpen:false,
+     height:900,
+     width:1200,
+     modal:true,
+     title:"Flagged Summary",
+     buttons:{
+      Close:function(){
+        flaggedSummaryDialog.dialog("close");
+
+      }
+     }
+    });
+
+   var totalFinishedDialog=$('#TotalFinishedDialog').dialog({
+    autoOpen:false,
+    height:900,
+    width:550,
+    modal:true,
+    title:"Total Finished Summary",
+    buttons:{
+      Close:function(){
+        totalFinishedDialog.dialog("close");
+      }
+    }
+   });
+ /*********************end of define dialog part************************************/
+
+    //student track performance by themselves button
+    $("#trackYourPerformance").on("click",function(){
+        //get total source count
+        $.ajax({
+        method: "GET",
+        url:"/getSourceTaggingCountForCurrentUser",
+      
+        success:function(result){
+          $("#sourceCount").text(result); //text() working here but html() is not working not sure why.
+        }
+      });
+        $.ajax({
+        method: "GET",
+        url:"/getFlaggedSourceTaggingCountForCurrentUser",
+        success:function(result){
+          $("#sourceFlagged").html("<strong>"+result+"</strong>");
+         }
+      });
+        //get total target count
+        $.ajax({
+        method: "GET",
+        url:"/getVerbTaggingCountForCurrentUser",
+      
+        success:function(result){
+          $("#verbCount").text(result); //text() working here but html() is not working not sure why.
+        }
+      });
+        $.ajax({
+        method: "GET",
+        url:"/getFlaggedVerbTaggingCountForCurrentUser",
+      
+        success:function(result){
+          $("#verbFlagged").html("<strong>"+result+"</strong>"); 
+        }
+      });
+        //get total sentence count
+        $.ajax({
+        method: "GET",
+        url:"/getSentenceTaggingCountForCurrentUser",
+      
+        success:function(result){
+          $("#sentenceCount").text(result); //text() working here but html() is not working not sure why.
+        }
+      });
+
+      dialog.dialog("open");
+    });
+    
+   $('#MostRecentActivityButton').on("click",function(){
+      $.ajax({
+        method: "GET",
+        url:"/getLatestSourceDictionItems",
+        //data:{"queryword":sourceword},
+        success:function(result){
+          $("#sourceSummaryTable").html(result);
+          $('.linkButtonSource').on("click",function(){
+           $.ajax({
+               method: "POST",
+               url:"/getSentenceStringById",
+               data:{sentenceId:$(this).text()},
+               success:function(sentenceResult){
+                $('#sentenceContext1').val(sentenceResult);
+               }
+           });
+        });
+        }
+      });
+
+        $.ajax({
+        method: "GET",
+        url:"/getLatestVerbDictionItems",
+        //data:{"queryword":sourceword},
+        success:function(result){
+          $("#verbSummaryTable").html(result);
+          //the event has to be attahced here instead of after dialog load, since when page all load the button on dialog does not exist yet.
+        $('.linkButtonVerb').on("click",function(){
+        
+            $.ajax({
+               method: "POST",
+               url:"/getSentenceStringById",
+               data:{sentenceId:$(this).text()},
+               success:function(sentenceResult){
+                $('#sentenceContext1').val(sentenceResult);
+               }
+           });
+        });
+        }
+      });
+  
+    mostRecentActivityDialog.dialog("open");
+
+   });
+   $('#FlaggedSummaryButton').on("click",function(){
+   
+    flaggedSummaryDialog.dialog("open");
+   });
+
+   
+   $('#TotalFinishedButton').on("click",function(){
+     totalFinishedDialog.dialog("open");
+   });
+
+   //show allTaggedNouns Button click inside of FLagged Summary dialog
+   $('#showFlaggedNouns').on('click',function(){
+    //make the flag to be noun
+     
+     $('#nounOrVerbFlag').val("noun");
+     $.ajax({
+      method:"GET",
+      url:"/getAllFlaggedNouns",
+      data:{page:1,limit:10},
+      success:function(flaggedResult){
+        $('#flaggedTable').html(flaggedResult);
+
+          $('.editSourceButton').click(function(){               
+                      //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
+               if($(this).text()==="Edit")
+               {
+                var input=$(this).closest("tr").find("input");
+                 input.prop('readonly', false);
+                 //hight the input box
+                 input.select();
+                 $(this).html('Save');
+                //bind the datetime picker
+
+                  $(this).closest("tr").find(".dateStart").datepicker({
+                      changeMonth: true,
+                      changeYear: true
+                    });
+
+                 $(this).closest("tr").find(".dateEnd").datepicker({
+                      changeMonth: true,
+                      changeYear: true
+                    });
+               }
+
+              else
+               {
+                $(this).closest("tr").find("input").prop('readonly', true);
+                $(this).html("Edit");
+                //now it is save then when it click it should make an ajax to post the data.
+                var dicid=$(this).closest("tr").find('.sourceDictionaryClass').text();
+                var countrycode=$(this).closest("tr").find('.countryCode').val();
+                var firstrolecode=$(this).closest("tr").find('.firstRoleCode').val();
+                var secondrolecode=$(this).closest("tr").find('.secondRoleCode').val();
+                var datestart=$(this).closest("tr").find('.dateStart').val();
+                var dateend=$(this).closest("tr").find('.dateEnd').val();
+                  
+                $.ajax({
+                  method:"POST",
+                  url:"/updateSourceDictionary",
+                  data:{'dicId':dicid,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend},
+                  success:function(data){
+                    console.log("update verb dictionary success!");
+                  }
+                });
+                //unbind the datepicker
+                     $(this).closest("tr").find(".dateStart").datepicker("destroy");
+                     $(this).closest("tr").find(".dateEnd").datepicker("destroy");       
+               }
+             });
+
+       
+           var goButton = $('#goButton');
+           if($('#nounOrVerbFlag').val()==="noun")
+           {
+             //when click the new button , need to attach the event of edit button (don't need date time picker since when page change the input will be kept the content is different but the button are newly created, that is why the edit event need to be reattached.)
+             goButton.unbind().click(function(){
+             $.ajax({
+                  method:"GET",
+                  url:"/getAllFlaggedNouns",
+                  data:{'page':$('#gotoPage').val(),'limit':10},
+                  success:function(flaggedResult){
+                    $('#flaggedTable').html(flaggedResult);
+                    //reattach the edit button event , this edit event can extracted, since it is used in both the flagged button click and goButton click
+              $('.editSourceButton').click(function(){               
+                      //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
+               if($(this).text()==="Edit")
+               {
+                var input=$(this).closest("tr").find("input");
+                 input.prop('readonly', false);
+                 //hight the input box
+                 input.select();
+                 $(this).html('Save');
+                //bind the datetime picker
+
+                  $(this).closest("tr").find(".dateStart").datepicker({
+                      changeMonth: true,
+                      changeYear: true
+                    });
+
+                 $(this).closest("tr").find(".dateEnd").datepicker({
+                      changeMonth: true,
+                      changeYear: true
+                    });
+               }
+
+              else
+               {
+                $(this).closest("tr").find("input").prop('readonly', true);
+                $(this).html("Edit");
+                //now it is save then when it click it should make an ajax to post the data.
+                var dicid=$(this).closest("tr").find('.sourceDictionaryClass').text();
+                var countrycode=$(this).closest("tr").find('.countryCode').val();
+                var firstrolecode=$(this).closest("tr").find('.firstRoleCode').val();
+                var secondrolecode=$(this).closest("tr").find('.secondRoleCode').val();
+                var datestart=$(this).closest("tr").find('.dateStart').val();
+                var dateend=$(this).closest("tr").find('.dateEnd').val();
+                  
+                $.ajax({
+                  method:"POST",
+                  url:"/updateSourceDictionary",
+                  data:{'dicId':dicid,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend},
+                  success:function(data){
+                    console.log("update verb dictionary success!");
+                  }
+                });
+                //unbind the datepicker
+                     $(this).closest("tr").find(".dateStart").datepicker("destroy");
+                     $(this).closest("tr").find(".dateEnd").datepicker("destroy");       
+               }
+             });
+             //end of the can be extracted method.
+             //reattach the sentence link button, this one can be extracted too.
+              $('.linkButtonNoun').on("click",function(){
+                //console.log("hey I am getting clicked!");
+           $.ajax({
+               method: "POST",
+               url:"/getSentenceStringById",
+               data:{sentenceId:$(this).text()},
+               success:function(sentenceResult){
+                $('#sentenceContext2').val(sentenceResult);
+               }
+           });
+        });
+
+                  }
+
+             });
+            
+          });
+           }
+
+           //test***************
+                     $('.linkButtonNoun').on("click",function(){
+                console.log("hey I am getting clicked!");
+           $.ajax({
+               method: "POST",
+               url:"/getSentenceStringById",
+               data:{sentenceId:$(this).text()},
+               success:function(sentenceResult){
+                $('#sentenceContext2').val(sentenceResult);
+               }
+           });
+        });
+
+
+           //end of test
+      }
+     });
+   });
+
+   //show allTaggedVebs Button click inside of FLagged Summary dialog
+   $('#showFlaggedVerbs').on('click',function(){
+     $('#nounOrVerbFlag').val("verb");
+     $.ajax({
+       method:"GET",
+       url:"/getAllFlaggedVerbs",
+       data:{page:1,limit:10},
+       success:function(flaggedResult){
+         $('#flaggedTable').html(flaggedResult);
+            
+             $('.editVerbButton').click(function(){
+               
+               //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
+               if($(this).text()==="Edit")
+               {
+                var input=$(this).closest("tr").find("input");
+                 input.prop('readonly', false);
+                 //hight the input box
+                 input.select();
+                 $(this).html('Save');
+
+               }
+               //this is when the button showed is a save button.
+               else
+               {
+                $(this).closest("tr").find("input").prop('readonly', true);
+                $(this).html("Edit");
+                //now it is save then when it click it should make an ajax to post the data.
+                var dicid=$(this).closest("tr").find('.verbDictionaryClass').text();
+                var verbcode=$(this).closest("tr").find('.verbcode').val();
+
+                $.ajax({
+                  method:"POST",
+                  url:"/updateVerbDictionary",
+                  data:{'dicId':dicid,'verbcode':verbcode},
+                  success:function(data){
+                    console.log("update verb dictionary success!");
+                  }
+
+                });
+               }
+             });
+
+             
+           
+               var goButton = $('#goButton');
+               if($('#nounOrVerbFlag').val()==="verb")
+               {
+                   goButton.unbind().click(function(){
+                   
+
+                 $.ajax({
+                      method:"GET",
+                      url:"/getAllFlaggedVerbs",
+                      data:{'page':$('#gotoPage').val(),'limit':10},
+                      success:function(flaggedResult){
+                        $('#flaggedTable').html(flaggedResult);
+                               $('.editVerbButton').click(function(){
+               
+               //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
+               if($(this).text()==="Edit")
+               {
+                var input=$(this).closest("tr").find("input");
+                 input.prop('readonly', false);
+                 //hight the input box
+                 input.select();
+                 $(this).html('Save');
+
+               }
+               //this is when the button showed is a save button.
+               else
+               {
+                $(this).closest("tr").find("input").prop('readonly', true);
+                $(this).html("Edit");
+                //now it is save then when it click it should make an ajax to post the data.
+                var dicid=$(this).closest("tr").find('.verbDictionaryClass').text();
+                var verbcode=$(this).closest("tr").find('.verbcode').val();
+
+                $.ajax({
+                  method:"POST",
+                  url:"/updateVerbDictionary",
+                  data:{'dicId':dicid,'verbcode':verbcode},
+                  success:function(data){
+                    console.log("update verb dictionary success!");
+                  }
+
+                });
+               }
+             });
+
+               //reattach the sentence link button
+                     //when click the sentenceId button show sentence
+                $('.linkButtonVerb').on("click",function(){
+            
+                $.ajax({
+                   method: "POST",
+                   url:"/getSentenceStringById",
+                   data:{sentenceId:$(this).text()},
+                   success:function(sentenceResult){
+                    $('#sentenceContext2').val(sentenceResult);
+                   }
+               });
+            });
+                      }
+
+                 });
+
+              });
+               }
+
+             //when click the sentenceId button show sentence
+                $('.linkButtonVerb').on("click",function(){
+            
+                $.ajax({
+                   method: "POST",
+                   url:"/getSentenceStringById",
+                   data:{sentenceId:$(this).text()},
+                   success:function(sentenceResult){
+                    $('#sentenceContext2').val(sentenceResult);
+                   }
+               });
+            });
+
+       }
+
+     });
+
+   });
+  
+   });
+   </script>
