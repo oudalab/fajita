@@ -28,11 +28,28 @@ div(id="sourceEditTable" class="table table-sm")
              input(type="text", name="firstrolename",value="#{source.firstRoleCode}" class="firstRoleCode jadeinput" readonly)
           td 
              input(type="text", name="secondrolename",value="#{source.secondRoleCode}" class="secondRoleCode jadeinput" readonly)
-          td 
-             input(type="text", name="datestartname",value="#{source.dateStart}" class="dateStart" readonly)
-          td 
-             input(type="text", name="dateendname",value="#{source.dateEnd}" class="dateEnd" readonly)
+          if source.dateStart =='Wed Jan 01 1800 00:00:00 GMT-0600 (CST)'
+           td 
+              input(type="text", name="datestartname",value="na" class="dateStart" readonly)
+          else
+              if source.dateStart =='Wed Jan 01 2200 00:00:00 GMT-0600 (CST)'
+               td  
+                 input(type="text", name="datestartname",value="now" class="dateStart" readonly)
+              else
+               td
+                 input(type="text", name="datestartname",value="#{source.dateStart}" class="dateStart" readonly)
+          if source.dateEnd =='Wed Jan 01 1800 00:00:00 GMT-0600 (CST)'
+           td 
+              input(type="text", name="dateendname",value="na" class="dateEnd" readonly)
+          else
+              if source.dateEnd=='Wed Jan 01 2200 00:00:00 GMT-0600 (CST)'
+               td  
+                 input(type="text", name="dateendname",value="now" class="dateEnd" readonly)
+              else
+               td
+                 input(type="text", name="dateendname",value="#{source.dateEnd}" class="dateEnd" readonly)
           td #{source.userName}
           td #{source.taggingTime}
           td <button class="editSourceButton">Edit</button>
           td(class="hidden sourceDictionaryClass") #{source._id}
+

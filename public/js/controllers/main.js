@@ -260,13 +260,22 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     var dateStart = $scope.sourceForm.startdate;
     var dateEnd = $scope.sourceForm.enddate;
 
-    if (dateStart === "") {
+    if (dateStart === ""||dateStart.toLowerCase()==="now") {
+      dateStart = "2200-01-01";
+    }
+    else if(dateStart.toLowerCase()==="na")
+    {
       dateStart = "1800-01-01";
     }
 
-    if (dateEnd === "") {
-      dateEnd = "1800-01-01";
+    if (dateEnd === ""||dateEnd.toLowerCase()==="now") {
+      dateEnd = "2200-01-01";
     }
+     else if(dateEnd.toLowerCase()==="na")
+    {
+      dateEnd= "1800-01-01";
+    }
+
 
     var sourceDicObject = {
       word: word,
