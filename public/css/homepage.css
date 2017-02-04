@@ -3,6 +3,7 @@
 #tabs-1
 {
 	background-color: pink;
+	height:480px;
 }
 /**color for target**/
 #tabs-3
@@ -138,6 +139,44 @@ tr:nth-child(even){background-color: #f2f2f2}
     background-color:#5cb85c;
     color: #fff;
 }
+ul.ui-autocomplete
+{
+	height:240px;
+	width:480px;
+	overflow-y:scroll;
+	overflow-x:scroll;
+}
+
+label.taglabel{
+    display: inline-block;
+    float: left;
+    width: 100px;
+}
+
+#synonymheader{
+	margin-top:10px;
+	margin-left:2px;
+	width:200px;
+}
+#editrow
+{
+	margin-bottom:10px;
+	padding-top: 5px;
+}
+#addSource
+{
+	margin-top:3px;
+}
+#clearnoun
+{
+	margin-top:3px;
+}
+.inlinewell
+{
+  padding:2px;
+  width:50px;
+}
+
 
 
 

@@ -31,7 +31,7 @@
 <div  ng-controller="mainController">
    <div class="container" >
       <div class="row">
-         <div class="col-md-4 well well-lg" style="height:940px;padding-top:0">
+         <div class="col-md-4 well well-lg" style="height:1050px;padding-top:0">
             <div class="row  well well-sm">
                <div class="col-md-5">
                <button type="button" class="btn btn-success" style="padding:2px;width:100px;float:left;margin:10px" ng-click="signmeOut()">Sign Out</button>
@@ -182,7 +182,7 @@
                </ul>
                <div id="tabs-1">
                  <form id="sourceForm">
-                         <div class="row" style="padding:0px">
+                         <div class="row" id="editrow" style="padding:0px">
                      <div class="col-md-6" style="font-weight:bold">
                        <label class="radio-inline">
                             <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Source">Actor Text
@@ -195,55 +195,53 @@
                           </label>
                      </div>
                      <div class="col-md-3">
-                         <button type="button" class="btn btn-success" id="addSource" style="padding:2px;width:150x;">Add another role period</button>
+                         <button type="button" class="btn btn-success" id="addSource" style="padding:2px;width:165px;">Add another role period</button>
                      </div>
-                     <div class="col-md-2">
-                         <button type="button" class="btn btn-danger" id="clearnoun" style="padding:2px;width:100x;">CLEAR</button>
+                    
                      </div>
-                     </div>
-                       
-                  <strong>Actor Text:</strong><input id="sourceWord">  <button type="button" class="btn btn-success" id="synonym" style="padding:2px;width:50x;">Synonym</button>
+                  <div class="well well-sm">     
+                  <label class="taglabel">Actor Text:</label><input id="sourceWord">  <button type="button" class="btn btn-success" id="synonym" style="padding:2px;width:70px;">Synonym</button>
+                  </div>
                  
                   <div class="row" style="padding:2px">
-                     <div class="ui-widget col-md-8">
-                        <label>country </label>
+                     <div class="ui-widget col-md-6">
+                        <label class="taglabel">Country:</label>
                         <input hidden id="combobox0input" class="comboboxinput">
                         <select id='combobox0' class="comboboxGroup" ng-model="sourceForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
                         <div>
-                           <button id="toggle0">Hide Underlying Select</button>
+                           <button id="toggle0" class="hideunderlying">Hide Underlying Select</button>
                         </div>
                     </div>
+                   <!--  <div class="col-md-2">
+                     <button type="button" class="btn btn-danger" id="clearcountry">clear</button>
+                    </div> -->
+
                   </div>
                   <div class="row" style="padding:2px">
-                     <div class="ui-widget col-md-8">
-                        <label>Primary role</label>
+                     <div class="ui-widget col-md-6">
+                        <label class="taglabel">Primary Role:</label>
                         <input hidden id="combobox1input" class="comboboxinput"/>
                         <select id='combobox1' class="comboboxGroup" ng-model="sourceForm.rolefirst" ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ></select>
                         <div>
-                           <button id="toggle1">Hide Underlying Select</button>
+                           <button id="toggle1" class="hideunderlying">Hide Underlying Select</button>
                         </div>
-                     </div>
-                     <div class="ui-widget col-md-4">
-                            <table class = "table table-condensed" id="synonymtable" style="height:50px;margin-top:-130px">
-                             <thead>
-                                <tr>
-                                   <th>Synonyms</th>
-                                </tr>
-                             </thead>
-                             <tbody>
-                             </tbody>
-                          </table>
-                     </div>  
+                     </div> 
+                     <!--  <div class="col-md-2">
+                     <button type="button" class="btn btn-danger" id="clearprimary">clear</button>
+                    </div> -->
                   </div>
                     <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
-                        <label>Secondary role </label>
+                        <label class="taglabel">Secondary Role:</label>
                         <input hidden id="combobox2input" class="comboboxinput"/>
                         <select id='combobox2' class="comboboxGroup" ng-model="sourceForm.rolesecond" ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ></select>
                         <div>
-                           <button id="toggle2">Hide Underlying Select</button>
+                           <button id="toggle2" class="hideunderlying">Hide Underlying Select</button>
                         </div>
                      </div>
+                    <!--   <div class="col-md-2">
+                     <button type="button" class="btn btn-danger" id="clearsecondary">clear</button>
+                    </div> -->
                   </div>
                   <div class="row" style="padding:2px">
                      <div class="col-md-2" style="font-weight:bold">
@@ -253,7 +251,6 @@
                         <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
                            <input ng-model="sourceForm.startdate" id="startdate"/>
                         </datepicker>
-                   <!--      <input id="nounStartDate"/> -->
                      </div>
                      <div class="col-md-4">
                         ("yyyy-mm-dd")
@@ -286,8 +283,21 @@
                         </div>
                       </div>
                      </div>
-                  </div>
-                 
+                      <div class="col-md-2">
+                         <button type="button" class="btn btn-danger" id="clearnoun" style="padding:2px;width:135x;">CLEAR ALL</button>
+                     </div>
+                  </div> 
+                  <div class="row" id="synonymheader" style="padding:2px">
+                   <table class = "table table-condensed" id="synonymtable" style="height:50px">
+                             <thead>
+                                <tr>
+                                   <th>Synonym List</th>
+                                </tr>
+                             </thead>
+                             <tbody>
+                             </tbody>
+                    </table>
+                  </div>  
                </form>
                </div>
                 <div id="tabs-2">
@@ -296,25 +306,21 @@
             </div>
             <div class="heading row well well-sm" style="height:27px"><strong>Verb Tagging Section</strong><div>
             <form id="verbForm">
-             
-            <div class="verbwell row well well-lg" style="height:315px;margin-bottom:0px;background-color:#fbc97f;">
-             
-              <strong>Verb:</strong><input id="verbword">
-
-              
+            <div class="verbwell row well well-lg" style="height:490px;margin-bottom:0px;background-color:#fbc97f;">
+               <div class="well well-sm"> 
+              <label class="taglabel">Verb:</label><input id="verbword">
+              </div>
                <div class="row" style="padding:2px">
-                
                   <div class="ui-widget col-md-6">
+                     <label class="taglabel" style="padding-top:10px" >Verb Code:</label>
                      <input hidden id="combobox6input" class="comboboxinput"/>
                      <select id='combobox3' ng-options="item as item.name for item in verbdata.availableOptions track by item.id" ng-model="selected3"></select>
                      <div>
-                        <button id="toggle3">Hide Underlying Select</button>
+                        <button id="toggle3" class="hideunderlying">Hide Underlying Select</button>
                      </div>
                   </div>
-                 
                </div>
-                <div class="row" style="padding:2px">
-                 
+                <div class="row" style="padding:2px;margin-top:30px"> 
                   <div class="col-md-3">
                      <label> <input type="checkbox" name="verbcheck" id="verbflag" style="margin:5px">not sure?</label>
                   </div>
@@ -327,6 +333,9 @@
                         </div>
                       </div>
                   </div>
+                     <div class="col-md-2">
+                         <button type="button" class="btn btn-danger" id="clearverb" style="padding:2px;width:135x;">CLEAR ALL</button>
+                     </div>
                </div>
                   </form>
                </div>
@@ -336,11 +345,12 @@
       </div>
    </div>
 </div>
-
- 
- <!-- sometimes the dialog not load might because the way u render it in a javascript file may need to make it an object like my company setup structure -->
    <script>
    $(function(){
+
+      $(".hideunderlying").click();
+      $(".hideunderlying").hide();
+
       $('#synonym').click(function(){
         $('#synonymtable tbody').empty();
          $.ajax({
@@ -430,9 +440,7 @@
       $("#combobox2").prop("selectedIndex", -1);
 
        $('#verbForm')[0].reset();
-/*      $("#combobox4").prop("selectedIndex", -1);
-      $("#combobox5").prop("selectedIndex", -1);
-      $("#combobox6").prop("selectedIndex", -1);*/
+       $("#combobox3").prop("selectedIndex", -1);
 
     });
 
@@ -563,6 +571,12 @@
      $("#combobox1").prop("selectedIndex", -1);
      $("#combobox2").prop("selectedIndex", -1);
       $('#sourceWord').val(sourceWordOld);
+    });
+
+     $("#clearverb").click(function(){ 
+
+    $('#verbForm')[0].reset();
+     $("#combobox3").prop("selectedIndex", -1);
     });
 
 //end of the button click function.
