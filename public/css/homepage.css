@@ -142,7 +142,9 @@ tr:nth-child(even){background-color: #f2f2f2}
 ul.ui-autocomplete
 {
 	height:240px;
+	width:480px;
 	overflow-y:scroll;
+	overflow-x:scroll;
 }
 
 label.taglabel{
@@ -169,6 +171,12 @@ label.taglabel{
 {
 	margin-top:3px;
 }
+.inlinewell
+{
+  padding:2px;
+  width:50px;
+}
+
 
 
 

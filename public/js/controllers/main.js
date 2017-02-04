@@ -187,20 +187,29 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
       });
   }
 
-
-  Actors.get()
+//Post.find().sort([['updatedAt', 'descending']]).all(function (posts) {
+  //define a comparator
+  var datacomparator=
+   function compare(a,b) {
+        if (a.id < b.id)
+          return -1;
+        if (a.id > b.id)
+          return 1;
+        return 0;
+      };
+    Actors.get()
     .success(function(data) {
-
+      data.sort(datacomparator);
       $scope.loading = false;
       $scope.actordata = {
         availableOptions: data,
         selectedOption: data[0].name
       }
-
     });
+
   Agents.get()
     .success(function(data) {
-
+      data.sort(datacomparator);
       $scope.loading = false;
       $scope.agentdata = {
         availableOptions: data,
@@ -210,7 +219,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     });
   Secondroles.get()
     .success(function(data) {
-
+      data.sort(datacomparator);
       $scope.loading = false;
       $scope.secondroledata = {
         availableOptions: data,
@@ -252,11 +261,11 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
 
     var sentenceId = $scope.currentSentenceId;
     var countryCode = $('#combobox0input').val();
+    countryCode=(countryCode==="000")?"":countryCode;
     var firstRoleCode = $('#combobox1input').val();
+    firstRoleCode=(firstRoleCode==="000")?"":firstRoleCode;
     var secondRoleCode = $('#combobox2input').val();
-/*    var countryCode = $('#combobox0 option:selected').text();
-    var firstRoleCode = $('#combobox1 option:selected').text();
-    var secondRoleCode = $('#combobox2 option:selected').text();*/
+    secondRoleCode=(secondRoleCode==="000")?"":secondRoleCode;
     var dateStart = $scope.sourceForm.startdate;
     var dateEnd = $scope.sourceForm.enddate;
 
@@ -340,6 +349,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     }
     var word = $('#verbword').val();
     var verbcode = $('#combobox6input').val();
+    verbcode=(verbcode==="000")?"":verbcode;
 
     var sentenceId = $scope.currentSentenceId;
     var verbDicObject = {

@@ -195,45 +195,53 @@
                           </label>
                      </div>
                      <div class="col-md-3">
-                         <button type="button" class="btn btn-success" id="addSource" style="padding:2px;width:150x;">Add another role period</button>
+                         <button type="button" class="btn btn-success" id="addSource" style="padding:2px;width:165px;">Add another role period</button>
                      </div>
-                     <div class="col-md-2">
-                         <button type="button" class="btn btn-danger" id="clearnoun" style="padding:2px;width:100x;">CLEAR</button>
-                     </div>
+                    
                      </div>
                   <div class="well well-sm">     
-                  <label class="taglabel">Actor Text:</label><input id="sourceWord">  <button type="button" class="btn btn-success" id="synonym" style="padding:2px;width:50x;">Synonym</button>
+                  <label class="taglabel">Actor Text:</label><input id="sourceWord">  <button type="button" class="btn btn-success" id="synonym" style="padding:2px;width:70px;">Synonym</button>
                   </div>
                  
                   <div class="row" style="padding:2px">
-                     <div class="ui-widget col-md-8">
-                        <label class="taglabel">country </label>
+                     <div class="ui-widget col-md-6">
+                        <label class="taglabel">Country:</label>
                         <input hidden id="combobox0input" class="comboboxinput">
                         <select id='combobox0' class="comboboxGroup" ng-model="sourceForm.country" ng-options="item as item.name for item in actordata.availableOptions track by item.id" ></select>
                         <div>
                            <button id="toggle0" class="hideunderlying">Hide Underlying Select</button>
                         </div>
                     </div>
+                   <!--  <div class="col-md-2">
+                     <button type="button" class="btn btn-danger" id="clearcountry">clear</button>
+                    </div> -->
+
                   </div>
                   <div class="row" style="padding:2px">
-                     <div class="ui-widget col-md-8">
-                        <label class="taglabel">Primary role</label>
+                     <div class="ui-widget col-md-6">
+                        <label class="taglabel">Primary Role:</label>
                         <input hidden id="combobox1input" class="comboboxinput"/>
                         <select id='combobox1' class="comboboxGroup" ng-model="sourceForm.rolefirst" ng-options="item as item.name for item in agentdata.availableOptions track by item.id" ></select>
                         <div>
                            <button id="toggle1" class="hideunderlying">Hide Underlying Select</button>
                         </div>
                      </div> 
+                     <!--  <div class="col-md-2">
+                     <button type="button" class="btn btn-danger" id="clearprimary">clear</button>
+                    </div> -->
                   </div>
                     <div class="row" style="padding:2px">
                      <div class="ui-widget col-md-6">
-                        <label class="taglabel">Secondary role </label>
+                        <label class="taglabel">Secondary Role:</label>
                         <input hidden id="combobox2input" class="comboboxinput"/>
                         <select id='combobox2' class="comboboxGroup" ng-model="sourceForm.rolesecond" ng-options="item as item.name for item in secondroledata.availableOptions track by item.id" ></select>
                         <div>
                            <button id="toggle2" class="hideunderlying">Hide Underlying Select</button>
                         </div>
                      </div>
+                    <!--   <div class="col-md-2">
+                     <button type="button" class="btn btn-danger" id="clearsecondary">clear</button>
+                    </div> -->
                   </div>
                   <div class="row" style="padding:2px">
                      <div class="col-md-2" style="font-weight:bold">
@@ -243,7 +251,6 @@
                         <datepicker class="picker" date-year-title="selected title" date-format='yyyy-MM-dd'>
                            <input ng-model="sourceForm.startdate" id="startdate"/>
                         </datepicker>
-                   <!--      <input id="nounStartDate"/> -->
                      </div>
                      <div class="col-md-4">
                         ("yyyy-mm-dd")
@@ -275,6 +282,9 @@
                           <strong>Done!</strong>
                         </div>
                       </div>
+                     </div>
+                      <div class="col-md-2">
+                         <button type="button" class="btn btn-danger" id="clearnoun" style="padding:2px;width:135x;">CLEAR ALL</button>
                      </div>
                   </div> 
                   <div class="row" id="synonymheader" style="padding:2px">
@@ -309,9 +319,8 @@
                         <button id="toggle3" class="hideunderlying">Hide Underlying Select</button>
                      </div>
                   </div>
-                 
                </div>
-                <div class="row" style="padding:2px"> 
+                <div class="row" style="padding:2px;margin-top:30px"> 
                   <div class="col-md-3">
                      <label> <input type="checkbox" name="verbcheck" id="verbflag" style="margin:5px">not sure?</label>
                   </div>
@@ -324,6 +333,9 @@
                         </div>
                       </div>
                   </div>
+                     <div class="col-md-2">
+                         <button type="button" class="btn btn-danger" id="clearverb" style="padding:2px;width:135x;">CLEAR ALL</button>
+                     </div>
                </div>
                   </form>
                </div>
@@ -333,9 +345,6 @@
       </div>
    </div>
 </div>
-
- 
- <!-- sometimes the dialog not load might because the way u render it in a javascript file may need to make it an object like my company setup structure -->
    <script>
    $(function(){
 
@@ -431,9 +440,7 @@
       $("#combobox2").prop("selectedIndex", -1);
 
        $('#verbForm')[0].reset();
-/*      $("#combobox4").prop("selectedIndex", -1);
-      $("#combobox5").prop("selectedIndex", -1);
-      $("#combobox6").prop("selectedIndex", -1);*/
+       $("#combobox3").prop("selectedIndex", -1);
 
     });
 
@@ -564,6 +571,12 @@
      $("#combobox1").prop("selectedIndex", -1);
      $("#combobox2").prop("selectedIndex", -1);
       $('#sourceWord').val(sourceWordOld);
+    });
+
+     $("#clearverb").click(function(){ 
+
+    $('#verbForm')[0].reset();
+     $("#combobox3").prop("selectedIndex", -1);
     });
 
 //end of the button click function.
