@@ -269,18 +269,18 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     var dateStart = $scope.sourceForm.startdate;
     var dateEnd = $scope.sourceForm.enddate;
 
-    if (dateStart === ""||dateStart.toLowerCase()==="now") {
+    if (dateStart.toLowerCase()==="now") {
       dateStart = "2200-01-01";
     }
-    else if(dateStart.toLowerCase()==="na")
+    else if(dateStart === ""||dateStart.toLowerCase()==="na")
     {
       dateStart = "1800-01-01";
     }
 
-    if (dateEnd === ""||dateEnd.toLowerCase()==="now") {
+    if (dateEnd.toLowerCase()==="now") {
       dateEnd = "2200-01-01";
     }
-     else if(dateEnd.toLowerCase()==="na")
+     else if(dateEnd === ""||dateEnd.toLowerCase()==="na")
     {
       dateEnd= "1800-01-01";
     }
