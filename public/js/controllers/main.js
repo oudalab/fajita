@@ -258,6 +258,10 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     }
     //now if the one of the radio button options has been chosen
     var word = $('#sourceWord').val();
+    if(word==null||word=="")
+    {
+       alert("You need to fill in 'Actor Text' first.");
+    }
 
     var sentenceId = $scope.currentSentenceId;
     var countryCode = $('#combobox0input').val();
@@ -348,6 +352,10 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
       flagged = true;
     }
     var word = $('#verbword').val();
+    if(word==null||word=="")
+    {
+       alert("You need to fill in the verb first.");
+    }
     var verbcode = $('#combobox6input').val();
     verbcode=(verbcode==="000")?"":verbcode;
 
