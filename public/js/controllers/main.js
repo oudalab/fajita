@@ -161,6 +161,10 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     });
   });
   $scope.querygo = function() {
+           //set all teh commit back to work;
+        $("#sentencecommit").prop("disabled",false);
+        $("#nouncommit").prop("disabled",false);
+        $("#verbcommit").prop("disabled",false);
     Sentences.post({
       'word': $scope.queryword
     }).success(function(data) {
@@ -172,11 +176,16 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
         $scope.sentenceVerb = data.verb;
         $scope.sentenceTarget = data['target'];
         $scope.currentSentenceId = data._id;
+ 
       }
 
     });
   }
   $scope.nextSentence = function() {
+          //set all teh commit back to work;
+        $("#sentencecommit").prop("disabled",false);
+        $("#nouncommit").prop("disabled",false);
+        $("#verbcommit").prop("disabled",false);
     Sentences.get()
       .success(function(data) {
         $scope.wholeSentence = data.wholeSentence;
@@ -184,6 +193,8 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
         $scope.sentenceVerb = data.verb;
         $scope.sentenceTarget = data['target'];
         $scope.currentSentenceId = data._id;
+  
+
       });
   }
 
@@ -258,6 +269,11 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     }
     //now if the one of the radio button options has been chosen
     var word = $('#sourceWord').val();
+    if(word==null||word=="")
+    {
+       alert("You need to fill in 'Actor Text' first.");
+    }
+    $('#nouncommit').prop('disabled',true);
 
     var sentenceId = $scope.currentSentenceId;
     var countryCode = $('#combobox0input').val();
@@ -269,18 +285,18 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     var dateStart = $scope.sourceForm.startdate;
     var dateEnd = $scope.sourceForm.enddate;
 
-    if (dateStart === ""||dateStart.toLowerCase()==="now") {
+    if (dateStart.toLowerCase()==="now") {
       dateStart = "2200-01-01";
     }
-    else if(dateStart.toLowerCase()==="na")
+    else if(dateStart === ""||dateStart.toLowerCase()==="na")
     {
       dateStart = "1800-01-01";
     }
 
-    if (dateEnd === ""||dateEnd.toLowerCase()==="now") {
+    if (dateEnd.toLowerCase()==="now") {
       dateEnd = "2200-01-01";
     }
-     else if(dateEnd.toLowerCase()==="na")
+     else if(dateEnd === ""||dateEnd.toLowerCase()==="na")
     {
       dateEnd= "1800-01-01";
     }
@@ -348,6 +364,11 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
       flagged = true;
     }
     var word = $('#verbword').val();
+    if(word==null||word=="")
+    {
+       alert("You need to fill in the verb first.");
+    }
+    $('#verbcommit').prop("disabled",true);
     var verbcode = $('#combobox6input').val();
     verbcode=(verbcode==="000")?"":verbcode;
 
@@ -392,6 +413,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
           userid:localStorage.getItem('currentid')
         }
         //make the tag to be 1 after commit the whole sentence.
+      $('#sentencecommit').prop("disabled",true);
       $http.post('/updateSentenceTag', {
         'sentenceId': sentenceId
       }).success(function(data) {
