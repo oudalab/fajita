@@ -161,6 +161,10 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     });
   });
   $scope.querygo = function() {
+           //set all teh commit back to work;
+        $("#sentencecommit").prop("disabled",false);
+        $("#nouncommit").prop("disabled",false);
+        $("#verbcommit").prop("disabled",false);
     Sentences.post({
       'word': $scope.queryword
     }).success(function(data) {
@@ -172,11 +176,16 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
         $scope.sentenceVerb = data.verb;
         $scope.sentenceTarget = data['target'];
         $scope.currentSentenceId = data._id;
+ 
       }
 
     });
   }
   $scope.nextSentence = function() {
+          //set all teh commit back to work;
+        $("#sentencecommit").prop("disabled",false);
+        $("#nouncommit").prop("disabled",false);
+        $("#verbcommit").prop("disabled",false);
     Sentences.get()
       .success(function(data) {
         $scope.wholeSentence = data.wholeSentence;
@@ -184,6 +193,8 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
         $scope.sentenceVerb = data.verb;
         $scope.sentenceTarget = data['target'];
         $scope.currentSentenceId = data._id;
+  
+
       });
   }
 
@@ -262,6 +273,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     {
        alert("You need to fill in 'Actor Text' first.");
     }
+    $('#nouncommit').prop('disabled',true);
 
     var sentenceId = $scope.currentSentenceId;
     var countryCode = $('#combobox0input').val();
@@ -356,6 +368,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     {
        alert("You need to fill in the verb first.");
     }
+    $('#verbcommit').prop("disabled",true);
     var verbcode = $('#combobox6input').val();
     verbcode=(verbcode==="000")?"":verbcode;
 
@@ -400,6 +413,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
           userid:localStorage.getItem('currentid')
         }
         //make the tag to be 1 after commit the whole sentence.
+      $('#sentencecommit').prop("disabled",true);
       $http.post('/updateSentenceTag', {
         'sentenceId': sentenceId
       }).success(function(data) {
