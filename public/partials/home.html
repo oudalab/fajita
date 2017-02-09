@@ -351,6 +351,32 @@
       $(".hideunderlying").click();
       $(".hideunderlying").hide();
 
+       $('#sourceWord').keyup(function (e) {
+        if (e.keyCode === 13) {
+           $("#nouncommit").prop("disabled",false);
+           $("#combobox0").hide();
+           $("#combobox1").hide();
+           $("#combobox2").hide();
+        }
+      });
+
+        $('#verbword').keyup(function (e) {
+        if (e.keyCode === 13) {
+           $("#verbcommit").prop("disabled",false);
+            $("#combobox3").hide();
+        }
+      });
+
+     $("#cleannoun").click(function(){
+        $("#nouncommit").prop("disabled",false);
+
+     });
+     $("#cleanverb").click(function(){
+        $("verbcommit").prop("disabled",false);
+     });
+
+    
+
       $('#synonym').click(function(){
         $('#synonymtable tbody').empty();
          $.ajax({

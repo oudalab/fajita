@@ -109,12 +109,11 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     //define a directive that will listen the ngRepeat finish event
     $('.sourceLink').click(function(e) {
       e.preventDefault();
+
       var value = $(this).text();
       $('#sourceWord').val(value);
-      /*$('#sourceForm #sourceWord').trigger("change");*/
-
       $('#sourceWord').select();
-
+      $('#nouncommit').prop("disabled",false);
       //this still being called twice!!
       $http.post('/nounexist', {
         'word': value
@@ -155,6 +154,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
 
     $('.verbLink').click(function(e) {
       e.preventDefault();
+      $('#verbcommit').prop("disabled",false);
       $('#verbword').val($(this).text());
       $('#verbword').select();
 
