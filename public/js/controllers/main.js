@@ -282,8 +282,9 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     firstRoleCode=(firstRoleCode==="000")?"":firstRoleCode;
     var secondRoleCode = $('#combobox2input').val();
     secondRoleCode=(secondRoleCode==="000")?"":secondRoleCode;
-    var dateStart = $scope.sourceForm.startdate;
-    var dateEnd = $scope.sourceForm.enddate;
+    var dateStart =$('#startdate').val(); //$scope.sourceForm.startdate;
+    var dateEnd = $('#enddate').val();//$scope.sourceForm.enddate;
+
 
     if (dateStart.toLowerCase()==="now") {
       dateStart = "2200-01-01";
