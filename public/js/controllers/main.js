@@ -109,12 +109,11 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     //define a directive that will listen the ngRepeat finish event
     $('.sourceLink').click(function(e) {
       e.preventDefault();
+
       var value = $(this).text();
       $('#sourceWord').val(value);
-      /*$('#sourceForm #sourceWord').trigger("change");*/
-
       $('#sourceWord').select();
-
+      $('#nouncommit').prop("disabled",false);
       //this still being called twice!!
       $http.post('/nounexist', {
         'word': value
@@ -155,6 +154,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
 
     $('.verbLink').click(function(e) {
       e.preventDefault();
+      $('#verbcommit').prop("disabled",false);
       $('#verbword').val($(this).text());
       $('#verbword').select();
 
@@ -282,8 +282,9 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     firstRoleCode=(firstRoleCode==="000")?"":firstRoleCode;
     var secondRoleCode = $('#combobox2input').val();
     secondRoleCode=(secondRoleCode==="000")?"":secondRoleCode;
-    var dateStart = $scope.sourceForm.startdate;
-    var dateEnd = $scope.sourceForm.enddate;
+    var dateStart =$('#startdate').val(); //$scope.sourceForm.startdate;
+    var dateEnd = $('#enddate').val();//$scope.sourceForm.enddate;
+
 
     if (dateStart.toLowerCase()==="now") {
       dateStart = "2200-01-01";
