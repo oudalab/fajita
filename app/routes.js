@@ -565,6 +565,7 @@ module.exports = function(app) {
       "_id": req.body.dicId
     }, {
       $set: {
+        "word":req.body.sourceWord,
         "countryCode": req.body.countryCode,
         "firstRoleCode": req.body.firstRoleCode,
         "secondRoleCode": req.body.secondRoleCode,
