@@ -168,7 +168,11 @@ module.exports = function(app) {
       User.find({
       'username': req.body.username
     }, function(err, data) {
-      res.json({"userid":data[0].id});
+      if(data[0]!=null)
+      {
+       res.json({"userid":data[0].id});
+       
+      }
       res.end();
     });
   });
