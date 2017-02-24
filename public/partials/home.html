@@ -144,6 +144,12 @@
                    <div class="col-md-2">
                      <input id="gotoPage" />  
                    </div> 
+                    <div class="col-md-2">
+                     <strong>Coder Name:</strong>
+                   </div> 
+                    <div class="col-md-2">
+                   <input id="codername"/>
+                   </div>
                    <div class="col-md-2">
                      <button class="btn btn-success" id="goButton">Go</button>
                    </div>
@@ -914,7 +920,7 @@ $("#combobox6").change(function() {
              $.ajax({
                   method:"GET",
                   url:"/getAllFlaggedNouns",
-                  data:{'page':$('#gotoPage').val(),'limit':10},
+                  data:{'page':$('#gotoPage').val(),'username':$('#codername').val(),'limit':10},
                   success:function(flaggedResult){
                     $('#flaggedTable').html(flaggedResult);
                     //reattach the edit button event , this edit event can extracted, since it is used in both the flagged button click and goButton click
