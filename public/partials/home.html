@@ -144,6 +144,12 @@
                    <div class="col-md-2">
                      <input id="gotoPage" />  
                    </div> 
+                    <div class="col-md-2">
+                     <strong>Coder Name:</strong>
+                   </div> 
+                    <div class="col-md-2">
+                   <input id="codername"/>
+                   </div>
                    <div class="col-md-2">
                      <button class="btn btn-success" id="goButton">Go</button>
                    </div>
@@ -884,6 +890,7 @@ $("#combobox6").change(function() {
                 $(this).html("Edit");
                 //now it is save then when it click it should make an ajax to post the data.
                 var dicid=$(this).closest("tr").find('.sourceDictionaryClass').text();
+                var word=$(this).closest("tr").find('.sourceWord').val();
                 var countrycode=$(this).closest("tr").find('.countryCode').val();
                 var firstrolecode=$(this).closest("tr").find('.firstRoleCode').val();
                 var secondrolecode=$(this).closest("tr").find('.secondRoleCode').val();
@@ -893,7 +900,7 @@ $("#combobox6").change(function() {
                 $.ajax({
                   method:"POST",
                   url:"/updateSourceDictionary",
-                  data:{'dicId':dicid,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend},
+                  data:{'dicId':dicid,'sourceWord':word,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend},
                   success:function(data){
                     console.log("update verb dictionary success!");
                   }
@@ -913,7 +920,7 @@ $("#combobox6").change(function() {
              $.ajax({
                   method:"GET",
                   url:"/getAllFlaggedNouns",
-                  data:{'page':$('#gotoPage').val(),'limit':10},
+                  data:{'page':$('#gotoPage').val(),'username':$('#codername').val(),'limit':10},
                   success:function(flaggedResult){
                     $('#flaggedTable').html(flaggedResult);
                     //reattach the edit button event , this edit event can extracted, since it is used in both the flagged button click and goButton click
@@ -945,6 +952,7 @@ $("#combobox6").change(function() {
                 $(this).html("Edit");
                 //now it is save then when it click it should make an ajax to post the data.
                 var dicid=$(this).closest("tr").find('.sourceDictionaryClass').text();
+                var word=$(this).closest("tr").find('.sourceWord').val();
                 var countrycode=$(this).closest("tr").find('.countryCode').val();
                 var firstrolecode=$(this).closest("tr").find('.firstRoleCode').val();
                 var secondrolecode=$(this).closest("tr").find('.secondRoleCode').val();
@@ -954,7 +962,7 @@ $("#combobox6").change(function() {
                 $.ajax({
                   method:"POST",
                   url:"/updateSourceDictionary",
-                  data:{'dicId':dicid,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend},
+                  data:{'dicId':dicid,'sourceWord':word,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend},
                   success:function(data){
                     console.log("update verb dictionary success!");
                   }
@@ -1058,7 +1066,7 @@ $("#combobox6").change(function() {
                  $.ajax({
                       method:"GET",
                       url:"/getAllFlaggedVerbs",
-                      data:{'page':$('#gotoPage').val(),'limit':10},
+                      data:{'page':$('#gotoPage').val(),'username':$('#codername').val(),'limit':10},
                       success:function(flaggedResult){
                         $('#flaggedTable').html(flaggedResult);
                                $('.editVerbButton').click(function(){

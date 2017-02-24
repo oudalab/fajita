@@ -458,56 +458,164 @@ module.exports = function(app) {
   })
 
   app.get('/getAllFlaggedNouns', function(req, res, next) {
-    SourceDictionary.paginate({
-      //this needs to be set back later
-      //'confidenceFlag': true
-    }, {
-      page: req.query.page,
-      limit: req.query.limit,
-      sort: {
-        taggingTime: 'desc'
-    }
-    }).then(function(result) {
-      //ToDO: this is some function that can be extracted, since it is used in both getAllFlaggedNouns and in getAllFlaggedVerbs
-      var totalPages = 0;
-      if (result.total % req.query.limit === 0) {
-        totalPages = Math.trunc(result.total / req.query.limit);
-      } else {
-        totalPages = Math.trunc(result.total / req.query.limit) + 1;
+    var codername=req.query.username;
+    //console.log("codername: "+codername);
+    if(codername===null||typeof codername==='undefined'||codername==="")
+    {
+         var querypage=req.query.page;
+        
+         if(querypage===null||typeof querypage==='undefined'||querypage==="")
+         {
+          querypage=1;
+         }
+         else
+         {
+          querypage=req.query.page;
+         }
+          SourceDictionary.paginate({}
+          //this needs to be set back later
+          //'confidenceFlag': true
+        , {
+          page: querypage,
+          limit: req.query.limit,
+          sort: {
+            taggingTime: 'desc'
+        }
+        }).then(function(result) {
+          //ToDO: this is some function that can be extracted, since it is used in both getAllFlaggedNouns and in getAllFlaggedVerbs
+          var totalPages = 0;
+          if (result.total % req.query.limit === 0) {
+            totalPages = Math.trunc(result.total / req.query.limit);
+          } else {
+            totalPages = Math.trunc(result.total / req.query.limit) + 1;
+          }
+
+          res.render('./sourceDictionaryTableWithEdit.jade', {
+            allFlaggedNouns: result.docs,
+            totalPages: totalPages
+          });
+
+          res.end();
+        });
+    } 
+    else
+    {
+        var querypage=req.query.page;
+        var regex = new RegExp(["^", codername, "$"].join(""), "i");
+         if(querypage===null||typeof querypage==='undefined'||querypage==="")
+         {
+          querypage=1;
+         }
+         else
+         {
+          querypage=req.query.page;
+         }
+        SourceDictionary.paginate({"userName":regex}
+        //this needs to be set back later
+        //'confidenceFlag': true
+      , {
+        page: querypage,
+        limit: req.query.limit,
+        sort: {
+          taggingTime: 'desc'
       }
+      }).then(function(result) {
+        //ToDO: this is some function that can be extracted, since it is used in both getAllFlaggedNouns and in getAllFlaggedVerbs
+        var totalPages = 0;
+        if (result.total % req.query.limit === 0) {
+          totalPages = Math.trunc(result.total / req.query.limit);
+        } else {
+          totalPages = Math.trunc(result.total / req.query.limit) + 1;
+        }
 
-      res.render('./sourceDictionaryTableWithEdit.jade', {
-        allFlaggedNouns: result.docs,
-        totalPages: totalPages
-      });
+        res.render('./sourceDictionaryTableWithEdit.jade', {
+          allFlaggedNouns: result.docs,
+          totalPages: totalPages
+        });
 
-      res.end();
+        res.end();
     });
+    }   
   });
 
   app.get('/getAllFlaggedVerbs', function(req, res, next) {
-    VerbDictionary.paginate({
-      //'confidenceFlag': true
-    }, {
-      page: req.query.page,
-      limit: req.query.limit,
-          sort: {
-        taggingTime: 'desc'
-    }
-    }).then(function(result) {
-      var totalPages = 0;
-      if (result.total % req.query.limit === 0) {
-        totalPages = Math.trunc(result.total / req.query.limit);
-      } else {
-        totalPages = Math.trunc(result.total / req.query.limit) + 1;
+       
+      var codername=req.query.username;
+      if(codername===null||typeof codername==='undefined'||codername==="")
+      {
+        var querypage=req.query.page;
+        
+         if(querypage===null||typeof querypage==='undefined'||querypage==="")
+         {
+          querypage=1;
+         }
+         else
+         {
+          querypage=req.query.page;
+         }
+          VerbDictionary.paginate({
+            //'confidenceFlag': true
+          }, {
+            page: querypage,
+            limit: req.query.limit,
+                sort: {
+              taggingTime: 'desc'
+          }
+          }).then(function(result) {
+            var totalPages = 0;
+            if (result.total % req.query.limit === 0) {
+              totalPages = Math.trunc(result.total / req.query.limit);
+            } else {
+              totalPages = Math.trunc(result.total / req.query.limit) + 1;
+            }
+
+            res.render('./verbDictionaryTableWithEdit.jade', {
+              allFlaggedVerbs: result.docs,
+              totalPages: totalPages
+            });
+            res.end();
+          });
+      }
+      else
+      {  
+        var regex = new RegExp(["^", codername, "$"].join(""), "i");
+        var querypage=req.query.page;
+        
+         if(querypage===null||typeof querypage==='undefined'||querypage==="")
+         {
+          querypage=1;
+         }
+         else
+         {
+          querypage=req.query.page;
+         }
+          VerbDictionary.paginate({
+            "userName":regex
+            //'confidenceFlag': true
+          }, {
+            page: querypage,
+            limit: req.query.limit,
+                sort: {
+              taggingTime: 'desc'
+          }
+          }).then(function(result) {
+            var totalPages = 0;
+            if (result.total % req.query.limit === 0) {
+              totalPages = Math.trunc(result.total / req.query.limit);
+            } else {
+              totalPages = Math.trunc(result.total / req.query.limit) + 1;
+            }
+
+            res.render('./verbDictionaryTableWithEdit.jade', {
+              allFlaggedVerbs: result.docs,
+              totalPages: totalPages
+            });
+            res.end();
+          });
+
       }
 
-      res.render('./verbDictionaryTableWithEdit.jade', {
-        allFlaggedVerbs: result.docs,
-        totalPages: totalPages
-      });
-      res.end();
-    });
+
   });
 
 
@@ -565,6 +673,7 @@ module.exports = function(app) {
       "_id": req.body.dicId
     }, {
       $set: {
+        "word":req.body.sourceWord,
         "countryCode": req.body.countryCode,
         "firstRoleCode": req.body.firstRoleCode,
         "secondRoleCode": req.body.secondRoleCode,
