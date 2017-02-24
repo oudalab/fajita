@@ -1066,7 +1066,7 @@ $("#combobox6").change(function() {
                  $.ajax({
                       method:"GET",
                       url:"/getAllFlaggedVerbs",
-                      data:{'page':$('#gotoPage').val(),'limit':10},
+                      data:{'page':$('#gotoPage').val(),'username':$('#codername').val(),'limit':10},
                       success:function(flaggedResult){
                         $('#flaggedTable').html(flaggedResult);
                                $('.editVerbButton').click(function(){
