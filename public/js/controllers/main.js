@@ -145,6 +145,10 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
           $('#combobox0').val(data.countryCode);
           $('#combobox1').val(data.firstRoleCode);
           $('#combobox2').val(data.secondRoleCode);
+          $('.custom-combobox:eq(0) .custom-combobox-input').val(data.countryCode);
+          $('.custom-combobox:eq(1) .custom-combobox-input').val(data.firstRoleCode);
+          $('.custom-combobox:eq(2) .custom-combobox-input').val(data.secondRoleCode);
+                               
         } else {
             //do nothing since the form has been all cleared.
         }
