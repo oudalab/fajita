@@ -427,15 +427,15 @@
                                  success:function(data){
                            
                                 //just grab the useful info not all the 000zzz on the date format.
-                                if (data != null&&data.dateStart!=null&&data.dateStart!="") {
-                                  if (data.dateStart.substring(0, 10) != '1800-01-01') {
+                                if (data != null) {
+                                  if (data.dateStart!=null&&data.dateStart!=""&&data.dateStart.substring(0, 10) != '1800-01-01') {
                                     $('#startdate').val(data.dateStart.substring(0, 10));
 
                                   } else {
                                    $('#startdate').val("");
                                   }
 
-                                  if (data.dateEnd.substring(0, 10) != '1800-01-01'&&data.dateEnd!=null&&data.dateEnd!="") {
+                                  if (data.dateEnd!=null&&data.dateEnd!=""&&data.dateEnd.substring(0, 10) != '1800-01-01') {
                                     $('#enddate').val(data.dateEnd.substring(0, 10));
                                   } else {
                                     $('#enddate').val("");
@@ -450,6 +450,10 @@
                                   $('#combobox0').val(data.countryCode);
                                   $('#combobox1').val(data.firstRoleCode);
                                   $('#combobox2').val(data.secondRoleCode);
+                                  $('#combobox0input').val(data.countryCode);
+                                  $('#combobox1input').val(data.firstRoleCode);
+                                  $('#combobox2input').val(data.secondRoleCode);
+                                
 
                                   $('.custom-combobox:eq(0) .custom-combobox-input').val(data.countryCode);
                                   $('.custom-combobox:eq(1) .custom-combobox-input').val(data.firstRoleCode);
