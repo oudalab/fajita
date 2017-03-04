@@ -427,7 +427,7 @@
                                  success:function(data){
                            
                                 //just grab the useful info not all the 000zzz on the date format.
-                                if (data != null) {
+                                if (data != null&&data.dateStart!=null&&data.dateStart!="") {
                                   if (data.dateStart.substring(0, 10) != '1800-01-01') {
                                     $('#startdate').val(data.dateStart.substring(0, 10));
 
@@ -435,7 +435,7 @@
                                    $('#startdate').val("");
                                   }
 
-                                  if (data.dateEnd.substring(0, 10) != '1800-01-01') {
+                                  if (data.dateEnd.substring(0, 10) != '1800-01-01'&&data.dateEnd!=null&&data.dateEnd!="") {
                                     $('#enddate').val(data.dateEnd.substring(0, 10));
                                   } else {
                                     $('#enddate').val("");
@@ -454,7 +454,7 @@
                                   $('.custom-combobox:eq(0) .custom-combobox-input').val(data.countryCode);
                                   $('.custom-combobox:eq(1) .custom-combobox-input').val(data.firstRoleCode);
                                   $('.custom-combobox:eq(2) .custom-combobox-input').val(data.secondRoleCode);
-                                  console.log("yanyan!");
+                                  //console.log("yanyan!");
                                 } else {
                                     //do nothing since the form has been all cleared.
                                 }
@@ -485,17 +485,17 @@
     });
 
       $("#sentencecommit").on("click", function() {
-      $("#sentencealert").removeClass("in").show();
-      $("#sentencealert").delay(200).addClass("in").fadeOut(300);
-      
-      //clear all the noun and verb form.
-      $('#sourceForm')[0].reset();
-      $("#combobox0").prop("selectedIndex", -1);
-      $("#combobox1").prop("selectedIndex", -1);
-      $("#combobox2").prop("selectedIndex", -1);
+          $("#sentencealert").removeClass("in").show();
+          $("#sentencealert").delay(200).addClass("in").fadeOut(300);
+          
+          //clear all the noun and verb form.
+          $('#sourceForm')[0].reset();
+          $("#combobox0").prop("selectedIndex", -1);
+          $("#combobox1").prop("selectedIndex", -1);
+          $("#combobox2").prop("selectedIndex", -1);
 
-       $('#verbForm')[0].reset();
-       $("#combobox3").prop("selectedIndex", -1);
+           $('#verbForm')[0].reset();
+           $("#combobox3").prop("selectedIndex", -1);
 
     });
 

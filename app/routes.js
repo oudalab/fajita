@@ -64,6 +64,12 @@ function getAllAgentActors(res) {
   });
 }
 
+function customdate(olddate)
+{
+   var d = new Date(olddate);
+  var newdate = (d.getMonth() +1) + '-' + d.getDate() + '-' + d.getFullYear();
+}
+
 function getAllSecondroleActors(res) {
   Secondrole.find(function(err, secondrole) {
     if (err)
@@ -176,6 +182,12 @@ module.exports = function(app) {
       res.end();
     });
   });
+/*  SourceDictionary.find({}).sort('-taggingTime').limit(5).exec(function(err, data) {
+      res.render('./sourceDictionaryTable.jade', {
+        sourcedictionary: data
+      });
+      res.end();
+    });*/
   //post source form
   app.post('/api/addSourceDictionary', function(req, res) {
     /*console.log("start date: "+req.body.dateStart);*/
@@ -186,22 +198,54 @@ module.exports = function(app) {
       req.body.dateEnd = new Date("1800-01-01");
     }
 
-    SourceDictionary.create({
+    //save will represent that we have a different commit value.
+   
+    var newnoun={
       sentenceId: req.body.sentenceId,
       word: req.body.word,
       countryCode: req.body.countryCode,
       firstRoleCode: req.body.firstRoleCode,
       secondRoleCode: req.body.secondRoleCode,
-      dateStart: req.body.dateStart,
-      dateEnd: req.body.dateEnd,
-      confidenceFlag: req.body.confidenceFlag,
-      //userId: req.user.id, //the id property is lower case on user
-      //userName: req.user.username //we can access the user name directly from the req.user object, not realize this previously.
-      userName:req.body.username,
-      userId:req.body.userid
-        /* userName:userName*/
+      confidenceFlag: req.body.confidenceFlag
+      }
+    var word = req.body.word;
+    var r = new RegExp(word,'i');
+   
+    SourceDictionary.find(
+      { 'word': {$regex:r} }
+    ).sort('-taggingTime').limit(1).exec(function(err, datalist) {
+      data=datalist[0];
+      if (data != null) 
+      {
+        var oldnoun={
+          sentenceId:data.sentenceId,
+          word:data.word,
+          countryCode:data.countryCode,
+          firstRoleCode:data.firstRoleCode,
+          secondRoleCode:data.secondRoleCode,
+          confidenceFlag:data.confidenceFlag
+        } 
+        if(JSON.stringify(oldnoun)===JSON.stringify(newnoun))
+        {
+          console.log("current noun with exact tagging component already exist in the database,nothing new will be updated in the database.");
+        }  
+        else
+        {
+          newnoun["userName"]=req.body.username;
+          newnoun["userId"]=req.body.userid;
+          newnoun["dateStart"]=req.body.dateStart;
+          newnoun["dateEnd"]=req.body.dateEnd;
+          SourceDictionary.create(newnoun);
+        }
+      } 
+      else {
+          newnoun["userName"]=req.body.username;
+          newnoun["userId"]=req.body.userid;
+          newnoun["dateStart"]=req.body.dateStart;
+          newnoun["dateEnd"]=req.body.dateEnd;
+        SourceDictionary.create(newnoun);
+      }
     });
-    //need to put this end here when making a post request.
     res.end();
   });
   app.post('/api/addVerbDictionary', function(req, res) {
@@ -221,7 +265,9 @@ module.exports = function(app) {
 
   app.post('/addNewSentenceTaggingResult', function(req, res) {
 
-
+    console.log(req.body.sourceList);
+    console.log(req.body.targetList);
+    console.log(req.body.verbList);
     SentenceTaggingResult.create({
       sentenceId: req.body.sentenceId,
       sourceList: req.body.sourceList,
@@ -282,15 +328,14 @@ module.exports = function(app) {
   app.post('/nounexist', function(req, res) {
     var word = req.body.word;
     var r = new RegExp(word,'i');
-    SourceDictionary.findOne(
-      { 'word': {$regex:r} }
-    , function(err, data) {
-      if (data != null) {
-        res.json(data);
-        //console.log("hey");
+     //SourceDictionary.find({}).sort('-taggingTime').limit(5).exec
+    SourceDictionary.find(
+      { 'word': {$regex:r} }).sort('-taggingTime').limit(1).exec(
+    function(err, data) {
+      if (data[0] != null) {
+        res.json(data[0]);
       } else {
-        res.json(data);
-        //console.log("false");
+        res.json(data[0]);
       }
     })
   });

@@ -329,8 +329,8 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
         var hiddenNounObject = {
           sourceWord: word,
           sourceCountryCode: countryCode,
-          sourceFirstRoleCode: firstRoleCode,
-          sourceSecondRoleCode: secondRoleCode,
+          sourceFirstroleCode: firstRoleCode,
+          sourceSecondroleCode: secondRoleCode,
           sourceStartDate: dateStart,
           sourceEndDate: dateEnd
         }
@@ -340,8 +340,8 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
         var hiddenNounObject = {
           targetWord: word,
           targetCountryCode: countryCode,
-          targetFirstRoleCode: firstRoleCode,
-          targetSecondRoleCode: secondRoleCode,
+          targetFirstroleCode: firstRoleCode,
+          targetSecondroleCode: secondRoleCode,
           targetStartDate: dateStart,
           targetEndDate: dateEnd
         }
