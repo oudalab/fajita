@@ -1051,11 +1051,12 @@ $("#combobox6").change(function() {
                 //now it is save then when it click it should make an ajax to post the data.
                 var dicid=$(this).closest("tr").find('.verbDictionaryClass').text();
                 var verbcode=$(this).closest("tr").find('.verbcode').val();
+                var verbword=$(this).closest("tr").find('.verbword').val();
 
                 $.ajax({
                   method:"POST",
                   url:"/updateVerbDictionary",
-                  data:{'dicId':dicid,'verbcode':verbcode},
+                  data:{'dicId':dicid,'verbword':verbword,'verbcode':verbcode},
                   success:function(data){
                     console.log("update verb dictionary success!");
                   }
@@ -1098,11 +1099,12 @@ $("#combobox6").change(function() {
                 //now it is save then when it click it should make an ajax to post the data.
                 var dicid=$(this).closest("tr").find('.verbDictionaryClass').text();
                 var verbcode=$(this).closest("tr").find('.verbcode').val();
+                var verbword=$(this).closest("tr").find('.verbword').val();
 
                 $.ajax({
                   method:"POST",
                   url:"/updateVerbDictionary",
-                  data:{'dicId':dicid,'verbcode':verbcode},
+                  data:{'dicId':dicid,'verbword':verbword,'verbcode':verbcode},
                   success:function(data){
                     console.log("update verb dictionary success!");
                   }

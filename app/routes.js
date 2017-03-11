@@ -703,7 +703,9 @@ module.exports = function(app) {
       "_id": req.body.dicId
     }, {
       $set: {
+         "word":req.body.verbword,
         "verbcode": req.body.verbcode
+
       }
     }, function(err, dic) {
 
