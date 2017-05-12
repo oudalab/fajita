@@ -517,7 +517,8 @@ module.exports = function(app) {
          {
           querypage=req.query.page;
          }
-          SourceDictionary.paginate({}
+         //confidenceFlag': true
+          SourceDictionary.paginate({'confidenceFlag':true}
           //this needs to be set back later
           //'confidenceFlag': true
         , {
@@ -555,7 +556,7 @@ module.exports = function(app) {
          {
           querypage=req.query.page;
          }
-        SourceDictionary.paginate({"userName":regex}
+        SourceDictionary.paginate({"userName":regex,'confidenceFlag': true}
         //this needs to be set back later
         //'confidenceFlag': true
       , {
@@ -598,9 +599,7 @@ module.exports = function(app) {
          {
           querypage=req.query.page;
          }
-          VerbDictionary.paginate({
-            //'confidenceFlag': true
-          }, {
+          VerbDictionary.paginate({'confidenceFlag': true}, {
             page: querypage,
             limit: req.query.limit,
                 sort: {
@@ -622,8 +621,8 @@ module.exports = function(app) {
           });
       }
       else
-      {  
-        var regex = new RegExp(["^", codername, "$"].join(""), "i");
+      { 
+         var regex = new RegExp(["^", codername, "$"].join(""), "i");
         var querypage=req.query.page;
         
          if(querypage===null||typeof querypage==='undefined'||querypage==="")
@@ -635,8 +634,8 @@ module.exports = function(app) {
           querypage=req.query.page;
          }
           VerbDictionary.paginate({
-            "userName":regex
-            //'confidenceFlag': true
+            "userName":regex,
+            'confidenceFlag': true
           }, {
             page: querypage,
             limit: req.query.limit,
