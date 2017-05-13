@@ -145,6 +145,13 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
           $('#combobox0').val(data.countryCode);
           $('#combobox1').val(data.firstRoleCode);
           $('#combobox2').val(data.secondRoleCode);
+          $('.custom-combobox:eq(0) .custom-combobox-input').val(data.countryCode);
+          $('.custom-combobox:eq(1) .custom-combobox-input').val(data.firstRoleCode);
+          $('.custom-combobox:eq(2) .custom-combobox-input').val(data.secondRoleCode);
+          $('#combobox0input').val(data.countryCode);
+          $('#combobox1input').val(data.firstRoleCode);
+          $('#combobox2input').val(data.secondRoleCode);
+                               
         } else {
             //do nothing since the form has been all cleared.
         }
@@ -306,7 +313,6 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
     var sourceDicObject = {
       word: word,
       sentenceId: sentenceId,
-      //this is they way to go there is bug in combobox auto complete use jquery directly
       countryCode: countryCode, //countryCode
       firstRoleCode: firstRoleCode, //firstRoleCode
       secondRoleCode: secondRoleCode, //secondRoleCode
@@ -317,6 +323,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
       userid:localStorage.getItem('currentid')
         //get the useId from the req in api.
     };
+    //console.log("testtest: "+sourceDicObject);
     //if it is source push into sourcelist 
     var chosenOption = $("input:radio[name='inlineRadioOptions']:checked").val();
     if (chosenOption != "Other") {
@@ -325,8 +332,8 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
         var hiddenNounObject = {
           sourceWord: word,
           sourceCountryCode: countryCode,
-          sourceFirstRoleCode: firstRoleCode,
-          sourceSecondRoleCode: secondRoleCode,
+          sourceFirstroleCode: firstRoleCode,
+          sourceSecondroleCode: secondRoleCode,
           sourceStartDate: dateStart,
           sourceEndDate: dateEnd
         }
@@ -336,8 +343,8 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
         var hiddenNounObject = {
           targetWord: word,
           targetCountryCode: countryCode,
-          targetFirstRoleCode: firstRoleCode,
-          targetSecondRoleCode: secondRoleCode,
+          targetFirstroleCode: firstRoleCode,
+          targetSecondroleCode: secondRoleCode,
           targetStartDate: dateStart,
           targetEndDate: dateEnd
         }
