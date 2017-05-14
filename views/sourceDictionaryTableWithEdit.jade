@@ -14,6 +14,7 @@ div(id="sourceEditTable" class="table table-sm")
         th 2nd Role
         th Start(mm/dd/yyyy)
         th End(mm/dd/yyyy)
+        th Confidence
         th Who Added
         th Tag Time
         th Tool
@@ -49,6 +50,8 @@ div(id="sourceEditTable" class="table table-sm")
               else
                td
                  input(type="text", name="dateendname",value="#{source.dateEnd}" class="dateEnd" readonly)
+          td 
+             input(type="checkbox", name="sourceconfidence",value="#{source.confidenceFlag}" class="sourceconfidence jadeinput" readonly)
           td #{source.userName}
           td #{source.taggingTime}
           td <button class="editSourceButton">Edit</button>

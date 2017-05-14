@@ -905,11 +905,12 @@ $("#combobox6").change(function() {
                 var secondrolecode=$(this).closest("tr").find('.secondRoleCode').val();
                 var datestart=$(this).closest("tr").find('.dateStart').val();
                 var dateend=$(this).closest("tr").find('.dateEnd').val();
+                var sourceconfidence=$(this).closest("tr").find('.sourceconfidence').is(':not(:checked)');
                   
                 $.ajax({
                   method:"POST",
                   url:"/updateSourceDictionary",
-                  data:{'dicId':dicid,'sourceWord':word,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend},
+                  data:{'dicId':dicid,'sourceWord':word,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend,"sourceconfidence":sourceconfidence},
                   success:function(data){
                     console.log("update verb dictionary success!");
                   }
@@ -967,11 +968,11 @@ $("#combobox6").change(function() {
                 var secondrolecode=$(this).closest("tr").find('.secondRoleCode').val();
                 var datestart=$(this).closest("tr").find('.dateStart').val();
                 var dateend=$(this).closest("tr").find('.dateEnd').val();
-                  
+                var sourceconfidence=$(this).closest("tr").find('.sourceconfidence').is(':not(:checked)');
                 $.ajax({
                   method:"POST",
                   url:"/updateSourceDictionary",
-                  data:{'dicId':dicid,'sourceWord':word,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend},
+                  data:{'dicId':dicid,'sourceWord':word,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend,"sourceconfidence":sourceconfidence},
                   success:function(data){
                     console.log("update verb dictionary success!");
                   }
@@ -1052,11 +1053,12 @@ $("#combobox6").change(function() {
                 var dicid=$(this).closest("tr").find('.verbDictionaryClass').text();
                 var verbcode=$(this).closest("tr").find('.verbcode').val();
                 var verbword=$(this).closest("tr").find('.verbword').val();
+                var verbconfidence=$(this).closest("tr").find('.verbconfidence').is(':not(:checked)');
 
                 $.ajax({
                   method:"POST",
                   url:"/updateVerbDictionary",
-                  data:{'dicId':dicid,'verbword':verbword,'verbcode':verbcode},
+                  data:{'dicId':dicid,'verbword':verbword,'verbcode':verbcode,'verbconfidence':verbconfidence},
                   success:function(data){
                     console.log("update verb dictionary success!");
                   }
@@ -1100,11 +1102,11 @@ $("#combobox6").change(function() {
                 var dicid=$(this).closest("tr").find('.verbDictionaryClass').text();
                 var verbcode=$(this).closest("tr").find('.verbcode').val();
                 var verbword=$(this).closest("tr").find('.verbword').val();
-
+                var verbconfidence=$(this).closest("tr").find('.verbconfidence').is(':not(:checked)');
                 $.ajax({
                   method:"POST",
                   url:"/updateVerbDictionary",
-                  data:{'dicId':dicid,'verbword':verbword,'verbcode':verbcode},
+                  data:{'dicId':dicid,'verbword':verbword,'verbcode':verbcode,'verbconfidence':verbconfidence},
                   success:function(data){
                     console.log("update verb dictionary success!");
                   }

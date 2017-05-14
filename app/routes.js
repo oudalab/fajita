@@ -703,7 +703,8 @@ module.exports = function(app) {
     }, {
       $set: {
          "word":req.body.verbword,
-        "verbcode": req.body.verbcode
+        "verbcode": req.body.verbcode,
+        "confidenceFlag":req.body.verbconfidence
 
       }
     }, function(err, dic) {
@@ -724,7 +725,8 @@ module.exports = function(app) {
         "firstRoleCode": req.body.firstRoleCode,
         "secondRoleCode": req.body.secondRoleCode,
         "dateStart": req.body.dateStart,
-        "dateEnd": req.body.dateEnd
+        "dateEnd": req.body.dateEnd,
+        "confidenceFlag":req.body.sourceconfidence
       }
     }, function(err, sourcedic) {
       console.log(err);

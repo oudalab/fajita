@@ -9,7 +9,8 @@ div(id="verbEditTable" class="table table-sm")
       tr
         th SentenceId(click)
         th Word
-        th VerbCode
+        th VerbCode 
+        th Confidence       
         th Who Added
         th Tag Time
         th Tool
@@ -21,6 +22,8 @@ div(id="verbEditTable" class="table table-sm")
              input(type="text", name="verbword",value="#{verb.word}" class="verbword jadeinput" readonly)
           td 
              input(type="text", name="verbcodename",value="#{verb.verbcode}" class="verbcode jadeinput" readonly)
+          td
+             input(type="checkbox", name="verbconfidence",value="#{verb.confidenceFlag}" class="verbconfidence jadeinput" readonly)
           td #{verb.userName}
           td #{verb.taggingTime}
           td <button class="editVerbButton">Edit</button>
