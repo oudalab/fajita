@@ -10,7 +10,7 @@ from stop_words import get_stop_words
 from nltk.stem.porter import PorterStemmer
 from gensim import corpora, models
 import gensim
-f = open("arabic_out",'w')
+#f = open("arabic_out",'w')
 
 import time
 start_time = time.time()
@@ -34,11 +34,15 @@ p_stemmer = PorterStemmer()
 #doc_set = doc_set#[doc_a, doc_b, doc_c, doc_d, doc_e]
 #count=1;
 doc_set=[]
+# for record in sen.find():
+#     doc_set.append(record['wholeSentence'])
+count=1;
 for record in sen.find():
-    doc_set.append(record['wholeSentence'])
+     doc_set.append(record['wholeSentence'])
+    
     
 # list for tokenized documents in loop
-f.write("--- %s data loading seconds ---" % (time.time() - start_time))
+#f.write("--- %s data loading seconds ---" % (time.time() - start_time))
 start_time = time.time()
 texts = []
 
@@ -69,7 +73,13 @@ corpus = [dictionary.doc2bow(text) for text in texts]
 # generate LDA model
 ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=10, id2word = dictionary, passes=1)
 
-f.write(ldamodel.print_topics(num_topics=10, num_words=10))
-f.write("\n")
-f.write("--- %s data training seconds ---" % (time.time() - start_time))
-f.close();
+#f.write(ldamodel.print_topics(num_topics=10, num_words=10))
+#f.write("\n")
+#f.write("--- %s data training seconds ---" % (time.time() - start_time))
+#f.close();
+#with open('arabic_rst.out', 'wb') as fp:
+    #pickle.dump(ldamodel.print_topics(num_topics=10, num_words=10), fp)
+lda_result=ldamodel.print_topics(num_topics=10, num_words=10)
+f = open("arabic.out",'w')
+for item in lda_result:
+    f.write(str(item[0]+1)+". "+item[1]+"\n")
