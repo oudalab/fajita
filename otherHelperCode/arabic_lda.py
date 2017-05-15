@@ -31,7 +31,7 @@ p_stemmer = PorterStemmer()
 #count=1;
 doc_set=[]
 for record in sen.find():
-    doc_set.append(record['wholeSentences'])
+    doc_set.append(record['wholeSentence'])
     
 # list for tokenized documents in loop
 texts = []
