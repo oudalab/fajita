@@ -10,6 +10,7 @@ from stop_words import get_stop_words
 from nltk.stem.porter import PorterStemmer
 from gensim import corpora, models
 import gensim
+f = open("arabic_out",'w')
 
 import time
 start_time = time.time()
@@ -37,6 +38,8 @@ for record in sen.find():
     doc_set.append(record['wholeSentence'])
     
 # list for tokenized documents in loop
+f.write("--- %s data loading seconds ---" % (time.time() - start_time))
+start_time = time.time()
 texts = []
 
 # loop through document list
@@ -65,5 +68,8 @@ corpus = [dictionary.doc2bow(text) for text in texts]
 
 # generate LDA model
 ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=10, id2word = dictionary, passes=1)
-print(ldamodel.print_topics(num_topics=10, num_words=4))
-print("--- %s seconds ---" % (time.time() - start_time))
+
+f.write(ldamodel.print_topics(num_topics=10, num_words=4))
+f.write("\n")
+f.write("--- %s data training seconds ---" % (time.time() - start_time))
+f.close();
