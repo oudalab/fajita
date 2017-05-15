@@ -11,6 +11,9 @@ from nltk.stem.porter import PorterStemmer
 from gensim import corpora, models
 import gensim
 
+import time
+start_time = time.time()
+
 tokenizer = RegexpTokenizer(r'\w+')
 
 # create English stop words list
@@ -63,3 +66,4 @@ corpus = [dictionary.doc2bow(text) for text in texts]
 # generate LDA model
 ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=10, id2word = dictionary, passes=1)
 print(ldamodel.print_topics(num_topics=10, num_words=4))
+print("--- %s seconds ---" % (time.time() - start_time))
