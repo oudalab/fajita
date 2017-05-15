@@ -69,7 +69,7 @@ corpus = [dictionary.doc2bow(text) for text in texts]
 # generate LDA model
 ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=10, id2word = dictionary, passes=1)
 
-f.write(ldamodel.print_topics(num_topics=10, num_words=4))
+f.write(ldamodel.print_topics(num_topics=10, num_words=10))
 f.write("\n")
 f.write("--- %s data training seconds ---" % (time.time() - start_time))
 f.close();
