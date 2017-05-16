@@ -8,6 +8,7 @@ var User = require('./models/user');
 var Sentence = require('./models/sentence');
 var SentenceTaggingResult = require('./models/sentenceTaggingResult');
 var mongoose = require('mongoose');
+/*var ObjectId = require('mongoose').Types.ObjectId;*/
 var request = require('request');
 var http = require('http');
 
@@ -317,10 +318,18 @@ module.exports = function(app) {
 
     var sentenceId = req.body.sentenceId;
     //console.log(sentenceId);
+    //console.log(sentenceId);
     Sentence.find({
-      '_id': sentenceId
+      '_id':sentenceId/*new ObjectId(sentenceId)*/
     }, function(err, data) {
-      res.json(data[0].wholeSentence);
+      /*console.log(data);
+      console.log(data[0]);*/
+      //console.log(err);
+      if(data[0]=!=null)
+      {
+         res.json(data[0].wholeSentence);
+      }
+     
       res.end();
     });
   });
