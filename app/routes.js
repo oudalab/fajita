@@ -328,7 +328,11 @@ module.exports = function(app) {
       if(data[0]!=null)
       {
          res.json(data[0].wholeSentence);
-         alert("error happens since mongoose model mapping that yan suggested");
+         //alert("error happens since mongoose model mapping that yan suggested");
+      }
+      else
+      {
+        res.json("mongoose find by id sometimes not working, this is a remind from yan.");
       }
      
       res.end();
