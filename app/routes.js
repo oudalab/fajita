@@ -325,9 +325,10 @@ module.exports = function(app) {
       /*console.log(data);
       console.log(data[0]);*/
       //console.log(err);
-      if(data[0]=!=null)
+      if(data[0]!=null)
       {
          res.json(data[0].wholeSentence);
+         alert("error happens since mongoose model mapping that yan suggested");
       }
      
       res.end();
