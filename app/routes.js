@@ -138,13 +138,13 @@ module.exports = function(app) {
   app.post('/api/synonyms', function(req, res) {
       //console.log(req.body.word);
       request({
-        url: 'http://hanover.cs.ou.edu:5001/get_synonyms',
+        url: 'http://hanover.cs.ou.edu:9090/ar',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         json: {
-          "text": "['" + req.body.word + "']"
+          "word": "['" + req.body.word + "']"
         }
       }, function(error, response, data) {
         if (error) {
