@@ -1,9 +1,9 @@
 import pymongo
 from pymongo import MongoClient
 client=MongoClient()
-client=MongoClient('mongodb://hanover.cs.ou.edu:27017/')
-db=client['arabic_data']
-sen=db.sentences
+client=MongoClient('mongodb://..../')
+db=client['eventData']
+sen=db.documents_english
 
 from nltk.tokenize import RegexpTokenizer
 from stop_words import get_stop_words
@@ -18,7 +18,7 @@ start_time = time.time()
 tokenizer = RegexpTokenizer(r'\w+')
 
 # create English stop words list
-en_stop = get_stop_words('ar')
+en_stop = get_stop_words('en')
 
 # Create p_stemmer of class PorterStemmer
 p_stemmer = PorterStemmer()
@@ -38,7 +38,7 @@ doc_set=[]
 #     doc_set.append(record['wholeSentence'])
 count=1;
 for record in sen.find():
-     doc_set.append(record['wholeSentence'])
+     doc_set.append(record['document'][0])
     
     
 # list for tokenized documents in loop
@@ -80,6 +80,7 @@ ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=10, id2word = dict
 #with open('arabic_rst.out', 'wb') as fp:
     #pickle.dump(ldamodel.print_topics(num_topics=10, num_words=10), fp)
 lda_result=ldamodel.print_topics(num_topics=10, num_words=10)
-f = open("arabic.out",'w')
+f = open("document_english.out",'w')
 for item in lda_result:
     f.write(str(item[0]+1)+". "+item[1]+"\n")
+
