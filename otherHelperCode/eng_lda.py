@@ -1,7 +1,7 @@
 
 from pymongo import MongoClient
 client=MongoClient()
-client=MongoClient('mongodb://hanover.cs.ou.edu:27017/')
+client=MongoClient('mongodb://..../')
 db=client['arabic_data']
 sen=db.sentences_eng
 
