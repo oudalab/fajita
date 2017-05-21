@@ -122,7 +122,7 @@ app.controller('mainController', ['$scope', '$http', '$location', 'Actors', 'Age
          $('#sourceForm').trigger("reset");
          $('#sourceWord').val(sourceword);
         //just grab the useful info not all the 000zzz on the date format.
-        if (data != null) {
+        if (data != null&&data.dateStart!=null) {
           if (data.dateStart.substring(0, 10) != '1800-01-01') {
             $('#startdate').val(data.dateStart.substring(0, 10));
 

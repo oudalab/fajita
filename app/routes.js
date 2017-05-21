@@ -350,10 +350,10 @@ module.exports = function(app) {
   //if the key exist return the object.
   app.post('/nounexist', function(req, res) {
     var word = req.body.word;
-    var r = new RegExp(word,'i');
+    //var r = new RegExp(word,'i');
      //SourceDictionary.find({}).sort('-taggingTime').limit(5).exec
     SourceDictionary.find(
-      { 'word': {$regex:r} }).sort('-taggingTime').limit(1).exec(
+      { 'word': word/*{$regex:r}*/ }).sort('-taggingTime').limit(1).exec(
     function(err, data) {
       if (data[0] != null) {
         res.json(data[0]);
@@ -368,7 +368,7 @@ module.exports = function(app) {
     SourceDictionary.find({
       'word': queryword
     }, function(err, data) {
-
+      
       res.render('./summaryTable.jade', {
         sourcedictionary: data
       });
