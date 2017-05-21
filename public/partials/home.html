@@ -304,8 +304,10 @@
                       </div>
                      </div>
                   </div> 
-                  <div class="row" id="synonymheader" style="padding:2px">
-                   <table class = "table table-condensed container" id="synonymtable">
+
+                 <!--  <div class="container" id="synonymheader" style="padding:2px;height:20px"> -->
+                 <div class="well well-sm" style="height:135px;overflow-y: auto">
+                   <table class = "table table-condensed" id="synonymtable" >
                              <thead>
                                 <tr>
                                    <th>Synonym List</th>
@@ -314,7 +316,9 @@
                              <tbody>
                              </tbody>
                     </table>
-                  </div>  
+                  <div>
+                 <!--  </div>  -->
+
                </form>
                </div>
                 <div id="tabs-2">
@@ -411,6 +415,8 @@
                 var synonymslist=JSON.parse(synonyms);
                  for(var i = 0; i < synonymslist.length; i++) {
                      $('#synonymtable').append('<tr><td><a href="#" class="clicksynonym">'+synonymslist[i]+'</a></td></tr>');
+                 /*   $(".dropdown-menu").append('<a class="dropdown-item clicksynonym" href="#">'+synonymslist[i]+'</a>');*/
+
                 } 
                 
                 //click on each synonym link, need to be here to make sure the class exist on it.
