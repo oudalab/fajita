@@ -15,6 +15,10 @@ prebuilt = Word2Vec.load(word2vec_model)
 vocab_set = set(prebuilt.vocab.keys())
 
 app = Flask(__name__)
+@app.route("/polling",methods=['GET'])
+def polling():
+	return "hello synonym"
+
 @app.route("/ar",methods=['POST'])
 def ar():
         word=request.json['word']
