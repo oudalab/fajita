@@ -1,9 +1,9 @@
 
 from pymongo import MongoClient
 client=MongoClient()
-client=MongoClient('mongodb://..../')
-db=client['arabic_data']
-sen=db.sentences_eng
+client=MongoClient('mongodb://:/')
+db=client['eventData']
+sen=db.documents_english
 
 from nltk.tokenize import RegexpTokenizer
 from stop_words import get_stop_words
@@ -65,13 +65,14 @@ texts = []
 actuallyTrained=0;
 for i in sen.find():
     try:
-       raw = i['wholeSentence'].lower()        
+       raw = ''.join(i['document']).lower()        
        tokens = tokenizer.tokenize(raw)
        stopped_tokens = [i for i in tokens if not i in en_stop]
        stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens]
        texts.append(stemmed_tokens)
        actuallyTrained=actuallyTrained+1
     except:
+       pass
         #do nothing
 # turn our tokenized documents into a id <-> term dictionary
 dictionary = corpora.Dictionary(texts)
@@ -89,7 +90,7 @@ ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=10, id2word = dict
 #with open('arabic_rst.out', 'wb') as fp:
     #pickle.dump(ldamodel.print_topics(num_topics=10, num_words=10), fp)
 lda_result=ldamodel.print_topics(num_topics=10, num_words=10)
-f = open("english.out",'w')
+f = open("english_docs.out",'w')
 for item in lda_result:
     f.write(str(item[0]+1)+". "+item[1]+"\n")
 

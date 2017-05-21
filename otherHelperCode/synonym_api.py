@@ -17,8 +17,8 @@ vocab_set = set(prebuilt.vocab.keys())
 app = Flask(__name__)
 @app.route("/ar",methods=['POST'])
 def ar():
-        word=request.form['word']
-        return encodedata(word)
+        word=request.json['word']
+        return get_synonyms(word)
 def get_synonyms(word,match_n=10):
          word = re.sub(" ", "_", word)
          word_combo = [word] #[word_upper, word_title, word_lower]
@@ -29,8 +29,8 @@ def get_synonyms(word,match_n=10):
                  results_list.extend([i[0].upper() for i in results])
              except KeyError:
                  pass
-         return list(set(results_list))
- def encodedata(word):
+         return jsonify(results_list) #list(set(results_list))
+def encodedata(word):
         #args = self.reqparse.parse_args()
         x = word
         words = ast.literal_eval(x)
@@ -42,7 +42,7 @@ def get_synonyms(word,match_n=10):
             word_list = [re.sub(" ", "_", w) for w in words]
             syns = []
             for n, w in enumerate(word_list):
-                syns.append(self.get_synonyms(w, match_n = 4))
+                syns.append(get_synonyms(w, match_n = 10))
             t = [zip(x, syns[1]) for x in itertools.permutations(syns[0], len(syns[1]))]
             x = []
             for i in t:
@@ -51,11 +51,12 @@ def get_synonyms(word,match_n=10):
                     x.append(p)
             syns = jsonify(list(set(x))) # get uniques
         if len(words) == 0 or len(words) > 2:
-            print "Word length is 0 or greater than 2"
+            print("Word length is 0 or greater than 2")
             syns = jsonify([])
         return syns
 
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=9090)
+
 
