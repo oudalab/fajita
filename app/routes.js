@@ -138,7 +138,7 @@ module.exports = function(app) {
   app.post('/api/synonyms', function(req, res) {
       //console.log(req.body.word);
       request({
-        url: 'http://hanover.cs.ou.edu:9090/ar',
+        url: 'http://hanover.cs.ou.edu:9090/get_synonyms_ar',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
