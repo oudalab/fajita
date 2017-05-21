@@ -1,7 +1,7 @@
 
 from pymongo import MongoClient
 client=MongoClient()
-client=MongoClient('mongodb://:/')
+client=MongoClient('mongodb://..../')
 db=client['eventData']
 sen=db.documents_english
 
@@ -81,7 +81,7 @@ dictionary = corpora.Dictionary(texts)
 corpus = [dictionary.doc2bow(text) for text in texts]
 
 # generate LDA model
-ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=10, id2word = dictionary, passes=1)
+ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=20, id2word = dictionary, passes=1)
 
 #f.write(ldamodel.print_topics(num_topics=10, num_words=10))
 #f.write("\n")
@@ -89,8 +89,8 @@ ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=10, id2word = dict
 #f.close();
 #with open('arabic_rst.out', 'wb') as fp:
     #pickle.dump(ldamodel.print_topics(num_topics=10, num_words=10), fp)
-lda_result=ldamodel.print_topics(num_topics=10, num_words=10)
-f = open("english_docs.out",'w')
+lda_result=ldamodel.print_topics(num_topics=20, num_words=20)
+f = open("english_docs_20top.out",'w')
 for item in lda_result:
     f.write(str(item[0]+1)+". "+item[1]+"\n")
 
