@@ -153,9 +153,9 @@ module.exports = function(app) {
       }, function(error, response, data) {
         if (error) {
           console.log(error);
-          res.end();
+          res.end({"error":"sorry, the synonym service is not available for now"});
         } else {
-          console.log(response.statusCode, data);
+          //console.log(response.statusCode, data);
           //sent the result back;
           //res.write(data[0]);
           /*rst=[];
