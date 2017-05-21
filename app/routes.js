@@ -8,6 +8,7 @@ var User = require('./models/user');
 var Sentence = require('./models/sentence');
 var SentenceTaggingResult = require('./models/sentenceTaggingResult');
 var mongoose = require('mongoose');
+/*var ObjectId = require('mongoose').Types.ObjectId;*/
 var request = require('request');
 var http = require('http');
 
@@ -97,6 +98,10 @@ function getOneNotTaggedSentence(res) {
   });
 }
 
+function decode_utf8(s) {
+  return decodeURIComponent(escape(s));
+}
+
 function test(res) {
   request.post('http://localhost:5051/get_synonyms', {
       "text": ["laugh"]
@@ -137,22 +142,27 @@ module.exports = function(app) {
   app.post('/api/synonyms', function(req, res) {
       //console.log(req.body.word);
       request({
-        url: 'http://hanover.cs.ou.edu:5001/get_synonyms',
+        url: 'http://hanover.cs.ou.edu:9090/ar',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         json: {
-          "text": "['" + req.body.word + "']"
+          "word": req.body.word
         }
       }, function(error, response, data) {
         if (error) {
           console.log(error);
-          res.end();
+          res.end({"error":"sorry, the synonym service is not available for now"});
         } else {
-          console.log(response.statusCode, data);
+          //console.log(response.statusCode, data);
           //sent the result back;
           //res.write(data[0]);
+          /*rst=[];
+          //decode_utf8
+          data.forEach(function(entry) {
+          rst.push(decode_utf8(entry));
+          });*/
           res.end(JSON.stringify(data));
         }
 
@@ -317,10 +327,23 @@ module.exports = function(app) {
 
     var sentenceId = req.body.sentenceId;
     //console.log(sentenceId);
+    //console.log(sentenceId);
     Sentence.find({
-      '_id': sentenceId
+      '_id':sentenceId/*new ObjectId(sentenceId)*/
     }, function(err, data) {
-      res.json(data[0].wholeSentence);
+      /*console.log(data);
+      console.log(data[0]);*/
+      //console.log(err);
+      if(data[0]!=null)
+      {
+         res.json(data[0].wholeSentence);
+         //alert("error happens since mongoose model mapping that yan suggested");
+      }
+      else
+      {
+        res.json("mongoose find by id sometimes not working, this is a remind from yan.");
+      }
+     
       res.end();
     });
   });

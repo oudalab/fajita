@@ -108,10 +108,13 @@ tr:nth-child(even){background-color: #f2f2f2}
 {
 	
   border: 1px solid black;
+  height:20px;
+  overflow-y: auto;
+  z-index:100;
 }
 
 #synonymtable tr
-{ background-color:  white; }
+{ background-color: 	#9932CC; }
 #goButton
 {
 	padding-top:0px;

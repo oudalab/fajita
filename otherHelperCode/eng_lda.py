@@ -1,7 +1,7 @@
-import pymongo
+
 from pymongo import MongoClient
 client=MongoClient()
-client=MongoClient('mongodb://..../')
+client=MongoClient('mongodb://:/')
 db=client['eventData']
 sen=db.documents_english
 
@@ -33,37 +33,47 @@ p_stemmer = PorterStemmer()
 # compile sample documents into a list
 #doc_set = doc_set#[doc_a, doc_b, doc_c, doc_d, doc_e]
 #count=1;
-doc_set=[]
-# for record in sen.find():
-#     doc_set.append(record['wholeSentence'])
-count=1;
-for record in sen.find():
-     doc_set.append(record['document'][0])
+# doc_set=[]
+# # for record in sen.find():
+# #     doc_set.append(record['wholeSentence'])
+# for record in sen.find().limit(10000):
+#      doc_set.append(record['wholeSentence'])
     
     
-# list for tokenized documents in loop
-#f.write("--- %s data loading seconds ---" % (time.time() - start_time))
-start_time = time.time()
+# # list for tokenized documents in loop
+# #f.write("--- %s data loading seconds ---" % (time.time() - start_time))
+# start_time = time.time()
 texts = []
 
-# loop through document list
-for i in doc_set:
+# # loop through document list
+# for i in doc_set:
     
-    # clean and tokenize document string
-    #raw = i.lower()
-    #tokens = tokenizer.tokenize(raw)
-    #raw = i.lower()
-    tokens = tokenizer.tokenize(i)
+#     # clean and tokenize document string
+#     raw = i.lower()
+#     tokens = tokenizer.tokenize(raw)
+#     raw = i.lower()
+#     tokens = tokenizer.tokenize(i)
 
-    # remove stop words from tokens
-    stopped_tokens = [i for i in tokens if not i in en_stop]
+#     # remove stop words from tokens
+#     stopped_tokens = [i for i in tokens if not i in en_stop]
     
-    # stem tokens
-    stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens]
+#     # stem tokens
+#     stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens]
     
-    # add tokens to list
-    texts.append(stemmed_tokens)
-
+#     # add tokens to list
+#     texts.append(stemmed_tokens)
+actuallyTrained=0;
+for i in sen.find():
+    try:
+       raw = ''.join(i['document']).lower()        
+       tokens = tokenizer.tokenize(raw)
+       stopped_tokens = [i for i in tokens if not i in en_stop]
+       stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens]
+       texts.append(stemmed_tokens)
+       actuallyTrained=actuallyTrained+1
+    except:
+       pass
+        #do nothing
 # turn our tokenized documents into a id <-> term dictionary
 dictionary = corpora.Dictionary(texts)
     
@@ -80,7 +90,10 @@ ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=10, id2word = dict
 #with open('arabic_rst.out', 'wb') as fp:
     #pickle.dump(ldamodel.print_topics(num_topics=10, num_words=10), fp)
 lda_result=ldamodel.print_topics(num_topics=10, num_words=10)
-f = open("document_english.out",'w')
+f = open("english_docs.out",'w')
 for item in lda_result:
     f.write(str(item[0]+1)+". "+item[1]+"\n")
 
+f.write("actuallty trained"+str(actuallyTrained))
+f.close()
+            

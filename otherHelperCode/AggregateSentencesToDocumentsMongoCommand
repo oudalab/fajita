@@ -1,0 +1,38 @@
+//generate the array.
+db.sentence_english.aggregate(
+  [
+    {
+      $group: {
+        _id: "$docId",
+        "document": { $push: "$wholeSentence" }
+      }
+      
+
+    },
+     {$out:"documents_english"}
+    ],
+    {
+    allowDiskUse:true,
+      $project: {
+        "description": 1,
+        "results": {
+          $reduce: {
+            input: "document",
+            initialValue: "",
+            in: { $concat:  ["$$value", "$$this"] }
+          }
+        }
+      }
+     
+    }
+  )
+
+  //concat the array.
+  db.documents_english.mapReduce(
+    function() {
+        emit( this._id, { "document": this.document.join(".") } );
+    },
+    function() {},
+    { "out": { "inline": 1 } },
+    {$out:"docs_english"}
+)
