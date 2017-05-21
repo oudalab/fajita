@@ -98,6 +98,10 @@ function getOneNotTaggedSentence(res) {
   });
 }
 
+function decode_utf8(s) {
+  return decodeURIComponent(escape(s));
+}
+
 function test(res) {
   request.post('http://localhost:5051/get_synonyms', {
       "text": ["laugh"]
@@ -138,13 +142,13 @@ module.exports = function(app) {
   app.post('/api/synonyms', function(req, res) {
       //console.log(req.body.word);
       request({
-        url: 'http://hanover.cs.ou.edu:9998/get_synonyms_ar',
+        url: 'http://hanover.cs.ou.edu:9090/ar',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         json: {
-          "word": "['" + req.body.word + "']"
+          "word": req.body.word
         }
       }, function(error, response, data) {
         if (error) {
@@ -154,6 +158,11 @@ module.exports = function(app) {
           console.log(response.statusCode, data);
           //sent the result back;
           //res.write(data[0]);
+          /*rst=[];
+          //decode_utf8
+          data.forEach(function(entry) {
+          rst.push(decode_utf8(entry));
+          });*/
           res.end(JSON.stringify(data));
         }
 
