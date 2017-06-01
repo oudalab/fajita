@@ -273,6 +273,21 @@ module.exports = function(app) {
     res.end();
   });
 
+  app.post('/api/deleteSourceDictionary',function(req,res){
+    console.log(req.body.sourceid);
+    //SourceDictionary.findOneAndRemove({'id':req.body.sourceid});
+    SourceDictionary.remove({ _id: req.body.sourceid }, function(err) {
+    /*if (err) {
+            //message.type = 'notification!';
+            console.log("success!")
+    }
+    else {
+            console.log("failed!!");
+    }*/
+});
+   res.end();
+  });
+
   app.post('/addNewSentenceTaggingResult', function(req, res) {
 
     console.log(req.body.sourceList);
@@ -749,7 +764,10 @@ module.exports = function(app) {
         "secondRoleCode": req.body.secondRoleCode,
         "dateStart": req.body.dateStart,
         "dateEnd": req.body.dateEnd,
-        "confidenceFlag":req.body.sourceconfidence
+        "confidenceFlag":req.body.sourceconfidence,
+        "editByName":req.body.editByName,
+        "editById":req.body.editById,
+        "editTime":Date.now()
       }
     }, function(err, sourcedic) {
       console.log(err);

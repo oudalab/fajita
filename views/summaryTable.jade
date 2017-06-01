@@ -1,4 +1,4 @@
-div(id="summary1" class="table table-bordered")
+div(id="summary1" class="table")
   table 
     thead
       tr
@@ -8,16 +8,50 @@ div(id="summary1" class="table table-bordered")
         th 2nd Role
         th Start
         th End
-        th Unsure
-        th Who Added
+        th Confidence
+        th AddBy
+        th EditBy
+        th AddTime
+        th EditTime
+        th Tools
     tbody
       each source in sourcedictionary
         tr
-          td #{source.word}
-          td #{source.countryCode}
-          td #{source.firstRoleCode}
-          td #{source.secondRoleCode}
-          td #{source.dateStart}
-          td #{source.dateEnd}
-          td !{source.confidenceFlag}
+          td
+            input(type="text", name="sourceWord",value="#{source.word}" class="sourceWord jadeinput" readonly)
+          td 
+            input(type="text", name="countryCodename",value="#{source.countryCode}" class="countryCode jadeinput" readonly)
+          td 
+            input(type="text", name="firstrolename",value="#{source.firstRoleCode}" class="firstRoleCode jadeinput" readonly)
+          td 
+            input(type="text", name="secondrolename",value="#{source.secondRoleCode}" class="secondRoleCode jadeinput" readonly)
+          if source.dateStart =='Wed Jan 01 1800 00:00:00 GMT-0600 (CST)'
+           td 
+              input(type="text", name="datestartname",value="na" class="dateStart" readonly)
+          else
+              if source.dateStart =='Wed Jan 01 2200 00:00:00 GMT-0600 (CST)'
+               td  
+                 input(type="text", name="datestartname",value="now" class="dateStart" readonly)
+              else
+               td
+                 input(type="text", name="datestartname",value="#{source.dateStart}" class="dateStart" readonly)
+          if source.dateEnd =='Wed Jan 01 1800 00:00:00 GMT-0600 (CST)'
+           td 
+              input(type="text", name="dateendname",value="na" class="dateEnd" readonly)
+          else
+              if source.dateEnd=='Wed Jan 01 2200 00:00:00 GMT-0600 (CST)'
+               td  
+                 input(type="text", name="dateendname",value="now" class="dateEnd" readonly)
+              else
+               td
+                 input(type="text", name="dateendname",value="#{source.dateEnd}" class="dateEnd" readonly)
+           td 
+             input(type="checkbox", name="sourceconfidence",value="#{source.confidenceFlag}" class="sourceconfidence jadeinput" readonly)
           td #{source.userName}
+          td(class="editbyname") #{source.editByName} 
+          td(class="editbyid hidden") #{source.editById}
+          td #{source.taggingTime}
+          td #{source.editTime}
+          td <button class="editRoleBtn btn btn-secondary">Edit</button><button class="deleteRoleBtn btn btn-secondary">Del</button>
+          td(class="hidden summarynoun") #{source._id}
+          

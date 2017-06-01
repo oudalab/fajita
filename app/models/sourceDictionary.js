@@ -35,6 +35,18 @@ var schema = new mongoose.Schema({
 	userName: {
 		type: String
 	},
+	editById:
+	{
+		type:String
+	},
+    editByName:
+    {
+    	type:String
+    },
+    editTime:
+    {
+    	type:Date
+    },
 	taggingTime: {
 		type: Date,
 		default: Date.now

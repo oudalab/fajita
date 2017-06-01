@@ -15,8 +15,10 @@ div(id="sourceEditTable" class="table table-sm")
         th Start(mm/dd/yyyy)
         th End(mm/dd/yyyy)
         th Confidence
-        th Who Added
-        th Tag Time
+        th AddBy
+        th EditBy
+        th AddTime
+        th EditTime
         th Tool
     tbody
       each source in allFlaggedNouns
@@ -53,7 +55,10 @@ div(id="sourceEditTable" class="table table-sm")
           td 
              input(type="checkbox", name="sourceconfidence",value="#{source.confidenceFlag}" class="sourceconfidence jadeinput" readonly)
           td #{source.userName}
+          td(class="editbyname") #{source.editByName} 
+          td(class="editbyid hidden") #{source.editById}
           td #{source.taggingTime}
+          td #{source.editTime}
           td <button class="editSourceButton">Edit</button>
           td(class="hidden sourceDictionaryClass") #{source._id}
 
