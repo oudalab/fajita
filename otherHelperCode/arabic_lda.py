@@ -1,7 +1,7 @@
 
 from pymongo import MongoClient
 client=MongoClient()
-client=MongoClient('mongodb://..../')
+client=MongoClient('mongodb://localhost:29017/')
 db=client['eventData']
 sen=db.documents_arabic
 
@@ -19,7 +19,10 @@ tokenizer = RegexpTokenizer(r'\w+')
 
 # create English stop words list
 en_stop = get_stop_words('ar')
-
+#add in the stop words that manar suggests and retrain it again
+en_stop.append(' ب')
+en_stop.append('إلى')
+en_stop.append('إلى')
 # Create p_stemmer of class PorterStemmer
 p_stemmer = PorterStemmer()
     
@@ -81,7 +84,7 @@ dictionary = corpora.Dictionary(texts)
 corpus = [dictionary.doc2bow(text) for text in texts]
 
 # generate LDA model
-ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=20, id2word = dictionary, passes=1)
+ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=15, id2word = dictionary, passes=1)
 
 #f.write(ldamodel.print_topics(num_topics=10, num_words=10))
 #f.write("\n")
@@ -89,8 +92,8 @@ ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=20, id2word = dict
 #f.close();
 #with open('arabic_rst.out', 'wb') as fp:
     #pickle.dump(ldamodel.print_topics(num_topics=10, num_words=10), fp)
-lda_result=ldamodel.print_topics(num_topics=20, num_words=20)
-f = open("arabic_docs_20top.out",'w')
+lda_result=ldamodel.print_topics(num_topics=15, num_words=20)
+f = open("arabic_docs_15top.out",'w')
 for item in lda_result:
     f.write(str(item[0]+1)+". "+item[1]+"\n")
 
