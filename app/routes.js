@@ -274,19 +274,23 @@ module.exports = function(app) {
   });
 
   app.post('/api/deleteSourceDictionary',function(req,res){
-    console.log(req.body.sourceid);
+    //console.log(req.body.sourceid);
     //SourceDictionary.findOneAndRemove({'id':req.body.sourceid});
     SourceDictionary.remove({ _id: req.body.sourceid }, function(err) {
-    /*if (err) {
-            //message.type = 'notification!';
-            console.log("success!")
-    }
-    else {
-            console.log("failed!!");
-    }*/
-});
+
+     });
    res.end();
   });
+
+  app.post('/api/deleteVerbDictionary',function(req,res){
+     VerbDictionary.remove({ _id: req.body.dicId}, function(err) {
+             
+     });
+   res.end();
+
+  });
+
+
 
   app.post('/addNewSentenceTaggingResult', function(req, res) {
 

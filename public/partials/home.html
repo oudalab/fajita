@@ -1167,6 +1167,8 @@ $("#combobox6").change(function() {
        success:function(flaggedResult){
          $('#flaggedTable').html(flaggedResult);
             
+
+            
              $('.editVerbButton').click(function(){
                
                //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
@@ -1201,9 +1203,22 @@ $("#combobox6").change(function() {
                 });
                }
              });
+            
+            $('.deleteVerbButton').click(function(){
+              var dicid=$(this).closest("tr").find('.verbDictionaryClass').text();
+              $.ajax({
+                method:"POST",
+                url:"/api/deleteVerbDictionary",
+                data:{'dicId':dicid},
+                  success:function(data){
+                    //console.log("delete verb dictionary success!");
+                    alert("You just successfully delete the verb, no worry it still shows up here, it will be gone when u refresh the page.")
+                  }
 
-             
-           
+              });
+
+            });
+
                var goButton = $('#goButton');
                if($('#nounOrVerbFlag').val()==="verb")
                {

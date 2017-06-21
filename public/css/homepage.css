@@ -81,6 +81,12 @@ tr:nth-child(even){background-color: #f2f2f2}
 	margin-bottom:5px;
 
 }
+.btn.btn-danger.deleteVerbButton
+{
+	
+	width:180px;
+	margin-bottom:5px;
+}
 .linkButton
 {
 	background-color:	#D8D8D8 ;
