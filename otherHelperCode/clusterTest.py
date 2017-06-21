@@ -1,9 +1,9 @@
 
 from pymongo import MongoClient
 client=MongoClient()
-client=MongoClient('mongodb://localhost:29017/')
+client=MongoClient('mongodb://hanover.cs.ou.edu:29017/')
 db=client['eventData']
-sen=db.documents_arabic
+sen=db.documents_english
 
 from nltk.tokenize import RegexpTokenizer
 from stop_words import get_stop_words
@@ -18,11 +18,8 @@ start_time = time.time()
 tokenizer = RegexpTokenizer(r'\w+')
 
 # create English stop words list
-en_stop = get_stop_words('ar')
-#add in the stop words that manar suggests and retrain it again
-en_stop.append(' ب')
-en_stop.append('إلى')
-en_stop.append('إلى')
+en_stop = get_stop_words('en')
+
 # Create p_stemmer of class PorterStemmer
 p_stemmer = PorterStemmer()
     
@@ -66,25 +63,31 @@ texts = []
 #     # add tokens to list
 #     texts.append(stemmed_tokens)
 actuallyTrained=0;
+count=0;
+limit=100;
 for i in sen.find():
+  if count<limit:
     try:
-       raw = ''.join(i['document']).lower()        
-       tokens = tokenizer.tokenize(raw)
-       stopped_tokens = [i for i in tokens if not i in en_stop]
-       stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens]
-       texts.append(stemmed_tokens)
-       actuallyTrained=actuallyTrained+1
+      count=count+1
+      raw = ''.join(i['document']).lower()        
+      tokens = tokenizer.tokenize(raw)
+      stopped_tokens = [i for i in tokens if not i in en_stop]
+      stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens]
+      texts.append(stemmed_tokens) 
+      actuallyTrained=actuallyTrained+1
     except:
-       pass
+      pass
+    
         #do nothing
 # turn our tokenized documents into a id <-> term dictionary
+print("finish loading "+str(limit))
 dictionary = corpora.Dictionary(texts)
     
 # convert tokenized documents into a document-term matrix
 corpus = [dictionary.doc2bow(text) for text in texts]
 
 # generate LDA model
-ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=15, id2word = dictionary, passes=1)
+ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=5, id2word = dictionary, passes=1)
 
 #f.write(ldamodel.print_topics(num_topics=10, num_words=10))
 #f.write("\n")
@@ -92,11 +95,7 @@ ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=15, id2word = dict
 #f.close();
 #with open('arabic_rst.out', 'wb') as fp:
     #pickle.dump(ldamodel.print_topics(num_topics=10, num_words=10), fp)
-lda_result=ldamodel.print_topics(num_topics=15, num_words=20)
-f = open("arabic_docs_15top.out",'w')
-for item in lda_result:
-    f.write(str(item[0]+1)+". "+item[1]+"\n")
 
-f.write("actuallty trained"+str(actuallyTrained))
-f.close()
+print(ldamodel[doc_bow])
             
+

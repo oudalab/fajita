@@ -273,6 +273,25 @@ module.exports = function(app) {
     res.end();
   });
 
+  app.post('/api/deleteSourceDictionary',function(req,res){
+    //console.log(req.body.sourceid);
+    //SourceDictionary.findOneAndRemove({'id':req.body.sourceid});
+    SourceDictionary.remove({ _id: req.body.sourceid }, function(err) {
+
+     });
+   res.end();
+  });
+
+  app.post('/api/deleteVerbDictionary',function(req,res){
+     VerbDictionary.remove({ _id: req.body.dicId}, function(err) {
+             
+     });
+   res.end();
+
+  });
+
+
+
   app.post('/addNewSentenceTaggingResult', function(req, res) {
 
     console.log(req.body.sourceList);
@@ -328,20 +347,17 @@ module.exports = function(app) {
     var sentenceId = req.body.sentenceId;
     //console.log(sentenceId);
     //console.log(sentenceId);
-    Sentence.find({
+    Sentence.findOne({
       '_id':sentenceId/*new ObjectId(sentenceId)*/
     }, function(err, data) {
-      /*console.log(data);
-      console.log(data[0]);*/
-      //console.log(err);
-      if(data[0]!=null)
+      if(data!=null)
       {
-         res.json(data[0].wholeSentence);
+         res.json(data.wholeSentence);
          //alert("error happens since mongoose model mapping that yan suggested");
       }
       else
       {
-        res.json("mongoose find by id sometimes not working, this is a remind from yan.");
+        res.json("The sentence indexed by the id you clicked can't be found in database any more");
       }
      
       res.end();
@@ -749,7 +765,10 @@ module.exports = function(app) {
         "secondRoleCode": req.body.secondRoleCode,
         "dateStart": req.body.dateStart,
         "dateEnd": req.body.dateEnd,
-        "confidenceFlag":req.body.sourceconfidence
+        "confidenceFlag":req.body.sourceconfidence,
+        "editByName":req.body.editByName,
+        "editById":req.body.editById,
+        "editTime":Date.now()
       }
     }, function(err, sourcedic) {
       console.log(err);

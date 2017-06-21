@@ -321,7 +321,7 @@
                </form>
                </div>
                 <div id="tabs-2">
-                <div id="summary"></div>
+                <div id="summary" class="well well-sm"></div>
                 </div>
             </div>
             <div class="heading row well well-sm" style="height:27px"><strong>Verb Tagging Section</strong><div>
@@ -374,6 +374,112 @@
 </div>
    <script>
    $(function(){
+    
+    //for edit and delete button on summary role
+    //edit button for role summary
+    $("#summary").on("click", ".editRoleBtn", function (event) {
+          /*var self=$(this);
+          var sourceid=self.closest("td").next("td").text();*/
+
+
+          //console.log(sourceid);
+                        
+                      //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
+               if($(this).text()==="Edit")
+               {
+                var input=$(this).closest("tr").find("input");
+                 input.prop('readonly', false);
+                 //hight the input box
+                 input.select();
+                 $(this).html('Save');
+                //bind the datetime picker
+
+               /*   $(this).closest("tr").find(".dateStart").datepicker({
+                      changeMonth: true,
+                      changeYear: true
+                    });
+
+                 $(this).closest("tr").find(".dateEnd").datepicker({
+                      changeMonth: true,
+                      changeYear: true
+                    });*/
+               }
+
+              else
+               {
+                $(this).closest("tr").find("input").prop('readonly', true);
+                $(this).html("Edit");
+               //on summary role table and edit flagged table the hidden id is with different class
+                var dicid=$(this).closest("tr").find('.summarynoun').text();
+                var word=$(this).closest("tr").find('.sourceWord').val();
+                var countrycode=$(this).closest("tr").find('.countryCode').val();
+                var firstrolecode=$(this).closest("tr").find('.firstRoleCode').val();
+                var secondrolecode=$(this).closest("tr").find('.secondRoleCode').val();
+                var datestart=$(this).closest("tr").find('.dateStart').val();
+                var dateend=$(this).closest("tr").find('.dateEnd').val();
+                var sourceconfidence=$(this).closest("tr").find('.sourceconfidence').is(':not(:checked)');
+
+                $.ajax({
+                  method:"POST",
+                  url:"/updateSourceDictionary",
+                  data:{'dicId':dicid,'sourceWord':word,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend,"sourceconfidence":sourceconfidence,"editByName":localStorage.currentuser,"editById":localStorage.currentid},
+                  success:function(data){
+                    console.log("update source dictionary success!");
+                    //reolad the summary
+                         var sourceword=$('#sourceWord').val();
+                        $.ajax({
+                          method: "GET",
+                          url:"/summaryTable",
+                          data:{"queryword":sourceword},
+                          success:function(result){
+                            $("#summary").html(result);
+                            $("#summary").find(":checkbox").each(function(){
+                             if($(this).val()==="false")
+                             {
+                              $(this).prop("checked",true);
+                             }
+
+                          });
+                          }
+                        });
+
+                  }
+                });
+                //unbind the datepicker
+                   /*  $(this).closest("tr").find(".dateStart").datepicker("destroy");
+                     $(this).closest("tr").find(".dateEnd").datepicker("destroy"); */      
+               }
+
+      });
+    //delete button for role summary
+     $("#summary").on("click", ".deleteRoleBtn", function (event) {
+          var self=$(this);
+          var sourceid=self.closest("td").next("td").text();
+            $.ajax({
+               method: "POST",
+               url:"/api/deleteSourceDictionary",
+               data:{"sourceid":sourceid},
+               success:function(sentenceResult){
+                 var sourceword=$('#sourceWord').val();
+                $.ajax({
+                  method: "GET",
+                  url:"/summaryTable",
+                  data:{"queryword":sourceword},
+                  success:function(result){
+                    $("#summary").html(result);
+                         $("#summary").find(":checkbox").each(function(){
+                             if($(this).val()==="false")
+                             {
+                              $(this).prop("checked",true);
+                             }
+
+                          });
+                  }
+                });
+               }
+           });
+          //console.log(sourceid);
+      });
 
       $(".hideunderlying").click();
       $(".hideunderlying").hide();
@@ -595,6 +701,13 @@
         data:{"queryword":sourceword},
         success:function(result){
           $("#summary").html(result);
+               $("#summary").find(":checkbox").each(function(){
+                             if($(this).val()==="false")
+                             {
+                              $(this).prop("checked",true);
+                             }
+
+                          });
         }
       });
     });
@@ -609,6 +722,13 @@
         data:{"queryword":targetword},
         success:function(result){
           $("#summaryTarget").html(result);
+               $("#summary").find(":checkbox").each(function(){
+               if($(this).val()==="false")
+               {
+                $(this).prop("checked",true);
+               }
+
+            });
         }
       });
     });
@@ -924,7 +1044,7 @@ $("#combobox6").change(function() {
                 $.ajax({
                   method:"POST",
                   url:"/updateSourceDictionary",
-                  data:{'dicId':dicid,'sourceWord':word,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend,"sourceconfidence":sourceconfidence},
+                  data:{'dicId':dicid,'sourceWord':word,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend,"sourceconfidence":sourceconfidence,"editByName":localStorage.currentuser,"editById":localStorage.currentid},
                   success:function(data){
                     console.log("update verb dictionary success!");
                   }
@@ -948,6 +1068,7 @@ $("#combobox6").change(function() {
                   success:function(flaggedResult){
                     $('#flaggedTable').html(flaggedResult);
                     //reattach the edit button event , this edit event can extracted, since it is used in both the flagged button click and goButton click
+
               $('.editSourceButton').click(function(){               
                       //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
                if($(this).text()==="Edit")
@@ -986,7 +1107,7 @@ $("#combobox6").change(function() {
                 $.ajax({
                   method:"POST",
                   url:"/updateSourceDictionary",
-                  data:{'dicId':dicid,'sourceWord':word,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend,"sourceconfidence":sourceconfidence},
+                  data:{'dicId':dicid,'sourceWord':word,'countryCode':countrycode,'firstRoleCode':firstrolecode,'secondRoleCode':secondrolecode,'dateStart':datestart,"dateEnd":dateend,"sourceconfidence":sourceconfidence,"editByName":localStorage.currentuser,"editById":localStorage.currentid},
                   success:function(data){
                     console.log("update verb dictionary success!");
                   }
@@ -1046,6 +1167,8 @@ $("#combobox6").change(function() {
        success:function(flaggedResult){
          $('#flaggedTable').html(flaggedResult);
             
+
+            
              $('.editVerbButton').click(function(){
                
                //if the text on the button is Edit make the button text change from "edit" to "save" and make the code value editable.
@@ -1080,9 +1203,22 @@ $("#combobox6").change(function() {
                 });
                }
              });
+            
+            $('.deleteVerbButton').click(function(){
+              var dicid=$(this).closest("tr").find('.verbDictionaryClass').text();
+              $.ajax({
+                method:"POST",
+                url:"/api/deleteVerbDictionary",
+                data:{'dicId':dicid},
+                  success:function(data){
+                    //console.log("delete verb dictionary success!");
+                    alert("You just successfully delete the verb, no worry it still shows up here, it will be gone when u refresh the page.")
+                  }
 
-             
-           
+              });
+
+            });
+
                var goButton = $('#goButton');
                if($('#nounOrVerbFlag').val()==="verb")
                {
@@ -1161,6 +1297,9 @@ $("#combobox6").change(function() {
                    }
                });
             });
+
+
+        
 
        }
 

@@ -11,7 +11,7 @@ div(id="verbEditTable" class="table table-sm")
         th Word
         th VerbCode 
         th Confidence       
-        th Who Added
+        th AddedBy
         th Tag Time
         th Tool
     tbody
@@ -26,5 +26,5 @@ div(id="verbEditTable" class="table table-sm")
              input(type="checkbox", name="verbconfidence",value="#{verb.confidenceFlag}" class="verbconfidence jadeinput" readonly)
           td #{verb.userName}
           td #{verb.taggingTime}
-          td <button class="editVerbButton">Edit</button>
+          td <button class="btn btn-primary editVerbButton">Edit</button> <button class="deleteVerbButton btn btn-danger">Delete</button>
           td(class="hidden verbDictionaryClass") #{verb._id}
