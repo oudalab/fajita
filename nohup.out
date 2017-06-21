@@ -24237,3 +24237,11 @@ info:    Forever processing file: server.js
 123.151.42.61 - - [19/Jun/2017 09:10:15] "GET http://www.baidu.com/ HTTP/1.1" 404 -
 127.0.0.1 - - [19/Jun/2017 19:08:10] "POST /ar HTTP/1.1" 200 -
 127.0.0.1 - - [20/Jun/2017 10:21:39] "POST /ar HTTP/1.1" 200 -
+warn:    --minUptime not set. Defaulting to: 1000ms
+warn:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+info:    Forever processing file: server.js
+ * Running on http://0.0.0.0:9090/ (Press CTRL+C to quit)
+127.0.0.1 - - [21/Jun/2017 10:20:12] "POST /ar HTTP/1.1" 200 -
+127.0.0.1 - - [21/Jun/2017 10:20:29] "POST /ar HTTP/1.1" 200 -
+127.0.0.1 - - [21/Jun/2017 12:09:07] "POST /ar HTTP/1.1" 200 -
+127.0.0.1 - - [21/Jun/2017 12:09:10] "POST /ar HTTP/1.1" 200 -
