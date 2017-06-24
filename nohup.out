@@ -24255,3 +24255,11 @@ warn:    --spinSleepTime not set. Your script will exit if it does not stay up f
 info:    Forever processing file: server.js
  * Running on http://0.0.0.0:9090/ (Press CTRL+C to quit)
 58.213.133.130 - - [22/Jun/2017 23:15:10] "GET http://www.sciencedirect.com/science/jrnlallbooks/a HTTP/1.1" 404 -
+warn:    --minUptime not set. Defaulting to: 1000ms
+warn:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+info:    Forever processing file: server.js
+ * Running on http://0.0.0.0:9090/ (Press CTRL+C to quit)
+warn:    --minUptime not set. Defaulting to: 1000ms
+warn:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+info:    Forever processing file: server.js
+ * Running on http://0.0.0.0:9090/ (Press CTRL+C to quit)
