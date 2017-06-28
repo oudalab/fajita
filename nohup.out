@@ -24263,3 +24263,7 @@ warn:    --minUptime not set. Defaulting to: 1000ms
 warn:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
 info:    Forever processing file: server.js
  * Running on http://0.0.0.0:9090/ (Press CTRL+C to quit)
+127.0.0.1 - - [24/Jun/2017 18:39:46] "POST /ar HTTP/1.1" 200 -
+123.151.42.61 - - [26/Jun/2017 17:18:56] "GET http://www.baidu.com/ HTTP/1.1" 404 -
+124.112.228.45 - - [27/Jun/2017 00:17:25] "GET /manager/html HTTP/1.1" 404 -
+123.151.42.61 - - [28/Jun/2017 18:02:58] "GET http://www.baidu.com/ HTTP/1.1" 404 -
