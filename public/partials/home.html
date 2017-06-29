@@ -109,7 +109,9 @@
                 <button type="button" class="btn btn-primary" id="MostRecentActivityButton">Most Recent Activity</button>
                 <button type="button" class="btn btn-primary" id="FlaggedSummaryButton">Flagged Summary</button>
                 <button type="button" class="btn btn-primary" id="TotalFinishedButton">Total Finished</button>
+                <button type="button" class="btn btn-primary" id="TopicModelButton">Topic Model</button>
               </div>
+
 
               <div id="MostRecentActivityDialog" hidden>  
               <div id="contextContainer">
@@ -168,10 +170,97 @@
                     <legend>Verb Dictionary Summary  Total: <span id="verbCountTotal"></span></legend>
                     <div id="verbPie" class="well well-sm"></div>
                 </fieldset>
-              
-            
               </div>
-
+                <div id="TopicModelDialog" hidden>
+                <div class="well well-sm">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="1">Topic 1</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="2">Topic 2</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="3">Topic 3</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="4">Topic 4</button>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn" data-topic="5">Topic 5</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="6">Topic 6</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="7">Topic 7</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="8">Topic 8</button>
+                  </div>
+                </div>
+                 <div class="row">
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="9">Topic 9</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="10">Topic 10</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="11">Topic 11</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="12">Topic 12</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="13">Topic 13</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="14">Topic 14</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="15">Topic 15</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="16">Topic 16</button>
+                  </div>
+                </div>
+                 <div class="row">
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="17">Topic 17</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="18">Topic 18</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="19">Topic 19</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary topicbtn"  data-topic="20">Topic 20</button>
+                  </div>
+                </div>
+                </div>
+                <div clas="well well-lg">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Document Under Topic: </h4>
+                  </div>
+                  <div class="card-block">
+                     <textarea rows="25" cols="120" style="overflow:auto" id="topic-content">
+                       content of documents belong to this area will show up here.
+                     </textarea>
+                  </div>
+                </div>
+                </div>
+                <div>
+                </div>
+                    
+                </div>
               </div>
             </div>
 
@@ -374,6 +463,20 @@
 </div>
    <script>
    $(function(){
+
+    $(".topicbtn").off('click').on('click',function(){
+      //alert($(this).data("topic"));
+      var topic=$(this).data("topic");
+        $.ajax({
+        method: "POST",
+        url:"/findDocumentsWithTopic",
+        data:{'topic':topic},
+        success:function(result){
+         $("#topic-content").html(result);
+       }
+       })
+      
+    })
     
     //for edit and delete button on summary role
     //edit button for role summary
@@ -889,6 +992,20 @@ $("#combobox6").change(function() {
       }
     }
    });
+
+   var topicModelDialog=$('#TopicModelDialog').dialog({
+     autoOpen:false,
+     height:900,
+     width:1200,
+     modal:true,
+     title:"Documents Topic Model",
+     buttons:{
+      Close:function(){
+        topicModelDialog.dialog("close");
+
+      }
+     }
+    });
  /*********************end of define dialog part************************************/
 
     //student track performance by themselves button
@@ -991,6 +1108,10 @@ $("#combobox6").change(function() {
    
    $('#TotalFinishedButton').on("click",function(){
      totalFinishedDialog.dialog("open");
+   });
+
+   $('#TopicModelButton').on("click",function(){
+     topicModelDialog.dialog("open");
    });
 
    //show allTaggedNouns Button click inside of FLagged Summary dialog

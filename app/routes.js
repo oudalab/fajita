@@ -7,6 +7,7 @@ var VerbDictionary = require('./models/verbDictionary');
 var User = require('./models/user');
 var Sentence = require('./models/sentence');
 var SentenceTaggingResult = require('./models/sentenceTaggingResult');
+var Documentswithtopic=require('./models/documentswithtopic');
 var mongoose = require('mongoose');
 /*var ObjectId = require('mongoose').Types.ObjectId;*/
 var request = require('request');
@@ -436,12 +437,6 @@ module.exports = function(app) {
     }).exec(function(err, count) {
       var randomnumber=Math.random();
       var random = Math.floor(randomnumber * count);
-      //var limitcount=0;
-   /*   if(randomnumber<0.5)
-      {
-        var random=Math.floor((randomnumber+0.25)*count);
-      }*/
-      //var queryword=req.param('word');
 
       Sentence.findOne({
         "tagged": false,
@@ -734,6 +729,84 @@ module.exports = function(app) {
     });
   });
 
+    app.post('/getOneQuerySentence', function(req, res) {
+    var r = new RegExp(".*" + req.param('word'), 'i');
+    Sentence.count({
+      "tagged": false,
+      "wholeSentence": {
+        $regex: r
+      }
+    }).exec(function(err, count) {
+      var randomnumber=Math.random();
+      var random = Math.floor(randomnumber * count);
+
+      Sentence.findOne({
+        "tagged": false,
+        "wholeSentence": {
+          $regex: r
+        }
+      }).limit(1).skip(random).exec(
+        function(err, result) {
+          if (result != null) {
+            res.json(result);
+          } else {
+            res.json({
+              'output': 'notfound'
+            });
+            console.log("find 0 sentence with this query");
+          }
+        }
+      )
+
+    });
+
+  });
+
+  app.post('/findDocumentsWithTopic',function(req,res){
+     var topicno=parseInt(req.body.topic)-1
+      Documentswithtopic.count({
+      "topic": topicno
+    
+    }).exec(function(err, count) {
+      var randomnumber=Math.random();
+      var random = Math.floor(randomnumber * count);
+
+      Documentswithtopic.findOne({
+        "topic": topicno
+
+      }).limit(1).skip(random).exec(
+        function(err, result) {
+          if(err)
+            {
+              res.end();
+            }
+          if (result != null) {
+            res.json(result['document']);
+            
+          } else {
+            res.json({
+              'output': 'notfound'
+            });
+            res.end();
+            /*console.log("find 0 sentence with this query");*/
+          }
+
+        }
+      )
+
+
+    });
+
+/*    //console.log("topic "+req.body.topic);
+      Documentswithtopic.findOne({
+      'topic': parseInt(req.body.topic)
+    }, function(err, data) {
+      res.json(data['document']);
+      //console.log(data[0]);
+      res.end();
+    });*/
+  });
+
 
   //update the verb code in verb dictionary
   app.post('/updateVerbDictionary', function(req, res) {
@@ -752,6 +825,8 @@ module.exports = function(app) {
     });
     res.end();
   });
+
+
 
   //update source didctionary based on sourceDictionaryId
   app.post('/updateSourceDictionary', function(req, res) {
