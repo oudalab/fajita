@@ -1,2 +1,2 @@
-# MonkeyKing
-Event Data Tagging Tool Website
+# OU ARABIC EVENT CODING SYSTEM--FAJITA
+Online event coidng system with machine learning algorithms applied.
