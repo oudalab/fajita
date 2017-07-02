@@ -32,13 +32,17 @@ def formatOriginalNameToWikiName(originalname):
 
 #inorder to be parallel we need to pass in a new driver
 def MakeSeleniumToSearchWithOriginalName(originalname,driver):
-    wikiname=formatOriginalNameToWikiName(originalname)
+    wikiname=''
+    try:
+        wikiname=formatOriginalNameToWikiName(originalname)
+    except:
+        pass
     nametosearch=originalname if(wikiname=="") else wikiname
-    driver.get("https://en.wikipedia.org/wiki/"+str(nametosearch))
     result={}
     result["findresult"]={}
     result["nofind"]={}
     try:
+        driver.get("https://en.wikipedia.org/wiki/"+str(nametosearch))
         elem = driver.find_element_by_css_selector(".interwiki-ar a")
         """
         these two lines of code needs to run before elem.click(), since it will goto
@@ -177,18 +181,18 @@ if __name__ == '__main__':
         
         #manager=Manager()
         #d=manager.dict()
-        p1=Process(target=func1)
-        p1.start()
-        p2=Process(target=func2)
-        p2.start()
-        p3=Process(target=func3)
-        p3.start()
+        # p1=Process(target=func1)
+        # p1.start()
+        # p2=Process(target=func2)
+        # p2.start()
+        # p3=Process(target=func3)
+        # p3.start()
         p4=Process(target=func4)
         p4.start()
         p1.join()
-        p2.join()
-        p3.join()
-        p4.join()
+        # p2.join()
+        # p3.join()
+        # p4.join()
         print("--- %s seconds ---" % (time.time() - start_time))
         #writeResultToDisk(d,"wholeresult.pkl")
 

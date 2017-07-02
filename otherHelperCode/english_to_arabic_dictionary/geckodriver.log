@@ -573,3 +573,83 @@ Full stack:
 1498940316672	Marionette	INFO	Listening on port 42451
 1498940316803	Marionette	WARN	TLS certificate errors will be ignored for this session
 1498940323342	Marionette	WARN	TLS certificate errors will be ignored for this session
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1498942064152	geckodriver	INFO	Listening on 127.0.0.1:48399
+1498942064152	geckodriver	INFO	Listening on 127.0.0.1:37277
+1498942064156	geckodriver	INFO	Listening on 127.0.0.1:33965
+1498942064157	geckodriver	INFO	Listening on 127.0.0.1:42099
+1498942064350	geckodriver::marionette	INFO	Starting browser /usr/lib/firefox/firefox.sh with args ["-marionette"]
+1498942064351	geckodriver::marionette	INFO	Starting browser /usr/lib/firefox/firefox.sh with args ["-marionette"]
+1498942064368	geckodriver::marionette	INFO	Starting browser /usr/lib/firefox/firefox.sh with args ["-marionette"]
+1498942064369	geckodriver::marionette	INFO	Starting browser /usr/lib/firefox/firefox.sh with args ["-marionette"]
+1498942072974	Marionette	INFO	Listening on port 40801
+1498942073243	Marionette	INFO	Listening on port 38609
+1498942073477	Marionette	INFO	Listening on port 37651
+1498942073970	Marionette	WARN	TLS certificate errors will be ignored for this session
+1498942074097	Marionette	INFO	Listening on port 38273
+1498942074284	Marionette	WARN	TLS certificate errors will be ignored for this session
+1498942074478	Marionette	WARN	TLS certificate errors will be ignored for this session
+1498942074876	Marionette	WARN	TLS certificate errors will be ignored for this session
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+Corrupt JPEG data: 179 extraneous bytes before marker 0xd9
+Corrupt JPEG data: 179 extraneous bytes before marker 0xd9
+JavaScript warning: https://a.slack-edge.com/bv1-1/slack_beacon.9555f5e382af865f618b.min.js, line 5163: unreachable code after return statement
+JavaScript warning: https://a.slack-edge.com/bv1-1/slack_beacon.9555f5e382af865f618b.min.js line 1 > eval, line 5163: unreachable code after return statement
+JavaScript warning: https://a.slack-edge.com/bv1-1/slack_beacon.9555f5e382af865f618b.min.js, line 5163: unreachable code after return statement
+JavaScript warning: https://a.slack-edge.com/bv1-1/slack_beacon.9555f5e382af865f618b.min.js line 1 > eval, line 5163: unreachable code after return statement
+JavaScript warning: https://a.slack-edge.com/bv1-1/rollup-brand.c4ec2770eb61bcaf9d83.min.js, line 5163: unreachable code after return statement
+JavaScript warning: https://a.slack-edge.com/bv1-1/rollup-brand.c4ec2770eb61bcaf9d83.min.js line 1 > eval, line 5163: unreachable code after return statement
+1498966155096	geckodriver	INFO	Listening on 127.0.0.1:42299
+1498966155187	geckodriver::marionette	INFO	Starting browser /usr/lib/firefox/firefox.sh with args ["-marionette"]
+1498966160218	Marionette	INFO	Listening on port 40447
+1498966160399	Marionette	WARN	TLS certificate errors will be ignored for this session
+1498966169182	Marionette	INFO	Ceased listening
+1498966171101	Marionette	INFO	Ceased listening
+1498966174287	Marionette	INFO	Ceased listening
+1498966181329	Marionette	INFO	Ceased listening
