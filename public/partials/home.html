@@ -30,9 +30,12 @@
  
 <div  ng-controller="mainController">
    <div class="container" >
-      <div class="row">
+      <div>
          <div class="col-md-4 well well-lg" style="height:1050px;padding-top:0">
-            <div class="row  well well-sm">
+              <div class="row">
+               <button class="btn btn-primary" style="width:100%">Take me to fast actor coding</button>
+              </div>
+              <div class="row">
                <div class="col-md-5">
                <button type="button" class="btn btn-success" style="padding:2px;width:100px;float:left;margin:10px" ng-click="signmeOut()">Sign Out</button>
                 </div>
@@ -59,7 +62,8 @@
                   </ul> 
                </div>
                 </div>
-              </div>
+                </div>
+             
             <div id="currentSentence" class="row well" style="height:150px;overflow-y:auto">
               <strong>{{wholeSentence}}</strong>
             </div>

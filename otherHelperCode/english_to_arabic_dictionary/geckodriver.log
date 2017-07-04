@@ -653,3 +653,17 @@ JavaScript warning: https://a.slack-edge.com/bv1-1/rollup-brand.c4ec2770eb61bcaf
 1498966171101	Marionette	INFO	Ceased listening
 1498966174287	Marionette	INFO	Ceased listening
 1498966181329	Marionette	INFO	Ceased listening
+1499194286927	geckodriver	INFO	Listening on 127.0.0.1:36094
+1499194288021	geckodriver::marionette	INFO	Starting browser /usr/lib/firefox/firefox.sh with args ["-marionette"]
+1499194291685	Marionette	INFO	Listening on port 33840
+1499194291759	Marionette	WARN	TLS certificate errors will be ignored for this session
+1499194315617	geckodriver	INFO	Listening on 127.0.0.1:59905
+1499194316713	geckodriver::marionette	INFO	Starting browser /usr/lib/firefox/firefox.sh with args ["-marionette"]
+1499194320333	Marionette	INFO	Listening on port 44874
+1499194320432	Marionette	WARN	TLS certificate errors will be ignored for this session
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
