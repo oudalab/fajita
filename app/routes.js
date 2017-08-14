@@ -8,6 +8,7 @@ var User = require('./models/user');
 var Sentence = require('./models/sentence');
 var SentenceTaggingResult = require('./models/sentenceTaggingResult');
 var Documentswithtopic=require('./models/documentswithtopic');
+var FastPerEntity=require('./models/fastperentity');
 var mongoose = require('mongoose');
 /*var ObjectId = require('mongoose').Types.ObjectId;*/
 var request = require('request');
@@ -34,6 +35,47 @@ function getAllTaggingSentences(res){
      res.send(JSON.stringify(taggingresult));
   });
 }
+
+
+function getOneFastPerEntity(res){
+  FastPerEntity.find(function(err,result){
+    if(err)
+      res.send(err);
+    else
+    {
+      var sentenceids=result[0].sentenceids;
+      var wholeSentences=[];
+       for(var i=0;i<5;i++)
+       {
+         Sentence.findOne({
+            '_id':sentenceids[i]/*new ObjectId(sentenceId)*/
+          }, function(err, data) {
+            if(data!=null)
+            {
+              //console.log("hey "+data.wholeSentence);
+               wholeSentences.push(data.wholeSentence);
+               //console.log(wholeSentences.length);
+               //alert("error happens since mongoose model mapping that yan suggested");
+            }
+            if(wholeSentences.length==5)
+            {
+              //this need to be here if it is defined outside, res.send will not wait until that Sentence.findOne finished.
+              res.send(JSON.stringify({"word":result[0].word,"sentences":wholeSentences}));
+            }
+         });
+       }
+    }
+
+  })
+}
+
+/*var myCallback = function(data) {
+  console.log('got data: '+data);
+};
+
+var usingItNow = function(callback) {
+  callback('get it?');
+};*/
 
 function getSourceDictionary(res) {
   SourceDictionary.find(function(err, sourcedictionary) {
@@ -139,6 +181,9 @@ module.exports = function(app) {
     });
   app.get('/api/getallwork', function(req,res){
       getAllTaggingSentences(res);
+  });
+  app.get('/getperentity',function(req,res){
+       getOneFastPerEntity(res);
   });
   app.post('/api/synonyms', function(req, res) {
       //console.log(req.body.word);
@@ -331,7 +376,8 @@ module.exports = function(app) {
     res.end();
   });
 
-  //to get the current sentence object, in order to make sure when we click the next sentence, the current sentence already get commited.
+  //to get the current sentence object, in order to make sure when we click the next sentence, the current sentence already get commited, this can  also be
+  //used for fast coding fast entity sentences.
   app.post('/getCurrentSentence', function(req, res) {
     var sentenceId = req.body.currentSentenceId;
     Sentence.find({
@@ -340,9 +386,8 @@ module.exports = function(app) {
       res.json(data);
       res.end();
     });
-
   });
-  //get sentence string by giving sentenceId
+  //get sentence string by giving sentenceId,this is can also be used for fast coding.
   app.post('/getSentenceStringById', function(req, res) {
 
     var sentenceId = req.body.sentenceId;
@@ -364,6 +409,7 @@ module.exports = function(app) {
       res.end();
     });
   });
+
   //if the key exist return the object.
   app.post('/nounexist', function(req, res) {
     var word = req.body.word;
@@ -796,15 +842,6 @@ module.exports = function(app) {
 
 
     });
-
-/*    //console.log("topic "+req.body.topic);
-      Documentswithtopic.findOne({
-      'topic': parseInt(req.body.topic)
-    }, function(err, data) {
-      res.json(data['document']);
-      //console.log(data[0]);
-      res.end();
-    });*/
   });
 
 
@@ -865,6 +902,11 @@ module.exports = function(app) {
   app.get('/sentences', function(req, res) {
 
     getOneNotTaggedSentence(res);
+  });
+
+  app.get('/fastcoding',function(req,res){
+      res.sendfile('./public/partials/fastcoding.html');
+       //res.render('./tryme.jade', {param1: 'xxx', param2: 'yyy'} );
   });
 
 

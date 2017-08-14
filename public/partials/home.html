@@ -33,7 +33,7 @@
       <div>
          <div class="col-md-4 well well-lg" style="height:1050px;padding-top:0">
               <div class="row">
-               <button class="btn btn-primary" style="width:100%">Take me to fast actor coding</button>
+               <button class="btn btn-primary" id="fast-btn" style="width:100%">Take me to fast actor coding</button>
               </div>
               <div class="row">
                <div class="col-md-5">
@@ -467,6 +467,21 @@
 </div>
    <script>
    $(function(){
+         //for take me to fast coding
+        $("#fast-btn").on("click",function(){
+              //$(".appcontainer").html("hello world!");
+              //console.log("fast coding clicked");
+              $.ajax({
+                method:"GET",
+                url:"/fastcoding",
+                success:function(html)
+                {
+                 
+                  $(".appcontainer").html(html);
+                }
+              });
+        });
+
 
     $(".topicbtn").off('click').on('click',function(){
       //alert($(this).data("topic"));
@@ -1422,6 +1437,7 @@ $("#combobox6").change(function() {
                    }
                });
             });
+
 
 
         

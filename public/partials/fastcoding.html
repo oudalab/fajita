@@ -1,0 +1,69 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading" id="fast-start">
+    <div class="row">
+    <div class="col col-sm-6">
+    <h4>Fast Arabic Actor Coding (PERSON ENTITY)</h4>
+    </div>
+    <div class="col col-sm-2">
+    <button class="btn btn-secondary btn-sm">Switch To Org Entity</button>
+    </div>
+	</div>
+	<div class="row"></div>
+    	<button class="btn btn-danger btn-sm"> <i class="fa fa-clock-o" aria-hidden="true" stype="padding:2px"></i><strong> STATR</strong></button>
+    </div>
+    <div class="panel-body">
+     <div id="fastactor" class="row well well-sm">
+              <div class="col col-sm-2" id="arabicentity"></div>
+              <div class="col col-sm-2">
+                  <input type="checkbox">Per Entity?</input>
+              </div>
+              <div class="col col-sm-2">
+              	  <button class="btn btn-primary btn-sm">Commit</button>
+              </div>
+              <div class="col col-sm-2">
+              	  <button class="btn btn-danger btn-sm"><i class="fa fa-step-forward" aria-hidden="true" style="padding:2px"></i>Next</button>
+              </div>
+      </div>
+      <div class="row well well-sm">
+ 
+      <strong>Related Sentences</strong>
+      	<div class="container" style="margin:3px;background: bisque" id="sen1">
+      	</div>
+      	<div class="container" sstyle="margin:3px" id="sen2">
+      	</div>
+  	 	<div class="container" style="margin:3px;background: bisque" id="sen3">
+      	</div>
+  	 	<div class="container" style="margin:3px" id="sen4">
+      	</div>
+  	 	<div class="container" style="margin:3px;background: bisque" id="sen5">
+      	</div>
+     </div>
+  </div>
+  <script>
+  	$(function(){
+  		$("#fast-start").on("click",function(){
+  			  $.ajax({
+                method:"GET",
+                url:"/getperentity",
+                success:function(data)
+                {
+                	//paser the data into dictionary , this needs to be called
+               		var result = JSON.parse(data);
+                 //console.log(result.word);
+                  $("#arabicentity").html(result.word);
+                  var sentences=result.sentences;
+                 // console.log(sentences);
+                  $("#sen1").text("1."+sentences[0]);
+                  $("#sen2").text("2."+sentences[1]);
+                  $("#sen3").text("3."+sentences[2]);
+                  $("#sen4").text("4."+sentences[3]);
+                  $("#sen5").text("5."+sentences[4]);
+              }
+              });
+  		});
+  	})
+  </script>
+
+
+
