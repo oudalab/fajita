@@ -1,30 +1,47 @@
+<script src="js/bootstrap3-typeahead.js"></script>
+<script src="js/bootstrap-tagsinput.js"></script>
 <div class="panel panel-success">
 
-    <div class="panel-heading" id="fast-start">
+    <div class="panel-heading">
     <div class="row">
     <div class="col col-sm-6">
     <h4>Fast Arabic Actor Coding (PERSON ENTITY)</h4>
     </div>
     <div class="col col-sm-2">
-    <button class="btn btn-secondary btn-sm">Switch To Org Entity</button>
+    <button class="btn btn-danger btn-sm">Switch To Org Entity</button>
     </div>
 	</div>
-	<div class="row"></div>
-    	<button class="btn btn-danger btn-sm"> <i class="fa fa-clock-o" aria-hidden="true" stype="padding:2px"></i><strong> STATR</strong></button>
-    </div>
+	<!-- <div class="row"></div>
+    	
+    </div> -->
     <div class="panel-body">
-     <div id="fastactor" class="row well well-sm">
-              <div class="col col-sm-2" id="arabicentity"></div>
-              <div class="col col-sm-2">
-                  <input type="checkbox">Per Entity?</input>
+     <div id="fastactor" class="row well">
+              <div class="col col-sm-3" id="arabicentity"></div>
+              <div class="col col-sm-3">
+                  <input type="checkbox">Person Entity?</input>
               </div>
-              <div class="col col-sm-2">
+              <div class="col col-sm-3">
+                <button class="btn btn-primary btn-sm" id="fast-start" data-status="start"> <i class="fa fa-clock-o" aria-hidden="true" stype="padding:2px"></i><strong> STATR</strong></button>
+              </div>
+
+              <!-- div class="col col-sm-2">
               	  <button class="btn btn-primary btn-sm">Commit</button>
               </div>
               <div class="col col-sm-2">
               	  <button class="btn btn-danger btn-sm"><i class="fa fa-step-forward" aria-hidden="true" style="padding:2px"></i>Next</button>
-              </div>
+              </div> -->
       </div>
+      <div class="row well well-sm">
+		<input id="country" type="search" placeholder="Country..." data-provide="typeahead" />
+		</div>
+		
+		 <div class="row well well-sm">
+		<input id="firstrole" type="search" placeholder="Primary..." data-provide="typeahead" />
+		</div>
+		 <div class="row well well-sm">
+		<input id="secondrole" type="search" placeholder="Secondary..." data-provide="typeahead" />
+		</div>
+     
       <div class="row well well-sm">
  
       <strong>Related Sentences</strong>
@@ -40,10 +57,15 @@
       	</div>
      </div>
   </div>
+ 
   <script>
   	$(function(){
   		$("#fast-start").on("click",function(){
-  			  $.ajax({
+  			if($(this).data("status")==="start")
+  			{
+  				$(this).removeClass("btn-primary").addClass("btn-warning");
+  				$(this).text("commit");
+  				$.ajax({
                 method:"GET",
                 url:"/getperentity",
                 success:function(data)
@@ -61,7 +83,39 @@
                   $("#sen5").text("5."+sentences[4]);
               }
               });
+  			}	  
   		});
+   
+   $("#country").tagsinput({
+  typeahead: {
+    source: function(query) {
+      return $.get("/api/actorsnames");
+    }
+  }
+});
+   $("#firstrole").tagsinput({
+  typeahead: {
+    source: function(query) {
+      return $.get("/api/agentsnames");
+    }
+  }
+});
+
+   $("#secondrole").tagsinput({
+  typeahead: {
+    source: function(query) {
+      return $.get("/api/secondrolesnames");
+    }
+  }
+});
+
+
+
+
+
+
+
+
   	})
   </script>
 

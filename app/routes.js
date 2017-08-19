@@ -100,11 +100,34 @@ function getAllCountryActors(res) {
   });
 }
 
+function getAllCountryActorsNames(res) {
+  Actor.find(function(err, actors) {
+    if (err)
+      res.send(err);
+    rst=[]
+    actors.forEach(function(actor){
+      rst.push(actor.name);
+    })
+    res.json(rst);
+  });
+}
+
 function getAllAgentActors(res) {
   Agent.find(function(err, agents) {
     if (err)
       res.send(err)
     res.json(agents);
+  });
+}
+function getAllAgentActorsnames(res) {
+  Agent.find(function(err, agents) {
+    if (err)
+      res.send(err);
+    rst=[]
+    agents.forEach(function(agent){
+      rst.push(agent.name);
+    })
+    res.json(rst);
   });
 }
 
@@ -119,6 +142,17 @@ function getAllSecondroleActors(res) {
     if (err)
       res.send(err)
     res.json(secondrole);
+  });
+}
+function getAllSecondroleActorsnames(res) {
+ Secondrole.find(function(err, roles) {
+    if (err)
+      res.send(err);
+    rst=[]
+    roles.forEach(function(role){
+      rst.push(role.name);
+    })
+    res.json(rst);
   });
 }
 //only show the non-tagged sentences
@@ -167,12 +201,22 @@ module.exports = function(app) {
   app.get('/api/actors', function(req, res) {
     getAllCountryActors(res);
   })
+  app.get('/api/actorsnames',function(req,res){
+    getAllCountryActorsNames(res);
+  })
   app.get('/api/agents', function(req, res) {
     getAllAgentActors(res);
+  })
+  app.get('/api/agentsnames',function(req,res){
+    getAllAgentActorsnames(res);
   })
   app.get('/api/secondroles', function(req, res) {
     getAllSecondroleActors(res);
   })
+  app.get('/api/secondrolesnames', function(req, res) {
+    getAllSecondroleActorsnames(res);
+  })
+
   app.get('/api/sourcedictionary', function(req, res) {
       getSourceDictionary(res);
     });
