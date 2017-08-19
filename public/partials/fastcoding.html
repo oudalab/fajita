@@ -17,19 +17,19 @@
     <div class="panel-body">
      <div id="fastactor" class="row well">
               <div class="col col-sm-3" id="arabicentity"></div>
-              <div class="col col-sm-3">
+            <!--   <div class="col col-sm-2">
                   <input type="checkbox">Person Entity?</input>
+              </div> -->
+              <div class="col col-sm-2">
+                <button class="btn btn-primary btn-sm" id="fast-start" data-status="start"> <i class="fa fa-clock-o" aria-hidden="true" style="padding:2px"></i><strong>START</strong></button>
               </div>
-              <div class="col col-sm-3">
-                <button class="btn btn-primary btn-sm" id="fast-start" data-status="start"> <i class="fa fa-clock-o" aria-hidden="true" stype="padding:2px"></i><strong> STATR</strong></button>
+               <div class="col col-sm-2">
+                <button class="btn btn-success btn-sm" id="fast-commit" data-status="commit"> <i class="fa fa-floppy-o" aria-hidden="true" style="padding:2px"></i><strong>COMMIT</strong></button>
               </div>
 
-              <!-- div class="col col-sm-2">
-              	  <button class="btn btn-primary btn-sm">Commit</button>
-              </div>
               <div class="col col-sm-2">
-              	  <button class="btn btn-danger btn-sm"><i class="fa fa-step-forward" aria-hidden="true" style="padding:2px"></i>Next</button>
-              </div> -->
+              	  <button class="btn btn-danger btn-sm" id="fast-skip"><i class="fa fa-step-forward" aria-hidden="true" style="padding:2px"></i><strong>Skip</strong></button>
+              </div>
       </div>
       <div class="row well well-sm">
 		<input id="country" type="search" placeholder="Country..." data-provide="typeahead" />
@@ -60,30 +60,45 @@
  
   <script>
   	$(function(){
+  		var timespent=0;
+  		var start=0
+  		var loadtime=0;
+  		var loadstart=0;
   		$("#fast-start").on("click",function(){
-  			if($(this).data("status")==="start")
-  			{
-  				$(this).removeClass("btn-primary").addClass("btn-warning");
-  				$(this).text("commit");
+  			$(this).prop("disabled",true);
   				$.ajax({
                 method:"GET",
                 url:"/getperentity",
+                //url:"/api/actors",
                 success:function(data)
                 {
                 	//paser the data into dictionary , this needs to be called
                		var result = JSON.parse(data);
-                 //console.log(result.word);
                   $("#arabicentity").html(result.word);
                   var sentences=result.sentences;
                  // console.log(sentences);
                   $("#sen1").text("1."+sentences[0]);
                   $("#sen2").text("2."+sentences[1]);
-                  $("#sen3").text("3."+sentences[2]);
+                 /* $("#sen3").text("3."+sentences[2]);
                   $("#sen4").text("4."+sentences[3]);
-                  $("#sen5").text("5."+sentences[4]);
-              }
+                  $("#sen5").text("5."+sentences[4]);*/
+                  start = new Date();
+                  loadtime=new Date()-loadstart;
+                 // console.log(data);
+                  $("#fast-start").prop("disabled",false);
+              },
+               error: function (xhr, ajaxOptions, thrownError) {
+			        console.log(xhr.status);
+			        //alert(thrownError);
+			      }
               });
-  			}	  
+  			
+  		});
+
+  		$("#fast-commit").on("click",function(){
+
+  			timespent=new Date()-start;
+  			alert("time spend: "+timespent);
   		});
    
    $("#country").tagsinput({

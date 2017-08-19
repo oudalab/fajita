@@ -36,16 +36,46 @@ function getAllTaggingSentences(res){
   });
 }
 
+/*var randomnumber=Math.random();
+      var random = Math.floor(randomnumber * count);
+
+      Sentence.findOne({
+        "tagged": false,
+        "wholeSentence": {
+          $regex: r
+        }
+      }).limit(1).skip(random).exec(
+        function(err, result) {
+          if (result != null) {
+            res.json(result);
+          } else {
+            res.json({
+              'output': 'notfound'
+            });
+            console.log("find 0 sentence with this query");
+          }
+        }
+      )*/
+
 
 function getOneFastPerEntity(res){
-  FastPerEntity.find(function(err,result){
-    if(err)
+  var random=Math.floor(Math.random() * 100);
+  FastPerEntity.findOne({
+  }).limit(1).skip(random).exec(
+  function(err,result){
+    if(err){
+      console.log(err);
       res.send(err);
+    }
     else
     {
-      var sentenceids=result[0].sentenceids;
+      var sentenceids=result.sentenceids;
+      if(result.sentenceids.length<2)
+      {
+        res.send(JSON.stringify({"word":"none","sentences":"no sentence!"}))
+      }
       var wholeSentences=[];
-       for(var i=0;i<5;i++)
+       for(var i=0;i<2;i++)
        {
          Sentence.findOne({
             '_id':sentenceids[i]/*new ObjectId(sentenceId)*/
@@ -57,17 +87,18 @@ function getOneFastPerEntity(res){
                //console.log(wholeSentences.length);
                //alert("error happens since mongoose model mapping that yan suggested");
             }
-            if(wholeSentences.length==5)
+            if(wholeSentences.length==2)
             {
               //this need to be here if it is defined outside, res.send will not wait until that Sentence.findOne finished.
-              res.send(JSON.stringify({"word":result[0].word,"sentences":wholeSentences}));
+              res.send(JSON.stringify({"word":result.word,"sentences":wholeSentences}));
             }
          });
        }
     }
 
-  })
+  });
 }
+
 
 /*var myCallback = function(data) {
   console.log('got data: '+data);
