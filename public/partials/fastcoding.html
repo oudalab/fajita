@@ -8,7 +8,8 @@
     <h4>Fast Arabic Actor Coding (PERSON ENTITY)</h4>
     </div>
     <div class="col col-sm-2">
-    <button class="btn btn-primary btn-sm">Switch To Org Entity</button>
+    <!-- disbale this button for nwo -->
+    <button class="btn btn-primary btn-sm disbaled">Switch To Org Entity</button>
     </div>
 	</div>
 	<!-- <div class="row"></div>
@@ -16,10 +17,7 @@
     </div> -->
     <div class="panel-body">
      <div id="fastactor" class="row well">
-              <div class="col col-sm-3" id="arabicentity"></div>
-            <!--   <div class="col col-sm-2">
-                  <input type="checkbox">Person Entity?</input>
-              </div> -->
+              <div class="col col-sm-3" id="arabicentity" data-entityid=""></div>
               <div class="col col-sm-2">
                 <button class="btn btn-primary btn-sm" id="fast-start" data-status="start"> <i class="fa fa-clock-o" aria-hidden="true" style="padding:2px"></i><strong>START</strong></button>
               </div>
@@ -64,6 +62,53 @@
   		var start=0
   		var loadtime=0;
   		var loadstart=0;
+  		$("#fast-skip").on("click",function(){
+  				$.ajax({
+                method:"POST",
+                url:"/skipperentity",
+                data:{'entityid':$('#arabicentity').data("entityid")},
+                success:function(data)
+                {
+               	 var result = JSON.parse(data);
+                  $("#arabicentity").html(result.word);
+                  var sentences=result.sentences;
+                 // console.log(sentences);
+                  $("#sen1").text("1."+sentences[0]);            
+                  start = new Date();
+                 // loadtime=new Date()-loadstart;
+                  $("#fast-start").prop("disabled",false)
+              },
+               error: function (xhr, ajaxOptions, thrownError) {
+			        console.log(xhr.status);
+			        //alert(thrownError);
+			      }
+              });
+
+  		});
+  		$("#fast-commit").on("click",function(){
+  				$.ajax({
+                method:"POST",
+                url:"/commitperentity",
+                data:{'entityid':$('#arabicentity').data("entityid"),'timespend':new Date()-start},
+                success:function(data)
+                {
+                	console.log("time"+new Date()-start);
+               	 var result = JSON.parse(data);
+                  $("#arabicentity").html(result.word);
+                  var sentences=result.sentences;
+                 // console.log(sentences);
+                  $("#sen1").text("1."+sentences[0]);            
+                  start = new Date();
+                 // loadtime=new Date()-loadstart;
+                  $("#fast-start").prop("disabled",false)
+              },
+               error: function (xhr, ajaxOptions, thrownError) {
+			        console.log(xhr.status);
+			        //alert(thrownError);
+			      }
+              });
+
+  		});
   		$("#fast-start").on("click",function(){
   			$(this).prop("disabled",true);
   				$.ajax({
@@ -75,15 +120,16 @@
                 	//paser the data into dictionary , this needs to be called
                		var result = JSON.parse(data);
                   $("#arabicentity").html(result.word);
+                  $("#arabicentity").attr("data-entityid",result.entityid);
                   var sentences=result.sentences;
                  // console.log(sentences);
                   $("#sen1").text("1."+sentences[0]);
-                  $("#sen2").text("2."+sentences[1]);
+                  //$("#sen2").text("2."+sentences[1]);
                  /* $("#sen3").text("3."+sentences[2]);
                   $("#sen4").text("4."+sentences[3]);
                   $("#sen5").text("5."+sentences[4]);*/
                   start = new Date();
-                  loadtime=new Date()-loadstart;
+                  //loadtime=new Date()-loadstart;
                  // console.log(data);
                   $("#fast-start").prop("disabled",false);
               },
@@ -93,12 +139,6 @@
 			      }
               });
   			
-  		});
-
-  		$("#fast-commit").on("click",function(){
-
-  			timespent=new Date()-start;
-  			alert("time spend: "+timespent);
   		});
    
    $("#country").tagsinput({

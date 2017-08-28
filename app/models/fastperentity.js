@@ -11,10 +11,10 @@ module.exports = mongoose.model('fastperentity', {
 	},
 	status:{
 		type:String,"default":"none"
-		//default is 0
-		//"exist" means it is exist from the normal interface
-		//"skip" means it is skipped
-		//"done" means it is a person and it has been tagged
+		//default is 0,means no body touch it yet
+		//"exist" means it is exist from the normal interface--,
+		//"skip" means it is skipped--
+		//"done" means it is a person. and we have done tagging with the fast tagging interface--
 	},
 	person:{
 		type:Boolean,"default":false

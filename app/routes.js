@@ -35,32 +35,29 @@ function getAllTaggingSentences(res){
      res.send(JSON.stringify(taggingresult));
   });
 }
+/*  app.post('/updateVerbDictionary', function(req, res) {
+    VerbDictionary.findOneAndUpdate({
+      "_id": req.body.dicId
+    }, {
+      $set: {
+         "word":req.body.verbword,
+        "verbcode": req.body.verbcode,
+        "confidenceFlag":req.body.verbconfidence
 
-/*var randomnumber=Math.random();
-      var random = Math.floor(randomnumber * count);
+      }
+    }, function(err, dic) {
 
-      Sentence.findOne({
-        "tagged": false,
-        "wholeSentence": {
-          $regex: r
-        }
-      }).limit(1).skip(random).exec(
-        function(err, result) {
-          if (result != null) {
-            res.json(result);
-          } else {
-            res.json({
-              'output': 'notfound'
-            });
-            console.log("find 0 sentence with this query");
-          }
-        }
-      )*/
+      console.log(err);
+    });
+    res.end();
+  });
+*/
 
 
 function getOneFastPerEntity(res){
   var random=Math.floor(Math.random() * 100);
   FastPerEntity.findOne({
+    status:"0"
   }).limit(1).skip(random).exec(
   function(err,result){
     if(err){
@@ -69,13 +66,14 @@ function getOneFastPerEntity(res){
     }
     else
     {
+      var noToShow=1;
       var sentenceids=result.sentenceids;
-      if(result.sentenceids.length<2)
+      if(result.sentenceids.length<noToShow)
       {
         res.send(JSON.stringify({"word":"none","sentences":"no sentence!"}))
       }
       var wholeSentences=[];
-       for(var i=0;i<2;i++)
+       for(var i=0;i<noToShow;i++)
        {
          Sentence.findOne({
             '_id':sentenceids[i]/*new ObjectId(sentenceId)*/
@@ -87,10 +85,10 @@ function getOneFastPerEntity(res){
                //console.log(wholeSentences.length);
                //alert("error happens since mongoose model mapping that yan suggested");
             }
-            if(wholeSentences.length==2)
+            if(wholeSentences.length==noToShow)
             {
               //this need to be here if it is defined outside, res.send will not wait until that Sentence.findOne finished.
-              res.send(JSON.stringify({"word":result.word,"sentences":wholeSentences}));
+              res.send(JSON.stringify({"word":result.word,"sentences":wholeSentences,"entityid":result._id}));
             }
          });
        }
@@ -223,6 +221,46 @@ function test(res) {
 
 module.exports = function(app) {
 
+  app.post('/commitperentity',function(req,res){
+      FastPerEntity.findOneAndUpdate({
+        "_id":req.body.entityid
+    },{
+      $set:{
+        "status":"done",
+        "taggingtime":Date.now(),
+        "timespend":req.body.timespend,
+        "person":true
+      }
+    },function(err,rst)
+    {
+      console.log(req.body.timespend)
+      if(err)
+      {
+       console.log(err); 
+      }
+      getOneFastPerEntity(res);
+    });
+  });
+
+  //to skip the person entity
+  app.post("/skipperentity",function(req,res){
+  FastPerEntity.findOneAndUpdate({
+      "_id":req.body.entityid
+  },{
+    $set:{
+      "status":"skip",
+      "taggingtime":Date.now()
+    }
+  },function(err,rst)
+  {
+    if(err)
+    {
+     console.log(err); 
+    }
+    getOneFastPerEntity(res);
+  });
+})
+
   // api ---------------------------------------------------------------------
   app.get('/api/verbs', function(req, res) {
     getAllVerbs(res);
@@ -305,6 +343,7 @@ module.exports = function(app) {
       User.find({
       'username': req.body.username
     }, function(err, data) {
+      //console.log(data);
       if(data[0]!=null)
       {
        res.json({"userid":data[0].id});
@@ -882,6 +921,7 @@ module.exports = function(app) {
     });
 
   });
+
 
   app.post('/findDocumentsWithTopic',function(req,res){
      var topicno=parseInt(req.body.topic)-1
