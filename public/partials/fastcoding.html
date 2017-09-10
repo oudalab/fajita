@@ -155,18 +155,20 @@
                 {
                 	//paser the data into dictionary , this needs to be called
                		var result = JSON.parse(data);
+               		var countleft=result.countleft;
                   $("#arabicentity").html(result.word);
                   $("#arabicentity").attr("data-entityid",result.entityid);
                   var sentences=result.sentences;
                  // console.log(sentences);
                   $("#sen1").text("1."+sentences[0]);
-                  //$("#sen2").text("2."+sentences[1]);
-                 /* $("#sen3").text("3."+sentences[2]);
+                  $("#sen2").text("2."+sentences[1]);
+                  $("#sen3").text("3."+sentences[2]);
                   $("#sen4").text("4."+sentences[3]);
-                  $("#sen5").text("5."+sentences[4]);*/
+                  $("#sen5").text("5."+sentences[4]);
                   start = new Date();
                   //loadtime=new Date()-loadstart;
                  // console.log(data);
+                 $("#totalleft").text(countleft);
                   $("#fast-start").prop("disabled",false);
               },
                error: function (xhr, ajaxOptions, thrownError) {

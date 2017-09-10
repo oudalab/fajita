@@ -66,7 +66,7 @@ function getOneFastPerEntity(res){
     }
     else
     {
-      var noToShow=1;
+      var noToShow=5;
       var sentenceids=result.sentenceids;
       if(result.sentenceids.length<noToShow)
       {
