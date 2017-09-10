@@ -26,6 +26,9 @@ module.exports = mongoose.model('fastperentity', {
 	},
 	timespend:{
 		type:Number
+	},
+	userid:{		
+		type:String
 	}
 	/*this is a database first model, need to define the collection name this model mapped to here*/
 },"fast_per_entities");

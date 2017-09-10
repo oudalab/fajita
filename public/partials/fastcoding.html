@@ -1,5 +1,6 @@
 <script src="js/bootstrap3-typeahead.js"></script>
 <script src="js/bootstrap-tagsinput.js"></script>
+<script src="js/jquery-ui.min.js"></script>
 <div class="panel panel-success">
 
     <div class="panel-heading">
@@ -9,7 +10,11 @@
     </div>
     <div class="col col-sm-2">
     <!-- disbale this button for nwo -->
-    <button class="btn btn-primary btn-sm disbaled">Switch To Org Entity</button>
+    <button class="btn btn-primary btn-sm disabled">Switch To Org Entity</button>
+    </div>
+    <div class="col col-sm-2">
+    <!-- disbale this button for nwo -->
+     Total Left:<span id="totalleft">0</span>
     </div>
 	</div>
 	<!-- <div class="row"></div>
@@ -30,14 +35,19 @@
               </div>
       </div>
       <div class="row well well-sm">
-		<input id="country" type="search" placeholder="Country..." data-provide="typeahead" />
-		</div>
-		
+		<input id="country" type="search" placeholder="Country..." data-provide="typeahead"/>
+		</div>		
 		 <div class="row well well-sm">
-		<input id="firstrole" type="search" placeholder="Primary..." data-provide="typeahead" />
+		<input id="firstrole" type="search" placeholder="Primary..." data-provide="typeahead"/>
 		</div>
 		 <div class="row well well-sm">
-		<input id="secondrole" type="search" placeholder="Secondary..." data-provide="typeahead" />
+		<input id="secondrole" type="search" placeholder="Secondary..." data-provide="typeahead"/>
+		</div>
+		<div class="row well well-sm">
+		<p>Start Date: <input type="text" id="datepicker1"></p>
+		</div>
+		<div class="row well well-sm">
+		<p>End Date: <input type="text" id="datepicker2"></p>
 		</div>
      
       <div class="row well well-sm">
@@ -55,9 +65,23 @@
       	</div>
      </div>
   </div>
+
+
  
   <script>
   	$(function(){
+  		$( "#datepicker1" ).datepicker({
+  			changeMonth: true,
+            changeYear: true,
+			yearRange: '1900:'+(new Date).getFullYear(),
+			dateFormat: 'yy-mm-dd'               
+  		});
+  		$( "#datepicker2" ).datepicker({
+  			changeMonth: true,
+            changeYear: true,
+            yearRange: '1900:'+(new Date).getFullYear(),
+            dateFormat: 'yy-mm-dd'     
+  		});
   		var timespent=0;
   		var start=0
   		var loadtime=0;
@@ -66,17 +90,20 @@
   				$.ajax({
                 method:"POST",
                 url:"/skipperentity",
-                data:{'entityid':$('#arabicentity').data("entityid")},
+                data:{'entityid':$('#arabicentity').attr("data-entityid")},
                 success:function(data)
                 {
                	 var result = JSON.parse(data);
                   $("#arabicentity").html(result.word);
+                  $("#arabicentity").attr("data-entityid",result.entityid);
                   var sentences=result.sentences;
+                  var countleft=result.countleft;
                  // console.log(sentences);
                   $("#sen1").text("1."+sentences[0]);            
                   start = new Date();
                  // loadtime=new Date()-loadstart;
                   $("#fast-start").prop("disabled",false)
+                  $("#totalleft").text(countleft);
               },
                error: function (xhr, ajaxOptions, thrownError) {
 			        console.log(xhr.status);
@@ -89,18 +116,27 @@
   				$.ajax({
                 method:"POST",
                 url:"/commitperentity",
-                data:{'entityid':$('#arabicentity').data("entityid"),'timespend':new Date()-start},
+                data:{'entityid':$('#arabicentity').attr("data-entityid"),'timespend':(new Date()-start)/1000,"country":$("#country").val(),"firstrole":$("#firstrole").val(),"secondrole":$("#secondrole").val(),"userid":localStorage["currentid"],"startdate":$("#datepicker1").val(),"enddate":$("#datepicker2").val(),"word":$("#arabicentity").text()},
                 success:function(data)
                 {
                 	console.log("time"+new Date()-start);
                	 var result = JSON.parse(data);
+               	 var countleft=result.countleft;
                   $("#arabicentity").html(result.word);
+                  $("#arabicentity").attr("data-entityid",result.entityid);
                   var sentences=result.sentences;
                  // console.log(sentences);
                   $("#sen1").text("1."+sentences[0]);            
                   start = new Date();
                  // loadtime=new Date()-loadstart;
                   $("#fast-start").prop("disabled",false)
+                  //get rid of all the input before doing the next one.
+                  $("input").val("");
+                  $(".label-info").remove();
+                  //update teh count
+                  $("#totalleft").text(countleft);
+
+
               },
                error: function (xhr, ajaxOptions, thrownError) {
 			        console.log(xhr.status);
@@ -163,14 +199,6 @@
     }
   }
 });
-
-
-
-
-
-
-
-
   	})
   </script>
 

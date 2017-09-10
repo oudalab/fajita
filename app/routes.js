@@ -88,7 +88,16 @@ function getOneFastPerEntity(res){
             if(wholeSentences.length==noToShow)
             {
               //this need to be here if it is defined outside, res.send will not wait until that Sentence.findOne finished.
-              res.send(JSON.stringify({"word":result.word,"sentences":wholeSentences,"entityid":result._id}));
+              //console.log("ready to show: "+count);
+                    var countleft=0;
+                    FastPerEntity.count({
+                    "status": "0"      
+                  }).exec(function(err, count) {
+                    countleft=count;
+                    console.log("count left yes yes: "+countleft);
+                    res.send(JSON.stringify({"word":result.word,"sentences":wholeSentences,"entityid":result._id,"countleft":countleft}));
+                  })
+              
             }
          });
        }
@@ -96,6 +105,8 @@ function getOneFastPerEntity(res){
 
   });
 }
+
+
 
 
 /*var myCallback = function(data) {
@@ -229,11 +240,57 @@ module.exports = function(app) {
         "status":"done",
         "taggingtime":Date.now(),
         "timespend":req.body.timespend,
-        "person":true
+        "person":true,
+        "userid":req.body.userid
       }
     },function(err,rst)
     {
-      console.log(req.body.timespend)
+      var country=req.body.country===""?"":req.body.country.split(":")[0];
+      var firstrole=req.body.firstrole===""?"":req.body.firstrole.split(":")[0];
+      var secondrole=req.body.secondrole===""?"":req.body.secondrole.split(":")[0];
+      var userid=req.body.userid;
+      var startdate=req.body.startdate;
+      if(req.body.startdate==="")
+      {
+        startdate="1800-01-01";
+      }
+      else if(req.body.startdate==="000")
+      {
+        startdate="2200-01-01";
+      }
+      var enddate=req.body.enddate;
+      if(req.body.enddate==="")
+      {
+        enddate="1800-01-01";
+      }
+      else if(req.body.enddate==="000")
+      {
+        enddate="2200-01-01";
+      }
+      var word=req.body.word;
+      SourceDictionary.create({
+      sentenceId: "",
+      word:word,
+      countryCode:country,
+      firstRoleCode:firstrole,
+      secondRoleCode:secondrole,
+      confidenceFlag:true,
+      userName:"fastcoding",
+      userId:userid,
+      dateStart:startdate,
+      dateEnd:enddate
+    }, function(err, data) {
+      if (err)
+        console.error(err);
+    });
+
+      console.log(req.body.timespend); 
+      console.log(country);
+      console.log(firstrole);
+      console.log(secondrole);
+      console.log(userid);
+      console.log(startdate);
+      console.log(enddate);
       if(err)
       {
        console.log(err); 
