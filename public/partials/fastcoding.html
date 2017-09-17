@@ -34,7 +34,7 @@
               	  <button class="btn btn-danger btn-sm" id="fast-skip"><i class="fa fa-step-forward" aria-hidden="true" style="padding:2px"></i><strong>Skip</strong></button>
               </div>
       </div>
-      <div class="row well well-sm">
+        <div class="row well well-sm special">
 		<input id="country" type="search" placeholder="Country..." data-provide="typeahead"/>
 		</div>		
 		 <div class="row well well-sm">
@@ -99,9 +99,13 @@
                   var sentences=result.sentences;
                   var countleft=result.countleft;
                  // console.log(sentences);
-                  $("#sen1").text("1."+sentences[0]);            
+                  $("#sen1").text("1."+sentences[0]);  
+                   $("#sen2").text("2."+sentences[1]);
+                  $("#sen3").text("3."+sentences[2]);
+                  $("#sen4").text("4."+sentences[3]);
+                  $("#sen5").text("5."+sentences[4]);          
                   start = new Date();
-                 // loadtime=new Date()-loadstart;
+                 
                   $("#fast-start").prop("disabled",false)
                   $("#totalleft").text(countleft);
               },
@@ -116,7 +120,9 @@
   				$.ajax({
                 method:"POST",
                 url:"/commitperentity",
-                data:{'entityid':$('#arabicentity').attr("data-entityid"),'timespend':(new Date()-start)/1000,"country":$("#country").val(),"firstrole":$("#firstrole").val(),"secondrole":$("#secondrole").val(),"userid":localStorage["currentid"],"startdate":$("#datepicker1").val(),"enddate":$("#datepicker2").val(),"word":$("#arabicentity").text()},
+                //actually I am not sure why the country needs input needs to be handle specially otehrwise it will not have the value, if you continously have
+                //two same country as input.
+                data:{'entityid':$('#arabicentity').attr("data-entityid"),'timespend':(new Date()-start)/1000,"country":$($(".special").find("input")[0]).text(),"firstrole":$("#firstrole").val(),"secondrole":$("#secondrole").val(),"userid":localStorage["currentid"],"username":localStorage["currentuser"],"startdate":$("#datepicker1").val(),"enddate":$("#datepicker2").val(),"word":$("#arabicentity").text()},
                 success:function(data)
                 {
                 	console.log("time"+new Date()-start);
@@ -126,7 +132,11 @@
                   $("#arabicentity").attr("data-entityid",result.entityid);
                   var sentences=result.sentences;
                  // console.log(sentences);
-                  $("#sen1").text("1."+sentences[0]);            
+                  $("#sen1").text("1."+sentences[0]);     
+                   $("#sen2").text("2."+sentences[1]);
+                  $("#sen3").text("3."+sentences[2]);
+                  $("#sen4").text("4."+sentences[3]);
+                  $("#sen5").text("5."+sentences[4]);       
                   start = new Date();
                  // loadtime=new Date()-loadstart;
                   $("#fast-start").prop("disabled",false)

@@ -241,7 +241,7 @@ module.exports = function(app) {
         "taggingtime":Date.now(),
         "timespend":req.body.timespend,
         "person":true,
-        "userid":req.body.userid
+        "userid":req.body.userid        
       }
     },function(err,rst)
     {
@@ -250,6 +250,7 @@ module.exports = function(app) {
       var secondrole=req.body.secondrole===""?"":req.body.secondrole.split(":")[0];
       var userid=req.body.userid;
       var startdate=req.body.startdate;
+      var username=req.body.username;
       if(req.body.startdate==="")
       {
         startdate="1800-01-01";
@@ -274,8 +275,8 @@ module.exports = function(app) {
       countryCode:country,
       firstRoleCode:firstrole,
       secondRoleCode:secondrole,
-      confidenceFlag:true,
-      userName:"fastcoding",
+      confidenceFlag:false,
+      userName:username+"(fastcoding)",
       userId:userid,
       dateStart:startdate,
       dateEnd:enddate
