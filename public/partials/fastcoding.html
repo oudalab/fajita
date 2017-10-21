@@ -22,7 +22,7 @@
     </div> -->
     <div class="panel-body">
      <div id="fastactor" class="row well">
-              <div class="col col-sm-3" id="arabicentity" data-entityid=""></div>
+              <input class="col col-sm-3" id="arabicentity" data-entityid=""></input>
               <div class="col col-sm-2">
                 <button class="btn btn-primary btn-sm" id="fast-start" data-status="start"> <i class="fa fa-clock-o" aria-hidden="true" style="padding:2px"></i><strong>START</strong></button>
               </div>
@@ -94,7 +94,7 @@
                 success:function(data)
                 {
                	 var result = JSON.parse(data);
-                  $("#arabicentity").html(result.word);
+                  $("#arabicentity").val(result.word);
                   $("#arabicentity").attr("data-entityid",result.entityid);
                   var sentences=result.sentences;
                   var countleft=result.countleft;
@@ -117,18 +117,19 @@
 
   		});
   		$("#fast-commit").on("click",function(){
+  			    var userid=localStorage.getItem("currentid");
   				$.ajax({
                 method:"POST",
                 url:"/commitperentity",
                 //actually I am not sure why the country needs input needs to be handle specially otehrwise it will not have the value, if you continously have
                 //two same country as input.
-                data:{'entityid':$('#arabicentity').attr("data-entityid"),'timespend':(new Date()-start)/1000,"country":$($(".special").find("input")[0]).text(),"firstrole":$("#firstrole").val(),"secondrole":$("#secondrole").val(),"userid":localStorage["currentid"],"username":localStorage["currentuser"],"startdate":$("#datepicker1").val(),"enddate":$("#datepicker2").val(),"word":$("#arabicentity").text()},
+                data:{'entityid':$('#arabicentity').attr("data-entityid"),'timespend':(new Date()-start)/1000,"country":$($(".special").find("input")[0]).text(),"firstrole":$("#firstrole").val(),"secondrole":$("#secondrole").val(),"userid":userid,"username":localStorage["currentuser"],"startdate":$("#datepicker1").val(),"enddate":$("#datepicker2").val(),"word":$("#arabicentity").val()},
                 success:function(data)
                 {
                 	console.log("time"+new Date()-start);
                	 var result = JSON.parse(data);
                	 var countleft=result.countleft;
-                  $("#arabicentity").html(result.word);
+                  $("#arabicentity").val(result.word);
                   $("#arabicentity").attr("data-entityid",result.entityid);
                   var sentences=result.sentences;
                  // console.log(sentences);
@@ -166,7 +167,7 @@
                 	//paser the data into dictionary , this needs to be called
                		var result = JSON.parse(data);
                		var countleft=result.countleft;
-                  $("#arabicentity").html(result.word);
+                  $("#arabicentity").val(result.word);
                   $("#arabicentity").attr("data-entityid",result.entityid);
                   var sentences=result.sentences;
                  // console.log(sentences);
