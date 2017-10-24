@@ -1,11 +1,12 @@
 
-import pymongo import MongoClient
+from pymongo import MongoClient
 import pymongo
-import pickle
 import logging
 import time
 import logging.config
+import json
 
+start_time = time.time()
 client1 =MongoClient('mongodb://user:pswd@portland.cs.ou.edu:port',maxPoolSize=5)
 db1 = client1['lexisnexis']
 largestory = db1.disk_stories_full
@@ -14,6 +15,7 @@ dic = {}
 count = 0
 dic["errorout"]=0;
 dic["goodrecord"]=0;
+
 
 cur = largestory.find()
 
@@ -29,8 +31,8 @@ while(count<=109672706):
                                                                             print (str(count), 'finished processing')
                                                                                         lan = i['language']
                                                                                                     if not lan in dic:
-                                                                                                                        dic[lan] = 0
-                                                                                                                                    dic[lan] = dic[lan] + 1
+                                                                                                                        dic[lan] = []
+                                                                                                                                    dic[lan].append(i["doc_id"])
                                                                                                                                                 dic["goodrecord"]=dic["goodrecord"]+1
                                                                                                                                                         except:
                                                                                                                                                                         print ('record has problems')
@@ -41,6 +43,7 @@ while(count<=109672706):
                                                                                                                                                                                                                             time.sleep(pow(2, sleep))
                                                                                                                                                                                                                                         sleep += 1
                                                                                                                                                                                                                                                     logging.info("retrying...")
+                                                                                                                                                                                                                                                    dic["timetaken"]=time.time() - start_time
+                                                                                                                                                                                                                                                    with open('language_analysis.json', 'w') as fp:
+                                                                                                                                                                                                                                                            json.dump(dic, fp)
 
-                                                                                                                                                                                                                                                    with open('language_count.pickle', 'wb') as file1:
-                                                                                                                                                                                                                                                            pickle.dump(dic, file1, protocol=pickle.HIGHEST_PROTOCOL)
