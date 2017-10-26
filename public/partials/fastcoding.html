@@ -87,10 +87,11 @@
   		var loadtime=0;
   		var loadstart=0;
   		$("#fast-skip").on("click",function(){
+  			var userid=localStorage.getItem("currentid");
   				$.ajax({
                 method:"POST",
                 url:"/skipperentity",
-                data:{'entityid':$('#arabicentity').attr("data-entityid")},
+                data:{'entityid':$('#arabicentity').attr("data-entityid"),'userid':userid},
                 success:function(data)
                 {
                	 var result = JSON.parse(data);

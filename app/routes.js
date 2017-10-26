@@ -308,7 +308,7 @@ module.exports = function(app) {
     $set:{
       "status":"skip",
       "taggingtime":Date.now(),
-      "userid":userid
+      "userid":req.body.userid
     }
   },function(err,rst)
   {
