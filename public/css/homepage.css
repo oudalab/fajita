@@ -29,6 +29,25 @@
 
 }
 
+#sourceWord
+{
+	direction:rtl;
+}
+/*for the role summany*/
+.sourceWord
+{
+	direction:rtl;
+}
+.verbword
+{
+	direction:rtl;
+}
+
+#verbword
+{
+	direction:rtl;
+}
+
 .ui-tabs-anchor
 {
 	height:20px;
