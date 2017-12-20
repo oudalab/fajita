@@ -1,0 +1,33 @@
+ <div class="panel panel-success">
+
+    <div class="panel-heading">
+      Click the start button get start
+    <div>
+ <div class="panel-body">
+ <div class="row"><button class="btn btn-primary btn-sm" id="wiki-start" data-status="start"> <i class="fa fa-clock-o" aria-hidden="true" style="padding:2px"></i>
+ <strong>START</strong></button>
+</div>
+
+<div id="content">
+
+</div>
+</div>
+</div>
+ 
+<script type="text/javascript">
+	$(function(){
+		$("#wiki-start").on("click",function(){
+			  $.ajax({
+                method:"GET",
+                url:"/wikitemplate",
+                success:function(html)
+                {
+                 
+                  $("#content").html(html);
+                }
+              });
+
+		});
+
+	})  	
+</script>

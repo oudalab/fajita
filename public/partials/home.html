@@ -39,6 +39,9 @@
                <button class="btn btn-primary" id="fast-btn" style="width:100%">Take me to fast actor coding</button>
               </div>
               <div class="row">
+               <button class="btn btn-primary" id="wiki-btn" style="width:100%">Take me to wiki coding</button>
+              </div>
+              <div class="row">
                <div class="col-md-5">
                <button type="button" class="btn btn-success" style="padding:2px;width:100px;float:left;margin:10px" ng-click="signmeOut()">Sign Out</button>
                 </div>
@@ -478,6 +481,19 @@
               $.ajax({
                 method:"GET",
                 url:"/fastcoding",
+                success:function(html)
+                {
+                 
+                  $(".appcontainer").html(html);
+                }
+              });
+        });
+        $("#wiki-btn").on("click",function(){
+              //$(".appcontainer").html("hello world!");
+              //console.log("fast coding clicked");
+              $.ajax({
+                method:"GET",
+                url:"/wikicoding",
                 success:function(html)
                 {
                  

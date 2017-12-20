@@ -1083,6 +1083,15 @@ module.exports = function(app) {
        //res.render('./tryme.jade', {param1: 'xxx', param2: 'yyy'} );
   });
 
+  app.get('/wikicoding',function(req,res){
+      res.sendfile('./public/partials/wikicoding.html');
+
+  });
+    app.get('/wikitemplate',function(req,res){
+      res.sendfile('./public/partials/wikitemplate.html');
+
+  });
+
 
   // application -------------------------------------------------------------
   app.get('*', function(req, res) {
