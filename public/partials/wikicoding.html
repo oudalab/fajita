@@ -1,3 +1,4 @@
+ <link rel="stylesheet" href="css/homepage.css">
  <div class="panel panel-success">
 
     <div class="panel-heading">
@@ -7,9 +8,19 @@
  <div class="row"><button class="btn btn-primary btn-sm" id="wiki-start" data-status="start"> <i class="fa fa-clock-o" aria-hidden="true" style="padding:2px"></i>
  <strong>START</strong></button>
 </div>
-
 <div id="content">
-
+<!-- <div class="row">
+  <div class="col col-6" id="card1"></div>
+  <div class="col col-6" id="card2"></div>
+</div>
+<div class="row">
+  <div class="col col-6" id="card3"></div>
+  <div class="col col-6" id="card4"></div>
+</div>
+<div class="row">
+  <div class="col col-6" id="card5"></div>
+  <div class="col col-6" id="card6"></div>
+</div> -->
 </div>
 </div>
 </div>
@@ -17,7 +28,7 @@
 <script type="text/javascript">
 	$(function(){
 		$("#wiki-start").on("click",function(){
-			  $.ajax({
+			  /*$.ajax({
                 method:"GET",
                 url:"/wikitemplate",
                 success:function(html)
@@ -25,9 +36,52 @@
                  
                   $("#content").html(html);
                 }
+              });*/
+        //now query the wiki object and see what is going to happen.
+        var numberOfRole=0;
+        $.ajax({
+                method:"GET",
+                url:"/wikirolecount",
+                success:function(data)
+                {
+             /*     var role=data[0].wiki_roles[0].en[0];
+                 //wiki roles stored as en as the key,the ar[0] is to get the object from the returned object,then start to accessing its property.
+                 console.log(role.title);
+                 if(role.start_date.date)
+                 {
+                  console.log(new Date(role.start_date.date).toUTCString());
+                 }
+                 if(role.end_date.date)
+                 {
+                  console.log(new Date(role.end_date.date).toUTCString());
+                 }   */              
+                  //$("#card1").html(data);
+                  /****this will give you number of roles for this wiki entities**/
+                  numberOfRole=data[0].wiki_roles[0].en.length;
+                  console.log("number of wiki roles for this wiki entity "+numberOfRole);                 
+                  //ok now need to make multiple ajax call based on how many roles there are. each ajax call will load in a card
+                  for(i=1;i<=numberOfRole;i++)
+                  {
+                    console.log(i);
+                    var privatei=i;
+                    $.ajax({
+                      method:"GET",
+                      url:"/wikiloadcard",
+                      success:function(data)
+                      {
+                        //this appened is going to append a card to each role this person has.
+                        $("#content").append(data);
+                      }
+                    });
+                  }
+                  //$("card2").html("hello world");
+                }
               });
 
+
+
 		});
+
 
 	})  	
 </script>

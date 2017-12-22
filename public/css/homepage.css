@@ -48,6 +48,13 @@
 	direction:rtl;
 }
 
+.wikicard
+{
+	width:50rem;
+	background-color:lightgoldenrodyellow;
+	margin-top:20px;
+}
+
 .ui-tabs-anchor
 {
 	height:20px;

@@ -7,6 +7,7 @@ var VerbDictionary = require('./models/verbDictionary');
 var User = require('./models/user');
 var Sentence = require('./models/sentence');
 var SentenceTaggingResult = require('./models/sentenceTaggingResult');
+var WikiEntity=require('./models/wikientity');
 var Documentswithtopic=require('./models/documentswithtopic');
 var FastPerEntity=require('./models/fastperentity');
 var mongoose = require('mongoose');
@@ -1071,7 +1072,24 @@ module.exports = function(app) {
     });
 
   });
-
+  
+  app.get('/wikirolecount',function(req,res){
+     WikiEntity.find({},function(err,data){
+       res.json(data);
+       res.end();
+     });
+    /* res.render('./wikitemplate.jade', {
+        
+      });*/
+  })
+  app.get('/wikiloadcard',function(req,res){
+/*     WikiEntity.find({},function(err,data){
+       res.json(data);
+       res.end();
+     });*/
+     res.render('./wikitemplate.jade', {        
+      });
+  })
   //this is for loop through the sentence
   app.get('/sentences', function(req, res) {
 
