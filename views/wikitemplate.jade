@@ -1,10 +1,70 @@
 div(class="card wikicard") 
   div(class="card-body") 
-    div(class="card-title" style="font-weight:bold") First & Last name
-    div(class="card-subtitle mb-2 text-muted" style="font-weight:bold") USA President
+    div(class="card-title" style="font-weight:bold") #{wikirole.name}
+      i(class="fa fa-check-circle-o aftercommit" aria-hidden="true" style="display:none;margin-left:2px;")
+    div(class="card-subtitle mb-2 text-muted" style="font-weight:bold") Role: #{wikirole.title}
     div(class="list-group list-group-flush")
-      li(class="list-group-item wiki-country") Country
-      li(class="list-group-item wiki-primary") Primary
-      li(class="list-group-item wiki-secondary") Secondary
-      li(class="list-group-item wiki-daterange") Date Range
-      li(class="list-group-item wiki-link") Wiki Link
+      li(class="list-group-item wiki-country")
+        input(class="input-country" type="search" placeholder="Country..." data-provide="typeahead")
+      li(class="list-group-item wiki-primary")
+        input(class="input-primary" type="search" placeholder="Primary..." data-provide="typeahead")
+      li(class="list-group-item wiki-secondary")
+        input(class="input-secondary" type="search" placeholder="Secondary..." data-provide="typeahead")
+      li(class="list-group-item wiki-datestart")
+        div(class="row")
+          div(class="col col-md-3") Date Start #{wikirole.start_date} 
+          div(class="col col-md-3")
+            input(class="wikidatepicker wikistartdate" type="text")        
+      li(class="list-group-item wiki-dateend")
+        div(class="row")
+          div(class="col col-md-3") Date End   #{wikirole.end_date} 
+          div(class="col col-md-3")
+            input(class="wikidatepicker wikienddate" type="text")        
+    div(class="row container") 
+      div(class="col col-md-3")
+        div(class="btn btn-success wiki-commit" style="margin-right:5px;margin-bottom:5px") COMMIT
+        a(href="#{wikirole.link}") wiki link          
+script.
+  $(function(){
+    $(".wiki-commit").on("click",function(){
+       var card=$(this).closest(".card");
+       card.css("background-color","lavender");
+       card.find(".aftercommit").show();
+       $(this).attr("disabled","diabled");
+
+    });
+
+    $(".wikidatepicker" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1900:'+(new Date).getFullYear(),
+        dateFormat: 'yy-mm-dd'               
+      });
+
+    $(".input-country").tagsinput({
+    typeahead: {
+      source: function(query) {
+        return $.get("/api/actorsnames");
+      }
+    }
+    });
+
+       $(".input-primary").tagsinput({
+        typeahead: {
+          source: function(query) {
+            return $.get("/api/agentsnames");
+          }
+        }
+      });
+
+   $(".input-secondary").tagsinput({
+      typeahead: {
+        source: function(query) {
+          return $.get("/api/secondrolesnames");
+        }
+      }
+    });
+
+
+  })
+  

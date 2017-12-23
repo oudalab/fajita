@@ -1082,13 +1082,44 @@ module.exports = function(app) {
         
       });*/
   })
-  app.get('/wikiloadcard',function(req,res){
+  app.post('/wikiloadcard',function(req,res){
 /*     WikiEntity.find({},function(err,data){
        res.json(data);
        res.end();
      });*/
-     res.render('./wikitemplate.jade', {        
+
+     /*res.render('./wikitemplate.jade', {        
+      });*/
+      var para=req.body.para;
+      /*console.log(para);
+      res.json(para);
+      res.end();
+      */
+      var model;
+      WikiEntity.find({},function(err,data){
+       //res.json(data);
+       //res.end();
+
+       model=data[0].wiki_roles[0].en[para];
+       if(model["start_date"])
+       {
+       model["start_date"]="("+new Date(model["start_date"].date).toISOString().split('T')[0]+")"; 
+       }
+       if(model["end_date"])
+       {
+       model["end_date"]="("+new Date(model["end_date"].date).toISOString().split('T')[0]+")"; 
+       }
+
+       
+       //set the name here
+      // model["en_name"]=data[0].wiki_roles[0].en_name;
+
+       res.render('./wikitemplate.jade', {wikirole:model     
       });
+       //console.log(model);
+       //res.json(data);
+       //res.end();
+     });
   })
   //this is for loop through the sentence
   app.get('/sentences', function(req, res) {
