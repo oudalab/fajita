@@ -1,4 +1,4 @@
-div(class="card wikicard") 
+div(class="card wikicard" data-entityid="#{wikirole.entityid}" data-rolerank="#{wikirole.rolerank}") 
   div(class="card-body") 
     div(class="card-title" style="font-weight:bold") #{wikirole.name}
       i(class="fa fa-check-circle-o aftercommit" aria-hidden="true" style="display:none;margin-left:2px;")
@@ -14,27 +14,31 @@ div(class="card wikicard")
         div(class="row")
           div(class="col col-md-3") Date Start #{wikirole.start_date} 
           div(class="col col-md-3")
-            input(class="wikidatepicker wikistartdate" type="text")        
+            input(class="wikistartdate" type="text")        
       li(class="list-group-item wiki-dateend")
         div(class="row")
           div(class="col col-md-3") Date End   #{wikirole.end_date} 
           div(class="col col-md-3")
-            input(class="wikidatepicker wikienddate" type="text")        
+            input(class="wikienddate" type="text")        
     div(class="row container") 
       div(class="col col-md-3")
-        div(class="btn btn-success wiki-commit" style="margin-right:5px;margin-bottom:5px") COMMIT
+        div(class="btn btn-success wiki-commit" style="margin-right:5px;margin-bottom:5px" data-rolerank="#{wikirole.rolerank}") COMMIT
         a(href="#{wikirole.link}") wiki link          
 script.
   $(function(){
-    $(".wiki-commit").on("click",function(){
+    $(".wiki-commit1").on("click",function(){
        var card=$(this).closest(".card");
-       card.css("background-color","lavender");
-       card.find(".aftercommit").show();
-       $(this).attr("disabled","diabled");
+     
 
     });
 
-    $(".wikidatepicker" ).datepicker({
+    $(".wikistartdate" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1900:'+(new Date).getFullYear(),
+        dateFormat: 'yy-mm-dd'               
+      });
+    $(".wikienddate" ).datepicker({
         changeMonth: true,
         changeYear: true,
         yearRange: '1900:'+(new Date).getFullYear(),
@@ -64,6 +68,32 @@ script.
         }
       }
     });
+    //since all the card will be called commit, so we need to check the rank, if the button on a rank that is not the current rank, then don't do anything
+    //need the off here since it will be defined multiple times
+          $(".wiki-commit").off("click").on("click",function(){
+            var card=$(this).closest(".card");
+            card.css("background-color","lavender");
+            card.find(".aftercommit").show();
+            $(this).attr("disabled","diabled");
+
+            var userid=localStorage.getItem("currentid");
+            var username=localStorage["currentuser"];           
+            var firstrole=card.find(".input-primary").val();
+            var secondrole=card.find(".input-secondary").val();
+            var startdate=card.find(".wikistartdate").val();
+            var enddate=card.find(".wikienddate").val();
+            var wikicountry=$($(".wiki-country").find("input")[0]).text();
+              console.log(userid);
+                  console.log(username);
+                  console.log(firstrole);
+                  console.log(secondrole);
+                  console.log(startdate);
+                  console.log(enddate);
+                  console.log(wikicountry);
+
+ 
+
+      });
 
 
   })

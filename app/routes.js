@@ -286,13 +286,13 @@ module.exports = function(app) {
         console.error(err);
     });
 
-      console.log(req.body.timespend); 
+    /*  console.log(req.body.timespend); 
       console.log(country);
       console.log(firstrole);
       console.log(secondrole);
       console.log(userid);
       console.log(startdate);
-      console.log(enddate);
+      console.log(enddate);*/
       if(err)
       {
        console.log(err); 
@@ -1073,54 +1073,93 @@ module.exports = function(app) {
 
   });
   
+  //GET the count of wiki rols on the wiki entity
   app.get('/wikirolecount',function(req,res){
      WikiEntity.find({},function(err,data){
        res.json(data);
        res.end();
      });
-    /* res.render('./wikitemplate.jade', {
-        
-      });*/
-  })
+  });
+
+  app.post('/commitwikirole',function(req,res){
+    WikiEntity.findOneAndUpdate({
+      "_id":req.body.entityid
+    },{
+      $set:{
+        "taggingtime":Date.now(),
+        //"timespend"
+        "userid":req.body.userid
+      }
+
+    },function(err,rst){
+      var country=req.body.country===""?"":req.body.country.split(":")[0];
+      var firstrole=req.body.firstrole===""?"":req.body.firstrole.split(":")[0];
+      var secondrole=req.body.secondrole===""?"":req.body.secondrole.split(":")[0];
+      var userid=req.body.userid;
+      var startdate=req.body.startdate;
+      var enddate=req.body.enddate;
+      var username=req.body.username;
+      if(req.body.startdate==="")
+      {
+        startdate="1800-01-01";
+      }
+      else if(req.body.startdate==="000")
+      {
+        startdate="2200-01-01";
+      }
+      var enddate=req.body.enddate;
+      if(req.body.enddate==="")
+      {
+        enddate="1800-01-01";
+      }
+      else if(req.body.enddate==="000")
+      {
+        enddate="2200-01-01";
+      }
+
+    })
+
+  });
+
+  //load wiki card for one role on one wiki entity
   app.post('/wikiloadcard',function(req,res){
-/*     WikiEntity.find({},function(err,data){
-       res.json(data);
-       res.end();
-     });*/
-
-     /*res.render('./wikitemplate.jade', {        
-      });*/
       var para=req.body.para;
-      /*console.log(para);
-      res.json(para);
-      res.end();
-      */
       var model;
-      WikiEntity.find({},function(err,data){
-       //res.json(data);
-       //res.end();
+      WikiEntity.count({
+        "tagged":false
+      }).exec(function(err,count){
+        var random=Math.floor(Math.random()*count);
+        WikiEntity.findOne({
+          "tagged":false
+        })
+        //don't have that much data to skip for now, 
+        /*.skip(random)*/
+        .exec(
+          function(err,data)
+          {
+            if(data!=null)
+            {
+              model=data.wiki_roles[0].en[para];
+             if(model["start_date"])
+               {
+               model["start_date"]="("+new Date(model["start_date"].date).toISOString().split('T')[0]+")"; 
+               } 
+             if(model["end_date"])
+               {
+               model["end_date"]="("+new Date(model["end_date"].date).toISOString().split('T')[0]+")"; 
+               }
+            model["entityid"]=data._id;
+            model["rolerank"]=parseInt(para)+1;
 
-       model=data[0].wiki_roles[0].en[para];
-       if(model["start_date"])
-       {
-       model["start_date"]="("+new Date(model["start_date"].date).toISOString().split('T')[0]+")"; 
-       }
-       if(model["end_date"])
-       {
-       model["end_date"]="("+new Date(model["end_date"].date).toISOString().split('T')[0]+")"; 
-       }
-
-       
-       //set the name here
-      // model["en_name"]=data[0].wiki_roles[0].en_name;
-
-       res.render('./wikitemplate.jade', {wikirole:model     
-      });
-       //console.log(model);
-       //res.json(data);
-       //res.end();
-     });
-  })
+             res.render('./wikitemplate.jade', {wikirole:model});
+            }
+              
+            else
+              console.log("no more untagged wiki entity to show!");
+          }
+        )
+      })
+  });
   //this is for loop through the sentence
   app.get('/sentences', function(req, res) {
 
@@ -1134,14 +1173,10 @@ module.exports = function(app) {
 
   app.get('/wikicoding',function(req,res){
       res.sendfile('./public/partials/wikicoding.html');
-
   });
     app.get('/wikitemplate',function(req,res){
       res.sendfile('./public/partials/wikitemplate.html');
-
   });
-
-
   // application -------------------------------------------------------------
   app.get('*', function(req, res) {
     res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
