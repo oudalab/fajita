@@ -251,6 +251,7 @@ module.exports = function(app) {
       var secondrole=req.body.secondrole===""?"":req.body.secondrole.split(":")[0];
       var userid=req.body.userid;
       var startdate=req.body.startdate;
+      var enddate=req.body.enddate;
       var username=req.body.username;
       if(req.body.startdate==="")
       {
@@ -1081,14 +1082,14 @@ module.exports = function(app) {
      });
   });
 
-  app.post('/commitwikirole',function(req,res){
+/*  app.post('/commitwikirole',function(req,res){
     WikiEntity.findOneAndUpdate({
       "_id":req.body.entityid
     },{
       $set:{
         "taggingtime":Date.now(),
         //"timespend"
-        "userid":req.body.userid
+        "userid":req.body.userid,
       }
 
     },function(err,rst){
@@ -1119,6 +1120,72 @@ module.exports = function(app) {
 
     })
 
+  });*/
+   app.post('/commitwikirole',function(req,res){
+      WikiEntity.findOneAndUpdate({
+        "_id":req.body.entityid
+    },{
+      $set:{
+        //"status":"done",
+        "taggingtime":Date.now(),
+      //  "timespend":req.body.timespend,
+        //"person":true,
+        "userid":req.body.userid        
+      }
+    },function(err,rst)
+    {
+      var word=req.body.word;
+      var country=req.body.country===""?"":req.body.country.split(":")[0];
+      var firstrole=req.body.firstrole===""?"":req.body.firstrole.split(":")[0];
+      var secondrole=req.body.secondrole===""?"":req.body.secondrole.split(":")[0];
+      var userid=req.body.userid;
+      var startdate=req.body.startdate;
+      var enddate=req.body.enddate;
+      var username=req.body.username;
+      var rolerank=req.body.rolerank;
+      var entityid=req.body.entityid;
+      if(req.body.startdate==="")
+      {
+        startdate="1800-01-01";
+      }
+      else if(req.body.startdate==="000")
+      {
+        startdate="2200-01-01";
+      }
+      var enddate=req.body.enddate;
+      if(req.body.enddate==="")
+      {
+        enddate="1800-01-01";
+      }
+      else if(req.body.enddate==="000")
+      {
+        enddate="2200-01-01";
+      }
+      var word=req.body.word;
+      SourceDictionary.create({
+      sentenceId: "",
+      word:word,
+      countryCode:country,
+      firstRoleCode:firstrole,
+      secondRoleCode:secondrole,
+      confidenceFlag:false,
+      userName:username+"(wikicoding)",
+      userId:userid,
+      dateStart:startdate,
+      dateEnd:enddate,
+      wikimongoid:entityid,
+      wikirolerank:rolerank
+    }, function(err, data) {
+      if (err)
+        console.error(err);
+    });
+
+      if(err)
+      {
+       console.log(err); 
+      }
+      //getOneFastPerEntity(res);
+    });
   });
 
   //load wiki card for one role on one wiki entity
@@ -1149,7 +1216,8 @@ module.exports = function(app) {
                model["end_date"]="("+new Date(model["end_date"].date).toISOString().split('T')[0]+")"; 
                }
             model["entityid"]=data._id;
-            model["rolerank"]=parseInt(para)+1;
+            //this is the rank of the role, this will be used when post the commit result
+            model["rolerank"]=para;
 
              res.render('./wikitemplate.jade', {wikirole:model});
             }

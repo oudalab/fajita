@@ -22,7 +22,7 @@ div(class="card wikicard" data-entityid="#{wikirole.entityid}" data-rolerank="#{
             input(class="wikienddate" type="text")        
     div(class="row container") 
       div(class="col col-md-3")
-        div(class="btn btn-success wiki-commit" style="margin-right:5px;margin-bottom:5px" data-rolerank="#{wikirole.rolerank}") COMMIT
+        div(class="btn btn-success wiki-commit" style="margin-right:5px;margin-bottom:5px" data-rolerank="#{wikirole.rolerank}" data-name="#{wikirole.name}") COMMIT
         a(href="#{wikirole.link}") wiki link          
 script.
   $(function(){
@@ -75,26 +75,40 @@ script.
             card.css("background-color","lavender");
             card.find(".aftercommit").show();
             $(this).attr("disabled","diabled");
-
             var userid=localStorage.getItem("currentid");
             var username=localStorage["currentuser"];           
             var firstrole=card.find(".input-primary").val();
+            var entityid=card.attr("data-entityid");
             var secondrole=card.find(".input-secondary").val();
             var startdate=card.find(".wikistartdate").val();
             var enddate=card.find(".wikienddate").val();
-            var wikicountry=$($(".wiki-country").find("input")[0]).text();
-              console.log(userid);
-                  console.log(username);
-                  console.log(firstrole);
-                  console.log(secondrole);
-                  console.log(startdate);
-                  console.log(enddate);
-                  console.log(wikicountry);
+            var wikicountry=$(card.find(".wiki-country").find("input")[0]).text();
+            var rolerank=$(this).attr("data-rolerank");
+            var word=$(this).attr("data-name");
+            console.log(userid);
+            console.log(username);
+            console.log(firstrole);
+            console.log(secondrole);
+            console.log(startdate);
+            console.log(enddate);
+            console.log(wikicountry);
+            console.log(rolerank);
+            console.log(word);            
+              $.ajax({
+                method:"POST",
+                url:"/commitwikirole",
+                data:{"word":word,'entityid':entityid,"country":wikicountry,"firstrole":firstrole,"secondrole":secondrole,"userid":userid,"username":username,"startdate":startdate,"enddate":enddate},
+                success:function(data)
+                {
 
- 
+                  console.log("successfully saved!");
 
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                 console.log(xhr.status);
+                }
+                });
       });
-
-
   })
   

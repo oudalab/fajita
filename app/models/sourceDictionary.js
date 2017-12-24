@@ -50,6 +50,12 @@ var schema = new mongoose.Schema({
 	taggingTime: {
 		type: Date,
 		default: Date.now
+	},
+	wikimongoid:{
+		type:String
+	},
+	wikirolerank:{
+		type:String
 	}
 });
 schema.plugin(mongoosePaginate);
