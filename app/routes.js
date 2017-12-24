@@ -1074,62 +1074,64 @@ module.exports = function(app) {
 
   });
   
-  //GET the count of wiki rols on the wiki entity
-  app.get('/wikirolecount',function(req,res){
-     WikiEntity.find({},function(err,data){
-       res.json(data);
-       res.end();
-     });
+  //get the next untagged wiki role
+  app.get('/wikinext',function(req,res){
+      WikiEntity.count({
+        "tagged":false
+      }).exec(function(err,count){
+        var random=Math.floor(Math.random()*count);
+        WikiEntity.findOne({
+          "tagged":false
+        })
+        //don't have that much data to skip for now, 
+        /*.skip(random)*/
+        .exec(
+          function(err,data)
+          {
+            if(err)
+            {
+              console.log(err);
+            }
+                       
+             res.json(data);
+                                  
+          }
+        )
+      })
+
   });
 
-/*  app.post('/commitwikirole',function(req,res){
+  app.post('/updatewikientity',function(req,res){
+    console.log(req.body.entityid);
+    console.log(req.body.timespend);
     WikiEntity.findOneAndUpdate({
       "_id":req.body.entityid
     },{
       $set:{
-        "taggingtime":Date.now(),
-        //"timespend"
-        "userid":req.body.userid,
+        "timespend":req.body.timespend,
+        "tagged":true
       }
+  },function(err,rst){
 
-    },function(err,rst){
-      var country=req.body.country===""?"":req.body.country.split(":")[0];
-      var firstrole=req.body.firstrole===""?"":req.body.firstrole.split(":")[0];
-      var secondrole=req.body.secondrole===""?"":req.body.secondrole.split(":")[0];
-      var userid=req.body.userid;
-      var startdate=req.body.startdate;
-      var enddate=req.body.enddate;
-      var username=req.body.username;
-      if(req.body.startdate==="")
-      {
-        startdate="1800-01-01";
-      }
-      else if(req.body.startdate==="000")
-      {
-        startdate="2200-01-01";
-      }
-      var enddate=req.body.enddate;
-      if(req.body.enddate==="")
-      {
-        enddate="1800-01-01";
-      }
-      else if(req.body.enddate==="000")
-      {
-        enddate="2200-01-01";
-      }
+     if(err)
+     {
+      console.log(err);
+     }
+     else
+     {
+      console.log("successfully update the timespend on wiki entity");
+     }
+     res.end();
+  })
 
-    })
+  });
 
-  });*/
    app.post('/commitwikirole',function(req,res){
       WikiEntity.findOneAndUpdate({
         "_id":req.body.entityid
     },{
       $set:{
-        //"status":"done",
-        "taggingtime":Date.now(),
-      //  "timespend":req.body.timespend,
-        //"person":true,
+        "taggingtime":Date.now(),      
         "userid":req.body.userid        
       }
     },function(err,rst)
@@ -1184,7 +1186,7 @@ module.exports = function(app) {
       {
        console.log(err); 
       }
-      //getOneFastPerEntity(res);
+      res.end();
     });
   });
 
@@ -1192,15 +1194,9 @@ module.exports = function(app) {
   app.post('/wikiloadcard',function(req,res){
       var para=req.body.para;
       var model;
-      WikiEntity.count({
-        "tagged":false
-      }).exec(function(err,count){
-        var random=Math.floor(Math.random()*count);
         WikiEntity.findOne({
-          "tagged":false
+          "_id":req.body.entityid
         })
-        //don't have that much data to skip for now, 
-        /*.skip(random)*/
         .exec(
           function(err,data)
           {
@@ -1209,11 +1205,11 @@ module.exports = function(app) {
               model=data.wiki_roles[0].en[para];
              if(model["start_date"])
                {
-               model["start_date"]="("+new Date(model["start_date"].date).toISOString().split('T')[0]+")"; 
+               model["start_date"]=new Date(model["start_date"].date).toISOString().split('T')[0]; 
                } 
              if(model["end_date"])
                {
-               model["end_date"]="("+new Date(model["end_date"].date).toISOString().split('T')[0]+")"; 
+               model["end_date"]=new Date(model["end_date"].date).toISOString().split('T')[0]; 
                }
             model["entityid"]=data._id;
             //this is the rank of the role, this will be used when post the commit result
@@ -1223,10 +1219,10 @@ module.exports = function(app) {
             }
               
             else
-              console.log("no more untagged wiki entity to show!");
+              console.log("there is no wikientity found based on this id.");
           }
         )
-      })
+     
   });
   //this is for loop through the sentence
   app.get('/sentences', function(req, res) {

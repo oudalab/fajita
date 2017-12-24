@@ -12,14 +12,14 @@ div(class="card wikicard" data-entityid="#{wikirole.entityid}" data-rolerank="#{
         input(class="input-secondary" type="search" placeholder="Secondary..." data-provide="typeahead")
       li(class="list-group-item wiki-datestart")
         div(class="row")
-          div(class="col col-md-3") Date Start #{wikirole.start_date} 
+          div(class="col col-md-3") Date Start:#{wikirole.start_date} 
           div(class="col col-md-3")
-            input(class="wikistartdate" type="text")        
+            input(class="wikistartdate" type="text" value="#{wikirole.start_date}")        
       li(class="list-group-item wiki-dateend")
         div(class="row")
-          div(class="col col-md-3") Date End   #{wikirole.end_date} 
+          div(class="col col-md-3") Date End:#{wikirole.end_date} 
           div(class="col col-md-3")
-            input(class="wikienddate" type="text")        
+            input(class="wikienddate" type="text" value="#{wikirole.end_date}")        
     div(class="row container") 
       div(class="col col-md-3")
         div(class="btn btn-success wiki-commit" style="margin-right:5px;margin-bottom:5px" data-rolerank="#{wikirole.rolerank}" data-name="#{wikirole.name}") COMMIT
@@ -70,6 +70,7 @@ script.
     });
     //since all the card will be called commit, so we need to check the rank, if the button on a rank that is not the current rank, then don't do anything
     //need the off here since it will be defined multiple times
+    //this is for the role commit.
           $(".wiki-commit").off("click").on("click",function(){
             var card=$(this).closest(".card");
             card.css("background-color","lavender");

@@ -8,6 +8,7 @@ module.exports = mongoose.model('wikientity', {
     taggingtime: {
 		type: Date,
 	},
+	//the time record is in seconds.
 	timespend:{
 		type:Number
 	},

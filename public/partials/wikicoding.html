@@ -5,7 +5,7 @@
  <div class="panel panel-success">
 
     <div class="panel-heading">
-      Click the start button get start
+      <strong>Click the start button to get start.</strong>
     <div>
  <div class="panel-body">
  <div class="row">
@@ -13,9 +13,9 @@
  <button class="btn btn-primary" id="wiki-start" data-status="start"> <i class="fa fa-clock-o" aria-hidden="true" style="padding:2px"></i>
  <strong>START</strong></button>
  </div>
-<div class="col col-md-offset-2 col-md-2">
- <button class="btn btn-secondary" id="wiki-next"> <i class="fa fa-step-forward" aria-hidden="true" style="padding:2px"></i>
- <strong>NEXT</strong></button>
+<div class="col col-md-6">
+ <button class="btn btn-danger" id="wiki-commit-all"> <i class="fa fa-clock-o" aria-hidden="true" style="padding:2px"></i>
+ <strong>COMMIT_ALL</strong></button>
  </div>
 </div>
 </div>
@@ -26,51 +26,84 @@
  
 <script type="text/javascript">
 	$(function(){
+    var numberOfRole=0;
+    var timespent=0;
+    var start=0;
+    var entityid;
+    //function that defined on the commit button.
+    $("#wiki-commit-all").on("click",function(){
+      //this is for track the timespend and mark the wiki entity to be tagged.
+      // this to do the commit the tagged =true on the wikientity and also the time spend, now the time spend is record in seconds
+          //enable the start button
+          $("#wiki-start").attr("disabled",false);
+          //diable commit, so no multiple commit and it will be enable when start again
+          $(this).attr("disabled","disabled");
+          timespent=(new Date()-start)/1000;
+          //flip the status on the start button
+          $(this).attr("data-status","start");
+          entityid=$(".wikicard").attr("data-entityid");
+          //record the time spent and flagged set to be true, then load in another record.
+          $.ajax({
+            method:"POST",
+            url:"/updatewikientity",
+            data:{"timespend":timespent,"entityid":entityid},
+            success:function(data)
+            {
+              console.log("successfullly update timespend");
+            }, 
+            error: function (xhr, ajaxOptions, thrownError) {
+                 console.log(xhr.status);
+                }
+          })
+
+    });
+
+    //function that defined on the start button
 		$("#wiki-start").on("click",function(){
-			  /*$.ajax({
-                method:"GET",
-                url:"/wikitemplate",
-                success:function(html)
-                {
-                 
-                  $("#content").html(html);
-                }
-              });*/
-        //now query the wiki object and see what is going to happen.
-        var numberOfRole=0;
-        $("#content").html("");
-        $.ajax({
-                method:"GET",
-                url:"/wikirolecount",
-                success:function(data)
-                {
-                  var ar=data[0].wiki_roles[0].en;
-                  numberOfRole=ar.length;
-                  console.log("number of wiki roles for this wiki entity "+numberOfRole);                 
-                  //ok now need to make multiple ajax call based on how many roles there are. each ajax call will load in a card
-                  var element=ar[0];
-                  for(i=0;i<numberOfRole;i++)
-                  {
-                    //console.log(i);
-                   // var privatei=i;
-                    $.ajax({
-                      method:"POST",
-                      url:"/wikiloadcard",
-                      //this i is to load ith role from the result
-                      data:{"para":i},
-                      success:function(data)
+          //update the start.
+          //disable the start button and after commit it will get enbale again
+          //enable the commit all button
+          $("#wiki-commit-all").attr("disabled",false);
+          $(this).attr("disabled","disabled");
+          start=new Date();
+          $("#content").html("");
+
+          //clear the content already loaded.
+            $.ajax({
+                    method:"GET",
+                    url:"/wikinext",
+                    success:function(data)
+                    {
+                      if(data===null)
                       {
-                        //console.log(data);
-                        //this appened is going to append a card to each role this person
-                        $("#content").append(data);
+                        alert("no more untagged wiki items");
+                        return;
                       }
-                    });
-                  }
-                }
-              });
-
-
-
+                      var ar=data.wiki_roles[0].en;
+                      numberOfRole=ar.length;
+                      var entityid=data._id;
+                     // console.log(entityid);
+                      console.log("number of wiki roles for this wiki entity "+numberOfRole);                 
+                      //ok now need to make multiple ajax call based on how many roles there are. each ajax call will load in a card
+                      for(i=0;i<numberOfRole;i++)
+                      {
+                        $.ajax({
+                          method:"POST",
+                          url:"/wikiloadcard",
+                          //this i is to load ith role from the result
+                          data:{"para":i,"entityid":entityid},
+                          success:function(data)
+                          {
+                            //console.log(data);
+                            //this appened is going to append a card to each role this person
+                            $("#content").append(data);
+                            entityid=$(".wikicard").attr("data-entityid");
+                            //console.log("hey entity id is: "+entityid);
+                          }
+                        });
+                      }
+                    }
+                  });      
 		});
 	})  	
 </script>
