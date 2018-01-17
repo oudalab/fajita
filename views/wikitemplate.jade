@@ -1,8 +1,10 @@
 div(class="card wikicard" data-entityid="#{wikirole.entityid}" data-rolerank="#{wikirole.rolerank}") 
   div(class="card-body") 
-    div(class="card-title" style="font-weight:bold") #{wikirole.name}
+    div(class="card-title" style="font-weight:bold;margin-bottom:10px" ) Name:
+      input(class="input-name" type="text" value="#{wikirole.name}" style="direction:rtl;width:100%")
       i(class="fa fa-check-circle-o aftercommit" aria-hidden="true" style="display:none;margin-left:2px;")
-    div(class="card-subtitle mb-2 text-muted" style="font-weight:bold") Role: #{wikirole.title}
+    div(class="card-subtitle mb-2 text-muted" style="font-weight:bold") Role: 
+      input(class="input-role" type="text" value="#{wikirole.title}" style="direction:rtl;width:100%")
     div(class="list-group list-group-flush")
       li(class="list-group-item wiki-country")
         input(class="input-country" type="search" placeholder="Country..." data-provide="typeahead")
@@ -85,7 +87,9 @@ script.
             var enddate=card.find(".wikienddate").val();
             var wikicountry=$(card.find(".wiki-country").find("input")[0]).text();
             var rolerank=$(this).attr("data-rolerank");
-            var word=$(this).attr("data-name");
+            //var word=$(this).attr("data-name");
+            var word=card.find(".input-name").val();
+            var wordrole=card.find(".input-role").val();
             console.log(userid);
             console.log(username);
             console.log(firstrole);
@@ -94,11 +98,12 @@ script.
             console.log(enddate);
             console.log(wikicountry);
             console.log(rolerank);
-            console.log(word);            
+            console.log(word); 
+            console.log(wordrole);           
               $.ajax({
                 method:"POST",
                 url:"/commitwikirole",
-                data:{"word":word,'entityid':entityid,"country":wikicountry,"firstrole":firstrole,"secondrole":secondrole,"userid":userid,"username":username,"startdate":startdate,"enddate":enddate},
+                data:{"word":word,'entityid':entityid,"country":wikicountry,"firstrole":firstrole,"secondrole":secondrole,"userid":userid,"username":username,"startdate":startdate,"enddate":enddate,"wordrole":wordrole},
                 success:function(data)
                 {
 

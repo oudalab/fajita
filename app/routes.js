@@ -1146,6 +1146,7 @@ module.exports = function(app) {
       var username=req.body.username;
       var rolerank=req.body.rolerank;
       var entityid=req.body.entityid;
+      var wordrole=req.body.wordrole;
       if(req.body.startdate==="")
       {
         startdate="1800-01-01";
@@ -1176,7 +1177,8 @@ module.exports = function(app) {
       dateStart:startdate,
       dateEnd:enddate,
       wikimongoid:entityid,
-      wikirolerank:rolerank
+      wikirolerank:rolerank,
+      role:wordrole
     }, function(err, data) {
       if (err)
         console.error(err);
@@ -1192,7 +1194,11 @@ module.exports = function(app) {
 
   //load wiki card for one role on one wiki entity
   app.post('/wikiloadcard',function(req,res){
+
       var para=req.body.para;
+      var fromarabic=req.body.fromarabic;
+      console.log("from arabic"+fromarabic);
+      var roleid=req.body.roleid;
       var model;
         WikiEntity.findOne({
           "_id":req.body.entityid
@@ -1200,26 +1206,72 @@ module.exports = function(app) {
         .exec(
           function(err,data)
           {
+            if(err)
+            {
+              console.log(err);
+            }
             if(data!=null)
             {
-              model=data.wiki_roles[0].en[para];
-             if(model["start_date"])
+              //console.log(data.wiki_roles[0])
+              //data=JSON.parse(data);
+              //console.log(data.wiki_roles);
+              //console.log(data["wiki_roles"]);
+              //console.log("para"+para);
+              //console.log(data.wiki_roles[0]["en"][0]);
+              //it gets a string "false" instead of a boolean one.
+              if(fromarabic==="false")
+              {
+                model=data.wiki_roles[0]["en"][para];
+               // console.log("not from arabic model"+model);
+              }
+              else
+              {
+                model=data.wiki_roles[0]["arabic"][para];
+                //console.log(data.wiki_roles[0]["arabic"][para]);
+                //console.log("from arabic model"+model);
+              }
+              
+             /*if(model["start_date"])
                {
                model["start_date"]=new Date(model["start_date"].date).toISOString().split('T')[0]; 
                } 
              if(model["end_date"])
                {
                model["end_date"]=new Date(model["end_date"].date).toISOString().split('T')[0]; 
-               }
+               }*/
+            //console.log("model"+model);
+            //console.log(data._id);
+            //console.log(data._id);
+            //console.log(data.wiki_roles[0]["en"]);
+            //console.log(data.wiki_roles[0]["englishname"]);
+           // console.log(model);
             model["entityid"]=data._id;
-            //this is the rank of the role, this will be used when post the commit result
-            model["rolerank"]=para;
+            //role id will be role_id on the role not the rank on the list anymore.
+            model["rolerank"]=roleid;
+            //console.log(data);
+            //console.log(data.names);
+           // console.log(data.cameo_coding);
+            //console.log(data.taggingtime);
+           // console.log(data["names"][0]);
+            var arabicname=data.wiki_roles[0]["arabicname"];
+            if(arabicname!=="")
+              model["name"]=arabicname;
+            else
+              model["name"]=data.wiki_roles[0]["englishname"];
+            //console.log(roleid);
+            var englishlink=data.wiki_roles[0]["englishlink"];
+            model["link"]=englishlink;
+            if(englishlink==="")
+            {
+              model["link"]=data.wiki_roles[0]["arabiclink"];
+            }
 
              res.render('./wikitemplate.jade', {wikirole:model});
             }
               
             else
               console.log("there is no wikientity found based on this id.");
+
           }
         )
      

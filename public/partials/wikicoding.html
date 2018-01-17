@@ -80,7 +80,22 @@
                         return;
                       }
                       var ar=data.wiki_roles[0].en;
+                      var fromArabic=false;
                       numberOfRole=ar.length;
+                      if(numberOfRole===0)
+                      {
+                        //check the arabic ones
+
+                        ar=data.wiki_roles[0].arabic;
+                        if(ar.length===0)
+                          return;
+                        else 
+                        {
+
+                          numberOfRole=ar.length;
+                          fromArabic=true;
+                        }
+                      }
                       var entityid=data._id;
                      // console.log(entityid);
                       console.log("number of wiki roles for this wiki entity "+numberOfRole);                 
@@ -91,15 +106,21 @@
                           method:"POST",
                           url:"/wikiloadcard",
                           //this i is to load ith role from the result
-                          data:{"para":i,"entityid":entityid},
+                          data:{"para":i,"entityid":entityid,"fromarabic":fromArabic,"roleid":ar[i].role_id},
                           success:function(data)
                           {
-                            //console.log(data);
+                           // console.log(data);
                             //this appened is going to append a card to each role this person
                             $("#content").append(data);
                             entityid=$(".wikicard").attr("data-entityid");
                             //console.log("hey entity id is: "+entityid);
-                          }
+                          },
+                          error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                           // console.log("Status from yan: " + textStatus); 
+                           console.log("ajax is error!!");
+                          }       
+
+
                         });
                       }
                     }
