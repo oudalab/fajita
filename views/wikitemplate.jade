@@ -21,7 +21,10 @@ div(class="card wikicard" data-entityid="#{wikirole.entityid}" data-rolerank="#{
         div(class="row")
           div(class="col col-md-3") Date End:#{wikirole.end_date} 
           div(class="col col-md-3")
-            input(class="wikienddate" type="text" value="#{wikirole.end_date}")        
+            input(class="wikienddate" type="text" value="#{wikirole.end_date}")  
+      li(class="list-group-item wiki-flag")
+        div(class="row") Not Sure? 
+          input(class="wikiflag" type="checkbox")   
     div(class="row container") 
       div(class="col col-md-3")
         div(class="btn btn-success wiki-commit" style="margin-right:5px;margin-bottom:5px" data-rolerank="#{wikirole.rolerank}" data-name="#{wikirole.name}") COMMIT
@@ -83,6 +86,12 @@ script.
             var firstrole=card.find(".input-primary").val();
             var entityid=card.attr("data-entityid");
             var secondrole=card.find(".input-secondary").val();
+            //var flag=card.find(".wikiflag").val();
+            var flag=false;
+            if(card.find(".wikiflag").prop("checked"))
+            {
+              flag=true;
+            }
             var startdate=card.find(".wikistartdate").val();
             var enddate=card.find(".wikienddate").val();
             var wikicountry=$(card.find(".wiki-country").find("input")[0]).text();
@@ -103,7 +112,7 @@ script.
               $.ajax({
                 method:"POST",
                 url:"/commitwikirole",
-                data:{"word":word,'entityid':entityid,"country":wikicountry,"firstrole":firstrole,"secondrole":secondrole,"userid":userid,"username":username,"startdate":startdate,"enddate":enddate,"wordrole":wordrole},
+                data:{"word":word,'entityid':entityid,"country":wikicountry,"firstrole":firstrole,"secondrole":secondrole,"userid":userid,"username":username,"startdate":startdate,"enddate":enddate,"wordrole":wordrole,"flag":flag},
                 success:function(data)
                 {
 

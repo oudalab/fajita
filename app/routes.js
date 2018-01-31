@@ -1147,6 +1147,7 @@ module.exports = function(app) {
       var rolerank=req.body.rolerank;
       var entityid=req.body.entityid;
       var wordrole=req.body.wordrole;
+      var flag=req.body.flag;
       if(req.body.startdate==="")
       {
         startdate="1800-01-01";
@@ -1178,7 +1179,8 @@ module.exports = function(app) {
       dateEnd:enddate,
       wikimongoid:entityid,
       wikirolerank:rolerank,
-      role:wordrole
+      role:wordrole,
+      confidenceFlag:flag
     }, function(err, data) {
       if (err)
         console.error(err);
