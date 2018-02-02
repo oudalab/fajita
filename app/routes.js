@@ -1076,13 +1076,14 @@ module.exports = function(app) {
   
   //get the next untagged wiki role
   app.get('/wikinext',function(req,res){
+      var random=Math.floor(Math.random() * 100);
       WikiEntity.count({
         "tagged":false
       }).exec(function(err,count){
         var random=Math.floor(Math.random()*count);
         WikiEntity.findOne({
           "tagged":false
-        })
+        }).limit(1).skip(random)
         //don't have that much data to skip for now, 
         /*.skip(random)*/
         .exec(
