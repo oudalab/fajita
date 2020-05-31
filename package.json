@@ -14,7 +14,7 @@
     "express-session": "^1.13.0",
     "jade": "^1.11.0",
     "method-override": ">=2.3.10",
-    "mongoose": "~3.8.13",
+    "mongoose": "~5.9.16",
     "mongoose-paginate": "^5.0.0",
     "mongoose-schema-formatdate": "^1.0.0",
     "morgan": "~1.1.1",
