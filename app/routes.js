@@ -7,7 +7,9 @@ var VerbDictionary = require('./models/verbDictionary');
 var User = require('./models/user');
 var Sentence = require('./models/sentence');
 var SentenceTaggingResult = require('./models/sentenceTaggingResult');
+var WikiEntity=require('./models/wikientity');
 var Documentswithtopic=require('./models/documentswithtopic');
+var FastPerEntity=require('./models/fastperentity');
 var mongoose = require('mongoose');
 /*var ObjectId = require('mongoose').Types.ObjectId;*/
 var request = require('request');
@@ -34,6 +36,87 @@ function getAllTaggingSentences(res){
      res.send(JSON.stringify(taggingresult));
   });
 }
+/*  app.post('/updateVerbDictionary', function(req, res) {
+    VerbDictionary.findOneAndUpdate({
+      "_id": req.body.dicId
+    }, {
+      $set: {
+         "word":req.body.verbword,
+        "verbcode": req.body.verbcode,
+        "confidenceFlag":req.body.verbconfidence
+
+      }
+    }, function(err, dic) {
+
+      console.log(err);
+    });
+    res.end();
+  });
+*/
+
+
+function getOneFastPerEntity(res){
+  var random=Math.floor(Math.random() * 100);
+  FastPerEntity.findOne({
+    status:"0"
+  }).limit(1).skip(random).exec(
+  function(err,result){
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    else
+    {
+      var noToShow=5;
+      var sentenceids=result.sentenceids;
+      if(result.sentenceids.length<noToShow)
+      {
+        res.send(JSON.stringify({"word":"none","sentences":"no sentence!"}))
+      }
+      var wholeSentences=[];
+       for(var i=0;i<noToShow;i++)
+       {
+         Sentence.findOne({
+            '_id':sentenceids[i]/*new ObjectId(sentenceId)*/
+          }, function(err, data) {
+            if(data!=null)
+            {
+              //console.log("hey "+data.wholeSentence);
+               wholeSentences.push(data.wholeSentence);
+               //console.log(wholeSentences.length);
+               //alert("error happens since mongoose model mapping that yan suggested");
+            }
+            if(wholeSentences.length==noToShow)
+            {
+              //this need to be here if it is defined outside, res.send will not wait until that Sentence.findOne finished.
+              //console.log("ready to show: "+count);
+                    var countleft=0;
+                    FastPerEntity.count({
+                    "status": "0"      
+                  }).exec(function(err, count) {
+                    countleft=count;
+                    console.log("count left yes yes: "+countleft);
+                    res.send(JSON.stringify({"word":result.word,"sentences":wholeSentences,"entityid":result._id,"countleft":countleft}));
+                  })
+              
+            }
+         });
+       }
+    }
+
+  });
+}
+
+
+
+
+/*var myCallback = function(data) {
+  console.log('got data: '+data);
+};
+
+var usingItNow = function(callback) {
+  callback('get it?');
+};*/
 
 function getSourceDictionary(res) {
   SourceDictionary.find(function(err, sourcedictionary) {
@@ -58,11 +141,34 @@ function getAllCountryActors(res) {
   });
 }
 
+function getAllCountryActorsNames(res) {
+  Actor.find(function(err, actors) {
+    if (err)
+      res.send(err);
+    rst=[]
+    actors.forEach(function(actor){
+      rst.push(actor.name);
+    })
+    res.json(rst);
+  });
+}
+
 function getAllAgentActors(res) {
   Agent.find(function(err, agents) {
     if (err)
       res.send(err)
     res.json(agents);
+  });
+}
+function getAllAgentActorsnames(res) {
+  Agent.find(function(err, agents) {
+    if (err)
+      res.send(err);
+    rst=[]
+    agents.forEach(function(agent){
+      rst.push(agent.name);
+    })
+    res.json(rst);
   });
 }
 
@@ -77,6 +183,17 @@ function getAllSecondroleActors(res) {
     if (err)
       res.send(err)
     res.json(secondrole);
+  });
+}
+function getAllSecondroleActorsnames(res) {
+ Secondrole.find(function(err, roles) {
+    if (err)
+      res.send(err);
+    rst=[]
+    roles.forEach(function(role){
+      rst.push(role.name);
+    })
+    res.json(rst);
   });
 }
 //only show the non-tagged sentences
@@ -116,6 +233,95 @@ function test(res) {
 
 module.exports = function(app) {
 
+  app.post('/commitperentity',function(req,res){
+      FastPerEntity.findOneAndUpdate({
+        "_id":req.body.entityid
+    },{
+      $set:{
+        "status":"done",
+        "taggingtime":Date.now(),
+        "timespend":req.body.timespend,
+        "person":true,
+        "userid":req.body.userid        
+      }
+    },function(err,rst)
+    {
+      var country=req.body.country===""?"":req.body.country.split(":")[0];
+      var firstrole=req.body.firstrole===""?"":req.body.firstrole.split(":")[0];
+      var secondrole=req.body.secondrole===""?"":req.body.secondrole.split(":")[0];
+      var userid=req.body.userid;
+      var startdate=req.body.startdate;
+      var enddate=req.body.enddate;
+      var username=req.body.username;
+      if(req.body.startdate==="")
+      {
+        startdate="1800-01-01";
+      }
+      else if(req.body.startdate==="000")
+      {
+        startdate="2200-01-01";
+      }
+      var enddate=req.body.enddate;
+      if(req.body.enddate==="")
+      {
+        enddate="1800-01-01";
+      }
+      else if(req.body.enddate==="000")
+      {
+        enddate="2200-01-01";
+      }
+      var word=req.body.word;
+      SourceDictionary.create({
+      sentenceId: "",
+      word:word,
+      countryCode:country,
+      firstRoleCode:firstrole,
+      secondRoleCode:secondrole,
+      confidenceFlag:false,
+      userName:username+"(fastcoding)",
+      userId:userid,
+      dateStart:startdate,
+      dateEnd:enddate
+    }, function(err, data) {
+      if (err)
+        console.error(err);
+    });
+
+    /*  console.log(req.body.timespend); 
+      console.log(country);
+      console.log(firstrole);
+      console.log(secondrole);
+      console.log(userid);
+      console.log(startdate);
+      console.log(enddate);*/
+      if(err)
+      {
+       console.log(err); 
+      }
+      getOneFastPerEntity(res);
+    });
+  });
+
+  //to skip the person entity
+  app.post("/skipperentity",function(req,res){
+  FastPerEntity.findOneAndUpdate({
+      "_id":req.body.entityid
+  },{
+    $set:{
+      "status":"skip",
+      "taggingtime":Date.now(),
+      "userid":req.body.userid
+    }
+  },function(err,rst)
+  {
+    if(err)
+    {
+     console.log(err); 
+    }
+    getOneFastPerEntity(res);
+  });
+})
+
   // api ---------------------------------------------------------------------
   app.get('/api/verbs', function(req, res) {
     getAllVerbs(res);
@@ -125,12 +331,22 @@ module.exports = function(app) {
   app.get('/api/actors', function(req, res) {
     getAllCountryActors(res);
   })
+  app.get('/api/actorsnames',function(req,res){
+    getAllCountryActorsNames(res);
+  })
   app.get('/api/agents', function(req, res) {
     getAllAgentActors(res);
+  })
+  app.get('/api/agentsnames',function(req,res){
+    getAllAgentActorsnames(res);
   })
   app.get('/api/secondroles', function(req, res) {
     getAllSecondroleActors(res);
   })
+  app.get('/api/secondrolesnames', function(req, res) {
+    getAllSecondroleActorsnames(res);
+  })
+
   app.get('/api/sourcedictionary', function(req, res) {
       getSourceDictionary(res);
     });
@@ -139,6 +355,9 @@ module.exports = function(app) {
     });
   app.get('/api/getallwork', function(req,res){
       getAllTaggingSentences(res);
+  });
+  app.get('/getperentity',function(req,res){
+       getOneFastPerEntity(res);
   });
   app.post('/api/synonyms', function(req, res) {
       //console.log(req.body.word);
@@ -185,6 +404,7 @@ module.exports = function(app) {
       User.find({
       'username': req.body.username
     }, function(err, data) {
+      //console.log(data);
       if(data[0]!=null)
       {
        res.json({"userid":data[0].id});
@@ -331,7 +551,8 @@ module.exports = function(app) {
     res.end();
   });
 
-  //to get the current sentence object, in order to make sure when we click the next sentence, the current sentence already get commited.
+  //to get the current sentence object, in order to make sure when we click the next sentence, the current sentence already get commited, this can  also be
+  //used for fast coding fast entity sentences.
   app.post('/getCurrentSentence', function(req, res) {
     var sentenceId = req.body.currentSentenceId;
     Sentence.find({
@@ -340,9 +561,8 @@ module.exports = function(app) {
       res.json(data);
       res.end();
     });
-
   });
-  //get sentence string by giving sentenceId
+  //get sentence string by giving sentenceId,this is can also be used for fast coding.
   app.post('/getSentenceStringById', function(req, res) {
 
     var sentenceId = req.body.sentenceId;
@@ -364,6 +584,7 @@ module.exports = function(app) {
       res.end();
     });
   });
+
   //if the key exist return the object.
   app.post('/nounexist', function(req, res) {
     var word = req.body.word;
@@ -762,6 +983,7 @@ module.exports = function(app) {
 
   });
 
+
   app.post('/findDocumentsWithTopic',function(req,res){
      var topicno=parseInt(req.body.topic)-1
       Documentswithtopic.count({
@@ -796,15 +1018,6 @@ module.exports = function(app) {
 
 
     });
-
-/*    //console.log("topic "+req.body.topic);
-      Documentswithtopic.findOne({
-      'topic': parseInt(req.body.topic)
-    }, function(err, data) {
-      res.json(data['document']);
-      //console.log(data[0]);
-      res.end();
-    });*/
   });
 
 
@@ -860,14 +1073,229 @@ module.exports = function(app) {
     });
 
   });
+  
+  //get the next untagged wiki role
+  app.get('/wikinext',function(req,res){
+      var random=Math.floor(Math.random() * 100);
+      WikiEntity.count({
+        "tagged":false
+      }).exec(function(err,count){
+        var random=Math.floor(Math.random()*count);
+        WikiEntity.findOne({
+          "tagged":false
+        }).limit(1).skip(random)
+        //don't have that much data to skip for now, 
+        /*.skip(random)*/
+        .exec(
+          function(err,data)
+          {
+            if(err)
+            {
+              console.log(err);
+            }
+                       
+             res.json(data);
+                                  
+          }
+        )
+      })
 
+  });
+
+  app.post('/updatewikientity',function(req,res){
+    console.log(req.body.entityid);
+    console.log(req.body.timespend);
+    WikiEntity.findOneAndUpdate({
+      "_id":req.body.entityid
+    },{
+      $set:{
+        "timespend":req.body.timespend,
+        "tagged":true
+      }
+  },function(err,rst){
+
+     if(err)
+     {
+      console.log(err);
+     }
+     else
+     {
+      console.log("successfully update the timespend on wiki entity");
+     }
+     res.end();
+  })
+
+  });
+
+   app.post('/commitwikirole',function(req,res){
+      WikiEntity.findOneAndUpdate({
+        "_id":req.body.entityid
+    },{
+      $set:{
+        "taggingtime":Date.now(),      
+        "userid":req.body.userid        
+      }
+    },function(err,rst)
+    {
+      var word=req.body.word;
+      var country=req.body.country===""?"":req.body.country.split(":")[0];
+      var firstrole=req.body.firstrole===""?"":req.body.firstrole.split(":")[0];
+      var secondrole=req.body.secondrole===""?"":req.body.secondrole.split(":")[0];
+      var userid=req.body.userid;
+      var startdate=req.body.startdate;
+      var enddate=req.body.enddate;
+      var username=req.body.username;
+      var rolerank=req.body.rolerank;
+      var entityid=req.body.entityid;
+      var wordrole=req.body.wordrole;
+      var flag=req.body.flag;
+      if(req.body.startdate==="")
+      {
+        startdate="1800-01-01";
+      }
+      else if(req.body.startdate==="000")
+      {
+        startdate="2200-01-01";
+      }
+      var enddate=req.body.enddate;
+      if(req.body.enddate==="")
+      {
+        enddate="1800-01-01";
+      }
+      else if(req.body.enddate==="000")
+      {
+        enddate="2200-01-01";
+      }
+      var word=req.body.word;
+      SourceDictionary.create({
+      sentenceId: "",
+      word:word,
+      countryCode:country,
+      firstRoleCode:firstrole,
+      secondRoleCode:secondrole,
+      confidenceFlag:false,
+      userName:username+"(wikicoding)",
+      userId:userid,
+      dateStart:startdate,
+      dateEnd:enddate,
+      wikimongoid:entityid,
+      wikirolerank:rolerank,
+      role:wordrole,
+      confidenceFlag:flag
+    }, function(err, data) {
+      if (err)
+        console.error(err);
+    });
+
+      if(err)
+      {
+       console.log(err); 
+      }
+      res.end();
+    });
+  });
+
+  //load wiki card for one role on one wiki entity
+  app.post('/wikiloadcard',function(req,res){
+
+      var para=req.body.para;
+      var fromarabic=req.body.fromarabic;
+      console.log("from arabic"+fromarabic);
+      var roleid=req.body.roleid;
+      var model;
+        WikiEntity.findOne({
+          "_id":req.body.entityid
+        })
+        .exec(
+          function(err,data)
+          {
+            if(err)
+            {
+              console.log(err);
+            }
+            if(data!=null)
+            {
+              //console.log(data.wiki_roles[0])
+              //data=JSON.parse(data);
+              //console.log(data.wiki_roles);
+              //console.log(data["wiki_roles"]);
+              //console.log("para"+para);
+              //console.log(data.wiki_roles[0]["en"][0]);
+              //it gets a string "false" instead of a boolean one.
+              if(fromarabic==="false")
+              {
+                model=data.wiki_roles[0]["en"][para];
+               // console.log("not from arabic model"+model);
+              }
+              else
+              {
+                model=data.wiki_roles[0]["arabic"][para];
+                //console.log(data.wiki_roles[0]["arabic"][para]);
+                //console.log("from arabic model"+model);
+              }
+              
+             /*if(model["start_date"])
+               {
+               model["start_date"]=new Date(model["start_date"].date).toISOString().split('T')[0]; 
+               } 
+             if(model["end_date"])
+               {
+               model["end_date"]=new Date(model["end_date"].date).toISOString().split('T')[0]; 
+               }*/
+            //console.log("model"+model);
+            //console.log(data._id);
+            //console.log(data._id);
+            //console.log(data.wiki_roles[0]["en"]);
+            //console.log(data.wiki_roles[0]["englishname"]);
+           // console.log(model);
+            model["entityid"]=data._id;
+            //role id will be role_id on the role not the rank on the list anymore.
+            model["rolerank"]=roleid;
+            //console.log(data);
+            //console.log(data.names);
+           // console.log(data.cameo_coding);
+            //console.log(data.taggingtime);
+           // console.log(data["names"][0]);
+            var arabicname=data.wiki_roles[0]["arabicname"];
+            if(arabicname!=="")
+              model["name"]=arabicname;
+            else
+              model["name"]=data.wiki_roles[0]["englishname"];
+            //console.log(roleid);
+            var englishlink=data.wiki_roles[0]["englishlink"];
+            model["link"]=englishlink;
+            if(englishlink==="")
+            {
+              model["link"]=data.wiki_roles[0]["arabiclink"];
+            }
+
+             res.render('./wikitemplate.jade', {wikirole:model});
+            }
+              
+            else
+              console.log("there is no wikientity found based on this id.");
+
+          }
+        )
+     
+  });
   //this is for loop through the sentence
   app.get('/sentences', function(req, res) {
 
     getOneNotTaggedSentence(res);
   });
 
+  app.get('/fastcoding',function(req,res){
+      res.sendfile('./public/partials/fastcoding.html');
+       //res.render('./tryme.jade', {param1: 'xxx', param2: 'yyy'} );
+  });
 
+  app.get('/wikicoding',function(req,res){
+      res.sendfile('./public/partials/wikicoding.html');
+  });
+    app.get('/wikitemplate',function(req,res){
+      res.sendfile('./public/partials/wikitemplate.html');
+  });
   // application -------------------------------------------------------------
   app.get('*', function(req, res) {
     res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)

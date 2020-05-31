@@ -1,0 +1,220 @@
+<script src="js/bootstrap3-typeahead.js"></script>
+<script src="js/bootstrap-tagsinput.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<div class="panel panel-success">
+
+    <div class="panel-heading">
+    <div class="row">
+    <div class="col col-sm-6">
+    <h4>Fast Arabic Actor Coding (PERSON ENTITY)</h4>
+    </div>
+    <div class="col col-sm-2">
+    <!-- disbale this button for nwo -->
+    <button class="btn btn-primary btn-sm disabled">Switch To Org Entity</button>
+    </div>
+    <div class="col col-sm-2">
+    <!-- disbale this button for nwo -->
+     Total Left:<span id="totalleft">0</span>
+    </div>
+	</div>
+	<!-- <div class="row"></div>
+    	
+    </div> -->
+    <div class="panel-body">
+     <div id="fastactor" class="row well">
+              <input class="col col-sm-3" id="arabicentity" data-entityid=""></input>
+              <div class="col col-sm-2">
+                <button class="btn btn-primary btn-sm" id="fast-start" data-status="start"> <i class="fa fa-clock-o" aria-hidden="true" style="padding:2px"></i><strong>START</strong></button>
+              </div>
+               <div class="col col-sm-2">
+                <button class="btn btn-success btn-sm" id="fast-commit" data-status="commit"> <i class="fa fa-floppy-o" aria-hidden="true" style="padding:2px"></i><strong>COMMIT</strong></button>
+              </div>
+
+              <div class="col col-sm-2">
+              	  <button class="btn btn-danger btn-sm" id="fast-skip"><i class="fa fa-step-forward" aria-hidden="true" style="padding:2px"></i><strong>Skip</strong></button>
+              </div>
+      </div>
+        <div class="row well well-sm special">
+		<input id="country" type="search" placeholder="Country..." data-provide="typeahead"/>
+		</div>		
+		 <div class="row well well-sm">
+		<input id="firstrole" type="search" placeholder="Primary..." data-provide="typeahead"/>
+		</div>
+		 <div class="row well well-sm">
+		<input id="secondrole" type="search" placeholder="Secondary..." data-provide="typeahead"/>
+		</div>
+		<div class="row well well-sm">
+		<p>Start Date: <input type="text" id="datepicker1"></p>
+		</div>
+		<div class="row well well-sm">
+		<p>End Date: <input type="text" id="datepicker2"></p>
+		</div>
+     
+      <div class="row well well-sm">
+ 
+      <strong>Related Sentences</strong>
+      	<div class="container" style="margin:3px;background: bisque" id="sen1">
+      	</div>
+      	<div class="container" sstyle="margin:3px" id="sen2">
+      	</div>
+  	 	<div class="container" style="margin:3px;background: bisque" id="sen3">
+      	</div>
+  	 	<div class="container" style="margin:3px" id="sen4">
+      	</div>
+  	 	<div class="container" style="margin:3px;background: bisque" id="sen5">
+      	</div>
+     </div>
+  </div>
+
+
+ 
+  <script>
+  	$(function(){
+  		$( "#datepicker1" ).datepicker({
+  			changeMonth: true,
+            changeYear: true,
+			yearRange: '1900:'+(new Date).getFullYear(),
+			dateFormat: 'yy-mm-dd'               
+  		});
+  		$( "#datepicker2" ).datepicker({
+  			changeMonth: true,
+            changeYear: true,
+            yearRange: '1900:'+(new Date).getFullYear(),
+            dateFormat: 'yy-mm-dd'     
+  		});
+  		var timespent=0;
+  		var start=0
+  		var loadtime=0;
+  		var loadstart=0;
+  		$("#fast-skip").on("click",function(){
+  			var userid=localStorage.getItem("currentid");
+  				$.ajax({
+                method:"POST",
+                url:"/skipperentity",
+                data:{'entityid':$('#arabicentity').attr("data-entityid"),'userid':userid},
+                success:function(data)
+                {
+               	 var result = JSON.parse(data);
+                  $("#arabicentity").val(result.word);
+                  $("#arabicentity").attr("data-entityid",result.entityid);
+                  var sentences=result.sentences;
+                  var countleft=result.countleft;
+                 // console.log(sentences);
+                  $("#sen1").text("1."+sentences[0]);  
+                   $("#sen2").text("2."+sentences[1]);
+                  $("#sen3").text("3."+sentences[2]);
+                  $("#sen4").text("4."+sentences[3]);
+                  $("#sen5").text("5."+sentences[4]);          
+                  start = new Date();
+                 
+                  $("#fast-start").prop("disabled",false)
+                  $("#totalleft").text(countleft);
+              },
+               error: function (xhr, ajaxOptions, thrownError) {
+			        console.log(xhr.status);
+			        //alert(thrownError);
+			      }
+              });
+
+  		});
+  		$("#fast-commit").on("click",function(){
+  			    var userid=localStorage.getItem("currentid");
+  				$.ajax({
+                method:"POST",
+                url:"/commitperentity",
+                //actually I am not sure why the country needs input needs to be handle specially otehrwise it will not have the value, if you continously have
+                //two same country as input.
+                data:{'entityid':$('#arabicentity').attr("data-entityid"),'timespend':(new Date()-start)/1000,"country":$($(".special").find("input")[0]).text(),"firstrole":$("#firstrole").val(),"secondrole":$("#secondrole").val(),"userid":userid,"username":localStorage["currentuser"],"startdate":$("#datepicker1").val(),"enddate":$("#datepicker2").val(),"word":$("#arabicentity").val()},
+                success:function(data)
+                {
+                	console.log("time"+new Date()-start);
+               	 var result = JSON.parse(data);
+               	 var countleft=result.countleft;
+                  $("#arabicentity").val(result.word);
+                  $("#arabicentity").attr("data-entityid",result.entityid);
+                  var sentences=result.sentences;
+                 // console.log(sentences);
+                  $("#sen1").text("1."+sentences[0]);     
+                   $("#sen2").text("2."+sentences[1]);
+                  $("#sen3").text("3."+sentences[2]);
+                  $("#sen4").text("4."+sentences[3]);
+                  $("#sen5").text("5."+sentences[4]);       
+                  start = new Date();
+                 // loadtime=new Date()-loadstart;
+                  $("#fast-start").prop("disabled",false)
+                  //get rid of all the input before doing the next one.
+                  $("input").val("");
+                  $(".label-info").remove();
+                  //update teh count
+                  $("#totalleft").text(countleft);
+
+
+              },
+               error: function (xhr, ajaxOptions, thrownError) {
+			        console.log(xhr.status);
+			        //alert(thrownError);
+			      }
+              });
+
+  		});
+  		$("#fast-start").on("click",function(){
+  			$(this).prop("disabled",true);
+  				$.ajax({
+                method:"GET",
+                url:"/getperentity",
+                //url:"/api/actors",
+                success:function(data)
+                {
+                	//paser the data into dictionary , this needs to be called
+               		var result = JSON.parse(data);
+               		var countleft=result.countleft;
+                  $("#arabicentity").val(result.word);
+                  $("#arabicentity").attr("data-entityid",result.entityid);
+                  var sentences=result.sentences;
+                 // console.log(sentences);
+                  $("#sen1").text("1."+sentences[0]);
+                  $("#sen2").text("2."+sentences[1]);
+                  $("#sen3").text("3."+sentences[2]);
+                  $("#sen4").text("4."+sentences[3]);
+                  $("#sen5").text("5."+sentences[4]);
+                  start = new Date();
+                  //loadtime=new Date()-loadstart;
+                 // console.log(data);
+                 $("#totalleft").text(countleft);
+                  $("#fast-start").prop("disabled",false);
+              },
+               error: function (xhr, ajaxOptions, thrownError) {
+			        console.log(xhr.status);
+			        //alert(thrownError);
+			      }
+              });
+  			
+  		});
+   
+   $("#country").tagsinput({
+  typeahead: {
+    source: function(query) {
+      return $.get("/api/actorsnames");
+    }
+  }
+});
+   $("#firstrole").tagsinput({
+  typeahead: {
+    source: function(query) {
+      return $.get("/api/agentsnames");
+    }
+  }
+});
+
+   $("#secondrole").tagsinput({
+  typeahead: {
+    source: function(query) {
+      return $.get("/api/secondrolesnames");
+    }
+  }
+});
+  	})
+  </script>
+
+
+

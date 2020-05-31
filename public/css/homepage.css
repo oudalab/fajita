@@ -29,6 +29,32 @@
 
 }
 
+#sourceWord
+{
+	direction:rtl;
+}
+/*for the role summany*/
+.sourceWord
+{
+	direction:rtl;
+}
+.verbword
+{
+	direction:rtl;
+}
+
+#verbword
+{
+	direction:rtl;
+}
+
+.wikicard
+{
+	width:80%;
+	background-color:lightgoldenrodyellow;
+	margin-top:20px;
+}
+
 .ui-tabs-anchor
 {
 	height:20px;

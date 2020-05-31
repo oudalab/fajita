@@ -1,0 +1,129 @@
+div(class="card wikicard" data-entityid="#{wikirole.entityid}" data-rolerank="#{wikirole.rolerank}") 
+  div(class="card-body") 
+    div(class="card-title" style="font-weight:bold;margin-bottom:10px" ) Name:
+      input(class="input-name" type="text" value="#{wikirole.name}" style="direction:rtl;width:100%")
+      i(class="fa fa-check-circle-o aftercommit" aria-hidden="true" style="display:none;margin-left:2px;")
+    div(class="card-subtitle mb-2 text-muted" style="font-weight:bold") Role: 
+      input(class="input-role" type="text" value="#{wikirole.title}" style="direction:rtl;width:100%")
+    div(class="list-group list-group-flush")
+      li(class="list-group-item wiki-country")
+        input(class="input-country" type="search" placeholder="Country..." data-provide="typeahead")
+      li(class="list-group-item wiki-primary")
+        input(class="input-primary" type="search" placeholder="Primary..." data-provide="typeahead")
+      li(class="list-group-item wiki-secondary")
+        input(class="input-secondary" type="search" placeholder="Secondary..." data-provide="typeahead")
+      li(class="list-group-item wiki-datestart")
+        div(class="row")
+          div(class="col col-md-3") Date Start:#{wikirole.start_date} 
+          div(class="col col-md-3")
+            input(class="wikistartdate" type="text" value="#{wikirole.start_date}")        
+      li(class="list-group-item wiki-dateend")
+        div(class="row")
+          div(class="col col-md-3") Date End:#{wikirole.end_date} 
+          div(class="col col-md-3")
+            input(class="wikienddate" type="text" value="#{wikirole.end_date}")  
+      li(class="list-group-item wiki-flag")
+        div(class="row") Not Sure? 
+          input(class="wikiflag" type="checkbox")   
+    div(class="row container") 
+      div(class="col col-md-3")
+        div(class="btn btn-success wiki-commit" style="margin-right:5px;margin-bottom:5px" data-rolerank="#{wikirole.rolerank}" data-name="#{wikirole.name}") COMMIT
+        a(href="#{wikirole.link}" target="_blank") wiki link          
+script.
+  $(function(){
+    $(".wiki-commit1").on("click",function(){
+       var card=$(this).closest(".card");
+     
+
+    });
+
+    $(".wikistartdate" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1900:'+(new Date).getFullYear(),
+        dateFormat: 'yy-mm-dd'               
+      });
+    $(".wikienddate" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1900:'+(new Date).getFullYear(),
+        dateFormat: 'yy-mm-dd'               
+      });
+
+    $(".input-country").tagsinput({
+    typeahead: {
+      source: function(query) {
+        return $.get("/api/actorsnames");
+      }
+    }
+    });
+
+       $(".input-primary").tagsinput({
+        typeahead: {
+          source: function(query) {
+            return $.get("/api/agentsnames");
+          }
+        }
+      });
+
+   $(".input-secondary").tagsinput({
+      typeahead: {
+        source: function(query) {
+          return $.get("/api/secondrolesnames");
+        }
+      }
+    });
+    //since all the card will be called commit, so we need to check the rank, if the button on a rank that is not the current rank, then don't do anything
+    //need the off here since it will be defined multiple times
+    //this is for the role commit.
+          $(".wiki-commit").off("click").on("click",function(){
+            var card=$(this).closest(".card");
+            card.css("background-color","lavender");
+            card.find(".aftercommit").show();
+            $(this).attr("disabled","diabled");
+            var userid=localStorage.getItem("currentid");
+            var username=localStorage["currentuser"];           
+            var firstrole=card.find(".input-primary").val();
+            var entityid=card.attr("data-entityid");
+            var secondrole=card.find(".input-secondary").val();
+            //var flag=card.find(".wikiflag").val();
+            var flag=false;
+            if(card.find(".wikiflag").prop("checked"))
+            {
+              flag=true;
+            }
+            var startdate=card.find(".wikistartdate").val();
+            var enddate=card.find(".wikienddate").val();
+            var wikicountry=$(card.find(".wiki-country").find("input")[0]).text();
+            var rolerank=$(this).attr("data-rolerank");
+            //var word=$(this).attr("data-name");
+            var word=card.find(".input-name").val();
+            var wordrole=card.find(".input-role").val();
+            console.log(userid);
+            console.log(username);
+            console.log(firstrole);
+            console.log(secondrole);
+            console.log(startdate);
+            console.log(enddate);
+            console.log(wikicountry);
+            console.log(rolerank);
+            console.log(word); 
+            console.log(wordrole);           
+              $.ajax({
+                method:"POST",
+                url:"/commitwikirole",
+                data:{"word":word,'entityid':entityid,"country":wikicountry,"firstrole":firstrole,"secondrole":secondrole,"userid":userid,"username":username,"startdate":startdate,"enddate":enddate,"wordrole":wordrole,"flag":flag},
+                success:function(data)
+                {
+
+                  console.log("successfully saved!");
+
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                 console.log(xhr.status);
+                }
+                });
+      });
+  })
+  
