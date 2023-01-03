@@ -10,7 +10,7 @@
     "bcrypt-node": "^0.1.0",
     "body-parser": "~1.4.3",
     "cookie-parser": "^1.4.1",
-    "express": "~4.6.1",
+    "express": "~4.17.3",
     "express-session": "^1.13.0",
     "jade": "^1.11.0",
     "method-override": ">=2.3.10",
